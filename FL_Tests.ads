@@ -1,5 +1,5 @@
 with Ahven.Framework;
-with PListe_Gen;
+with Text_IO; use Text_IO;
 with PMot; use PMot;
 
 package FL_Tests is

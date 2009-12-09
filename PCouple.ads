@@ -1,4 +1,6 @@
 with PMot; use PMot;
+with Text_IO; use Text_IO;
+with ada.Integer_Text_IO; use ada.Integer_Text_IO;
 
 package PCouple is
     
@@ -10,7 +12,7 @@ package PCouple is
     private
         type TCouple is record
             mot: TMot;
-            occurrences: Integer;
+            occurrence: Integer;
         end record;
         
         function mot(Couple: in TCouple) return TMot;

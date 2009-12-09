@@ -5,14 +5,14 @@ package body FL_Tests is
     begin
         Set_Name (T, "Tests sur FatLoutre");
 
-        Framework.Add_Test_Routine(T, My_First_Test'Access, "My first test");
+        Framework.Add_Test_Routine(T, My_First_Test'Access, "Test sur les mots");
     end Initialize;
       
     procedure My_First_Test is
         L: TMot;
     begin
-        L := creer_Liste(L);
-        Assert(vide(L), "MEH");
+        creer_Mot(L);
+        Assert(mot_Vide(L), "MEH");
     end My_First_Test;
       
-   end FL_Tests;
+end FL_Tests;
