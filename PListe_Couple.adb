@@ -1,6 +1,7 @@
 package body PListe_Couple is
 
-    function nb_Total_Occurrence(T: in TListe_Couple) return Integer
+    function nb_Total_Occurrence(T: in TListe_Couple) return Integer is
+    begin
         if not vide(T) then
             return (occurrence(valeur(T)) + nb_Total_Mots(suivant(T)));
         else
@@ -8,13 +9,14 @@ package body PListe_Couple is
         end if;
     end nb_Total_Occurrence;
 
-    function nb_Mots_Differents(T: in TListe_Couple) return Integer
+    function nb_Mots_Differents(T: in TListe_Couple) return Integer is
+    begin
         return longueur(T);
     end nb_Mots_Differents;
 
-    function moy_Occurrence(T: in TListe_Couple) return Integer
+    function moy_Occurrence(T: in TListe_Couple) return Integer is
         nb: integer := 0;
-    
+    begin
         while not vide(T) loop
             nb := (nb + occurrence(valeur(T)));
             suivant(T);
@@ -23,9 +25,9 @@ package body PListe_Couple is
         return (nb / nb_Mots_Differents(T));
     end moy_Occur;
 
-    function moy_Longueur(T: in TListe_Couple) return Integer
+    function moy_Longueur(T: in TListe_Couple) return Integer is
         long: integer := 0;
-      
+    begin
         while not vide(T) loop
             long := (long + longueur(mot(valeur(T))));
             T := suivant(T);
@@ -34,7 +36,8 @@ package body PListe_Couple is
         return (long / nb_Total_Mots(T));
     end moy_Longueur;
 
-    function nb_Superieur(T: in TListe_Couple; N: in Integer) return Integer
+    function nb_Superieur(T: in TListe_Couple; N: in Integer) return Integer is
+    begin
         if not vide(T) then
             if (longueur(mot(valeur(T))) >= N) then
                 return (1 + nb_Superieur(suivant(T)));
@@ -46,7 +49,8 @@ package body PListe_Couple is
         end if;
     end nb_Superieur;
 
-    function nb_Occurrences(T: in TListe_Couple; Mot: in TMot) return Integer
+    function nb_Occurrences(T: in TListe_Couple; Mot: in TMot) return Integer is
+    begin
         if not vide(T) then
             if mots_egaux(Mot, mot(valeur(T))) then
                 return (ocurrence(valeur(T)));
@@ -56,7 +60,8 @@ package body PListe_Couple is
         end if;
     end nb_Occurrences;
 
-    function nb_Prefixe(T: in TListe_Couple; Mot: in TMot) return Int
+    function nb_Prefixe(T: in TListe_Couple; Mot: in TMot) return Integer is
+    begin
         if not vide(T) then
             if (prefixe(mot(valeur(T)), Mot)) then
                 return (occurrence(valeur(T)) + nb_Prefixe(suivant(T), Mot);
@@ -68,7 +73,8 @@ package body PListe_Couple is
         end if;
     end nb_Prefixe;
 
-    function nb_Suffixe(T: in TListe_Couple; Mot: in TMot) return Int
+    function nb_Suffixe(T: in TListe_Couple; Mot: in TMot) return Integer is
+    begin
         if not vide(T) then
             if (suffixe(mot(valeur(T)), Mot)) then
                 return (occurrence(valeur(T)) + nb_Suffixe(suivant(T), Mot);
@@ -80,7 +86,8 @@ package body PListe_Couple is
       end if;
     end nb_Suffixe;
 
-    function nb_Facteur(T: in TListe_Couple; Mot: in TMot) return Int
+    function nb_Facteur(T: in TListe_Couple; Mot: in TMot) return Integer is
+    begin
         if not vide(T) then
             if facteur(mot(valeur(T)), Mot) then
                 return (occurrence(valeur(T)) + nb_Facteur(suivant(T), Mot));
@@ -92,10 +99,10 @@ package body PListe_Couple is
       end if;
     end nb_Facteur;
 
-    procedure gen_Fichier(T: in TListe_Couple) return TFichier
-        F: TFichier := new_Fichier();
+    procedure gen_Fichier(T: in TListe_Couple) return TFichier is
+        F: TFichier := create(F, Name => "liste-mot.txt");
         L: TListe_Couple := T;
-        
+    begin
         while not vide(T) loop
             ecrire_ligne(F, valeur(L));
             L := suivant(L);
@@ -104,7 +111,8 @@ package body PListe_Couple is
         return F;
     end gen_Fichier;
 
-    procedure ajout_mot(T: in TListe_Couple, Mot: in TMot)
+    procedure ajout_mot(T: in TListe_Couple, Mot: in TMot) is
+    begin
         if not vide(T) then
             if (couples_egaux(valeur(T)), Mot)) then
                 ajout_Occurrence(valeur(T), 1);
@@ -117,10 +125,10 @@ package body PListe_Couple is
         end if;
     end ajout_mot;
 
-    procedure affichage_Decroissant(T: in TListe_Couple; N: in Integer)
+    procedure affichage_Decroissant(T: in TListe_Couple; N: in Integer) is
     	L: TListe_Couple := tri_Decroissant_Occurrences(T);
     	I: Integer := 0;
-	
+	begin
     	while (not vide(T) and then I < N) loop
     	    affiche_Couple(val(T));
     	    I := I + 1;
@@ -132,8 +140,8 @@ package body PListe_Couple is
     end fusion_Couples;
 
     tri_Decroissant_Occurrences(T: in TListe_Couple) return TListe_Couple
-            	-- Retourne la liste de couple triée sur le nombre d'occurrences de manière croissante
-            	null;
+        -- Retourne la liste de couple triée sur le nombre d'occurrences de manière croissante
+        null;
     end tri_Decroissant_Occurrences;
 
 end PListe_Couple;

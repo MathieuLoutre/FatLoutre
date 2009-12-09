@@ -1,11 +1,11 @@
 
-function gen_Liste_Couples(Fichier: TFichier) return TListe_Couple
-	open(Fichier, In_File, "texte.txt");
+function gen_Liste_Couples(Fichier: TFichier) return TListe_Couple is
 	L: TListe_Couple := creer_Liste();
 	M: TMot := new TMot;
 	C: Character;
 	Couple: TCouple;
-	
+begin
+	open(Fichier, In_File, "texte.txt");
 	while (not end_of_file(Fichier)) loop
 		get(Fichier, C);
 		if (C /= ".") then
@@ -18,14 +18,14 @@ function gen_Liste_Couples(Fichier: TFichier) return TListe_Couple
 	end loop
 
 	close(Fichier);
-
 	return L;
 end gen_Liste_Couples;
 	
-function ecrire_Ligne(Fichier: in TFichier; Couple: in TCouple) return TFichier;
-	open(Fichier, Out_File, "liste-mot.txt");
+function ecrire_Ligne(Fichier: in TFichier; Couple: in TCouple) return TFichier is
 	Mot: TMot := mot(valeur(Couple));
-	
+begin
+    open(Fichier, Out_File, "liste-mot.txt");
+    
 	while not end_of_file(Fichier) loop
 	    skip_line(Fichier);
 	end loop;
@@ -41,11 +41,11 @@ function ecrire_Ligne(Fichier: in TFichier; Couple: in TCouple) return TFichier;
 	close(Fichier);
 end ecrire_ligne;
 	
-function regen_Liste_Couples(Fichier: in TFichier) return TListe_Couple;
-	open(Fichier, In_File, "liste-mot.txt");
+function regen_Liste_Couples(Fichier: in TFichier) return TListe_Couple is
 	L: TListe_Couple := creer_Liste();
 	C: Character;
-	
+begin
+    open(Fichier, In_File, "liste-mot.txt");
 	while (not end_of_file(Fichier)) loop
 	    get(Fichier, C);
 		if (C /= " " or end_of_line(Fichier)) then
@@ -61,15 +61,15 @@ function regen_Liste_Couples(Fichier: in TFichier) return TListe_Couple;
 	end loop
 	
 	close(Fichier);
-	
 	return L;
 end regen_Liste_Couples;
 	
-function est_Petit_Mot(Mot: in TMot) return Boolean;
+function est_Petit_Mot(Mot: in TMot) return Boolean is
 	found: Boolean := false;
 	Temp: TMot := Mot;
 	C: Character;
 	Fichier: File_Type;
+begin
 	open(Fichier, In_File, "petit-mot.txt");
 	
 	while (not end_of_file(petit-mots.txt) and then not found) loop

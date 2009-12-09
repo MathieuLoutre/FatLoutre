@@ -1,18 +1,22 @@
 package body PListe_Gen is
         
-    procedure creer_Liste(T: out TPtrCellule)
+    procedure creer_Liste(T: out TPtrCellule) is
+    begin
         T:= null;
     end creer_Liste;
 
-    function vide(T: in TPtrCellule) return Boolean
+    function vide(T: in TPtrCellule) return Boolean is
+    begin
         return (T = null);
     end vide;
 
-    function ajout_Debut(T: in TPtrCellule; N: in Integer) return TPtrCellule
+    function ajout_Debut(T: in TPtrCellule; N: in Integer) return TPtrCellule is
+    begin
     	T:= new TCellule'(N, T);
     end ajout_Debut;
 
-    function ajout_Fin(T: in TPtrCellule; N: Integer) return TPtrCellule
+    function ajout_Fin(T: in TPtrCellule; N: Integer) return TPtrCellule is
+    begin
         if not vide(T) then
             ajout_Fin(suivant(T), N);
         else
@@ -20,7 +24,8 @@ package body PListe_Gen is
         end if;
     end ajout_Fin;
 
-    function longueur(T: in TPtrCellule) return Integer
+    function longueur(T: in TPtrCellule) return Integer is
+    begin
         if not vide(T) then
             return (1 + longueur(suivant(T));
         else
@@ -28,7 +33,8 @@ package body PListe_Gen is
         end if;
     end longueur;
 
-    procedure affiche_Liste(T: in TPtrCellule)
+    procedure affiche_Liste(T: in TPtrCellule) is
+    begin
         if not vide(T) then
             ecrire(valeur(T));
             return affiche_Liste(suivant(T));
@@ -37,7 +43,8 @@ package body PListe_Gen is
         end if;
     end affiche_Liste;
 
-    function valeur(T: in TPtrCellule) return TElem
+    function valeur(T: in TPtrCellule) return TElem is
+    begin
         if not vide(T) then
             return T.val;
         else
@@ -45,7 +52,8 @@ package body PListe_Gen is
         end if;
     end valeur;
 
-    function suivant(T: in TPtrCellule) return TPtrCellule
+    function suivant(T: in TPtrCellule) return TPtrCellule is
+    begin
         if not vide(T) then
             return T.suiv;
         else
@@ -53,7 +61,8 @@ package body PListe_Gen is
       end if;
     end suivant;
 
-    function copie(T: in TListeCouple) return TListeCouple
+    function copie(T: in TListeCouple) return TListe_Couple is
+    begin
         l1: TListeCoupleNonVide := T;
         l2: TListeCoupleVide := creer_Liste();
         
@@ -65,7 +74,8 @@ package body PListe_Gen is
         return l2;
     end copie;
 
-    function insert_Trie_Croissant(T: in out TPtrCellule; N: in TElem) return TPtrCellule
+    function insert_Trie_Croissant(T: in out TPtrCellule; N: in TElem) return TPtrCellule is
+    begin
         if not vide(T) then
             if (not vide(suivant(T)) and then (superieur(N, valeur(suivant(T)))) then
                 suivant(T) := insere_Trie_Croissant(suivant(T), N);
@@ -79,7 +89,8 @@ package body PListe_Gen is
         end if;
     end insere_Trie_Croissant;
 
-    function listes_Egales(T1: in TPtrCellule; T2: in TPtrCellule) return Boolean
+    function listes_Egales(T1: in TPtrCellule; T2: in TPtrCellule) return Boolean is
+    begin
         if (not vide(T1)) and not (vide(T2)) then
             if (egaux(valeur(T1), valeur(T2)) then
                 return listes_Egales(suivant(T1), suivant(T2));
@@ -91,7 +102,8 @@ package body PListe_Gen is
         end if;
     end listes_Egales;
 
-    procedure supprimer(T: in out TPtrCellule, N: in TElem)
+    procedure supprimer(T: in out TPtrCellule, N: in TElem) is
+    begin
         if (not vide(T)) then 
             if egaux(valeur(T), N)
     		    then T:= suivant(T);
