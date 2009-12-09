@@ -1,16 +1,18 @@
 with Ahven; use Ahven;
 
-package body My_Tests is
+package body FL_Tests is
     procedure Initialize (T : in out Test) is
     begin
-        Set_Name (T, "My tests");
+        Set_Name (T, "Tests sur FatLoutre");
 
         Framework.Add_Test_Routine(T, My_First_Test'Access, "My first test");
     end Initialize;
       
-      procedure My_First_Test is
-      begin
-         Assert (1 /= 4, "1 /= 4 failed!");
-      end My_First_Test;
+    procedure My_First_Test is
+        L: TMot;
+    begin
+        L := creer_Liste(L);
+        Assert(vide(L), "MEH");
+    end My_First_Test;
       
-   end My_Tests;
+   end FL_Tests;
