@@ -21,7 +21,7 @@ package body FL_Tests is
         
         ajout_Mot(T, M);
         
-        assert(mot_Vide(mot(valeur_Couple(T))), "FAIL MOTHERFUCKA");
+        assert(mot_Vide(mot_Couple(valeur_Couple(T))), "FAIL MOTHERFUCKA");
     end My_First_Test;
       
 end FL_Tests;

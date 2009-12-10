@@ -51,7 +51,7 @@ package body PListe_Couple is
         L: TListe_Couple := T;
     begin
         while not vide(T) loop
-            long := (long + longueur_Mot(mot(valeur_Couple(L))));
+            long := (long + longueur_Mot(mot_Couple(valeur_Couple(L))));
             L := suivant(L);
         end loop;
         
@@ -61,7 +61,7 @@ package body PListe_Couple is
     function nb_Superieur(T: in TListe_Couple; N: in Integer) return Integer is
     begin
         if not vide(T) then
-            if (longueur_Mot(mot(valeur_Couple(T))) >= N) then
+            if (longueur_Mot(mot_Couple(valeur_Couple(T))) >= N) then
                 return (1 + nb_Superieur(couple_Suivant(T), N));
             else
                 return (nb_Superieur(couple_Suivant(T), N));
@@ -74,18 +74,20 @@ package body PListe_Couple is
     function nb_Occurrences(T: in TListe_Couple; Mot: in TMot) return Integer is
     begin
         if not vide(T) then
-            if mots_Egaux(Mot, mot(valeur_Couple(T))) then
+            if mots_Egaux(Mot, mot_Couple(valeur_Couple(T))) then
                 return (occurrence(valeur_Couple(T)));
+            else
+                return (nb_Occurrences(couple_Suivant(T), Mot));
             end if;
         else
-            return (nb_Occurrences(couple_Suivant(T), Mot));
+            return 0;
         end if;
     end nb_Occurrences;
 
     function nb_Prefixe(T: in TListe_Couple; Mot: in TMot) return Integer is
     begin
         if not vide(T) then
-            if (prefixe(mot(valeur_Couple(T)), Mot)) then
+            if (prefixe(mot_Couple(valeur_Couple(T)), Mot)) then
                 return (occurrence(valeur_Couple(T)) + nb_Prefixe(couple_Suivant(T), Mot));
             else
                 return (nb_Prefixe(couple_Suivant(T), Mot));
@@ -96,10 +98,9 @@ package body PListe_Couple is
     end nb_Prefixe;
 
     function nb_Suffixe(T: in TListe_Couple; Mot: in TMot) return Integer is
-        meh: TMot := mot(valeur_Couple(T));
     begin
         if not vide(T) then    
-            if (suffixe(Mot, Mot)) then
+            if (suffixe(mot_Couple(valeur_Couple(T)), Mot)) then
                 return (occurrence(valeur_Couple(T)) + nb_Suffixe(couple_Suivant(T), Mot));
             else
                 return (nb_Suffixe(couple_Suivant(T), Mot));
@@ -112,7 +113,7 @@ package body PListe_Couple is
     function nb_Facteur(T: in TListe_Couple; Mot: in TMot) return Integer is
     begin
         if not vide(T) then
-            if facteur(mot(valeur_Couple(T)), Mot) then
+            if facteur(mot_Couple(valeur_Couple(T)), Mot) then
                 return (occurrence(valeur_Couple(T)) + nb_Facteur(couple_Suivant(T), Mot));
             else
                 return (nb_Facteur(couple_Suivant(T), Mot));
@@ -127,7 +128,7 @@ package body PListe_Couple is
         L: TListe_Couple;
     begin
         if not vide(T) then
-            if mots_Egaux(mot(valeur_Couple(T)), Mot) then
+            if mots_Egaux(mot_Couple(valeur_Couple(T)), Mot) then
                 Couple := valeur_Couple(T);
                 ajout_Occurrence(Couple, 1);
             else

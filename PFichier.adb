@@ -27,7 +27,7 @@ package body PFichier is
     end gen_Liste_Couples;
 	
     procedure ecrire_Ligne(Fichier: in out TFichier; Couple: in TCouple) is
-    	Mot: TMot := mot(Couple);
+    	Mot: TMot := mot_Couple(Couple);
     begin
         open(Fichier, Out_File, "liste-mot.txt");
     
@@ -58,7 +58,7 @@ package body PFichier is
     	while (not end_of_file(Fichier)) loop
     	    get(Fichier, C);
     		if (C /= ' ' or end_of_line(Fichier)) then
-    		    ajout_Lettre_Fin(mot(valeur_Couple(L)), C);
+    		    ajout_Lettre_Fin(mot_Couple(valeur_Couple(L)), C);
     		elsif (C = ' ') then
     		    Couple := valeur_Couple(L);
     			ajout_Occurrence(Couple, integer(C));

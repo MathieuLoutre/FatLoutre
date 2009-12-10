@@ -1,9 +1,9 @@
 package body PCouple is
 
-    function mot(Couple: in TCouple) return TMot is
+    function mot_Couple(Couple: in TCouple) return TMot is
     begin
-    	return Couple.val_mot;
-    end mot;
+    	return Couple.mot;
+    end mot_Couple;
 		
     function occurrence(Couple: in TCouple) return Integer is
     begin
@@ -12,7 +12,7 @@ package body PCouple is
 
     procedure affiche_Couple(Couple: in TCouple) is
     begin
-    	affiche_Mot(mot(Couple));
+    	affiche_Mot(mot_Couple(Couple));
     	put(occurrence(Couple));
     end affiche_Couple;
 
@@ -28,12 +28,12 @@ package body PCouple is
 
     function couples_Egaux(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
     begin
-        return mots_Egaux(mot(Couple1), mot(Couple2));
+        return mots_Egaux(mot_Couple(Couple1), mot_Couple(Couple2));
     end couples_Egaux;
 
     function couple_Superieur(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
     begin
-        return mot_Superieur(mot(Couple1), mot(Couple2));
+        return mot_Superieur(mot_Couple(Couple1), mot_Couple(Couple2));
     end couple_Superieur;
     
     procedure creer_Couple(Couple: out TCouple; Mot: in TMot; Occurrence: in Integer) is

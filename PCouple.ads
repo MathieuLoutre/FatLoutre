@@ -17,7 +17,7 @@ package PCouple is
     function couple_Superieur(Couple1: in TCouple; Couple2: in TCouple) return Boolean;
         -- Retourne True si le Couple2 est superieur au Couple1, False sinon
     
-    function mot(Couple: in TCouple) return TMot;
+    function mot_Couple(Couple: in TCouple) return TMot;
         -- Donne le TMot du TCouple donné
 
     function occurrence(Couple: in TCouple) return Integer;
@@ -28,7 +28,7 @@ package PCouple is
 
     private
         type TCouple is record
-            val_mot: TMot;
+            mot: TMot;
             occurrences: Integer;
         end record;
             
