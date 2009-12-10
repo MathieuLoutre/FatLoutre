@@ -2,21 +2,23 @@ package body PFichier is
     
     function gen_Liste_Couples(Fichier: TFichier) return TListe_Couple is
     	L: TListe_Couple;
-    	M: TMot := new TMot;
+    	M: TMot;
     	C: Character;
     	Couple: TCouple;
     begin
-        L := creer_Liste(L);
+        creer_Mot(M);
+        creer_Liste_Couple(L);
     	open(Fichier, In_File, "texte.txt");
+    	
     	while (not end_of_file(Fichier)) loop
     		get(Fichier, C);
-    		if (C /= ".") then
-    			M := ajout_Fin(M, C);
+    		if (C /= '.') then
+    			ajout_Lettre_Fin(M, C);
     		else
     			if (significatif(M)) then
     			    ajout_mot(L, M);
     			end if;
-    			M := new TMot;
+    			creer_Mot(M);
     		end if;
     	end loop;
 
@@ -24,8 +26,8 @@ package body PFichier is
     	return L;
     end gen_Liste_Couples;
 	
-    function ecrire_Ligne(Fichier: in TFichier; Couple: in TCouple) return TFichier is
-    	Mot: TMot := mot(valeur(Couple));
+    procedure ecrire_Ligne(Fichier: in out TFichier; Couple: in TCouple) is
+    	Mot: TMot := mot(Couple);
     begin
         open(Fichier, Out_File, "liste-mot.txt");
     
@@ -33,67 +35,54 @@ package body PFichier is
     	    skip_line(Fichier);
     	end loop;
 	    
-    	while (not vide(Mot)) loop
-    		put(Fichier, valeur(Mot));
-    		Mot := suivant(Mot);
+    	while (not mot_Vide(Mot)) loop
+    		put(Fichier, valeur_Mot(Mot));
+    		Mot := lettre_Suivante(Mot);
     	end loop;
 
     	put(Fichier, " ");
-    	put(Fichier, occurrence(valeur(Couple)));
+    	put(Fichier, occurrence(Couple));
     	new_line(Fichier);
     	close(Fichier);
     end ecrire_ligne;
 	
     function regen_Liste_Couples(Fichier: in TFichier) return TListe_Couple is
     	L: TListe_Couple;
+    	T: TListe_Couple;
+    	Couple: TCouple;
     	C: Character;
     begin
-        L := creer_Liste(L);
+        creer_Liste_Couple(L);
         open(Fichier, In_File, "liste-mot.txt");
+        
     	while (not end_of_file(Fichier)) loop
     	    get(Fichier, C);
-    		if (C /= " " or end_of_line(Fichier)) then
-    			valeur(mot(valeur(L))) := C;
-    			mot(valeur(L)) := suivant(mot(valeur(L)));
-    		elsif (C = " ") then
-    			valeur(occurrence(valeur(L))) := integer(C);
+    		if (C /= ' ' or end_of_line(Fichier)) then
+    		    ajout_Lettre_Fin(mot(valeur_Couple(L)), C);
+    		elsif (C = ' ') then
+    		    Couple := valeur_Couple(L);
+    			ajout_Occurrence(Couple, integer(C));
     		else
     			skip_line(Fichier);
-    			suivant(L) := creer_Liste;
-    			L := suivant(L);
+    			creer_Liste_Couple(T);
+    			couple_Suivant(L) := T;
+    			L := couple_Suivant(L);
     		end if;
     	end loop;
 	
     	close(Fichier);
     	return L;
     end regen_Liste_Couples;
-	
-    function est_Petit_Mot(Mot: in TMot) return Boolean is
-    	found: Boolean := false;
-    	Temp: TMot := Mot;
-    	C: Character;
-    	Fichier: File_Type;
+    
+    procedure gen_Fichier(T: in TListe_Couple; Fichier: out TFichier) is
+        L: TListe_Couple := T;
     begin
-    	open(Fichier, In_File, "petit-mot.txt");
-	
-    	while (not end_of_file(petit-mots.txt) and then not found) loop
-    		get(Fichier, C);
-    		if (C = valeur(Mot)) then
-    			while (C = valeur(Temp)) loop
-    				Temp := suivant(Temp);
-    			end loop;
-			
-    			found := vide(Temp);
-			
-    			if (not found) then
-    				Temp := Mot;
-    			end if;
-    		else
-    			skip_line(Fichier);
-    		end if;
-    	end loop;
-	
-    	return found;
-    end est_Petit_Mot;
+        create(Fichier, Name => "liste-mot.txt");
+        
+        while not liste_Couple_Vide(T) loop
+            ecrire_ligne(Fichier, valeur_Couple(L));
+            L := couple_Suivant(L);
+        end loop;
+    end gen_Fichier;
 
 end PFichier;

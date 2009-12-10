@@ -1,5 +1,25 @@
 package body PListe_Couple is
+    
+    procedure creer_Liste_Couple(T: out TListe_Couple) is
+    begin
+        creer_Liste(T);
+    end creer_Liste_Couple;
+    
+    function liste_Couple_Vide(T: in TListe_Couple) return Boolean is
+    begin
+        return liste_Vide(T);
+    end liste_Couple_Vide;
+    
+    function valeur_Couple(T: in TListe_Couple) return TCouple is
+    begin
+        return valeur(T);
+    end valeur_Couple;
 
+    function couple_Suivant(T: in TListe_Couple) return TListe_Couple is
+    begin
+        return suivant(T);
+    end couple_Suivant;
+    
     function nb_Total_Occurrence(T: in TListe_Couple) return Integer is
     begin
         if not vide(T) then
@@ -98,18 +118,6 @@ package body PListe_Couple is
             return 0;
       end if;
     end nb_Facteur;
-
-    function gen_Fichier(T: in TListe_Couple) return TFichier is
-        F: TFichier := create(F, Name => "liste-mot.txt");
-        L: TListe_Couple := T;
-    begin
-        while not vide(T) loop
-            ecrire_ligne(F, valeur(L));
-            L := suivant(L);
-        end loop;
-            
-        return F;
-    end gen_Fichier;
 
     procedure ajout_mot(T: in TListe_Couple; Mot: in TMot) is
     begin

@@ -1,9 +1,9 @@
 package body PMot is
 
-    -- function significatif(Mot: in TMot) return Boolean is
-    --     begin
-    --      return (longueur(Mot) > 3 or est_Petit_Mot(Mot));
-    --     end significatif;
+    function significatif(Mot: in TMot) return Boolean is
+    begin
+        return (longueur(Mot) > 3 or est_Petit_Mot(Mot));
+    end significatif;
 
     procedure creer_Mot(Mot: out TMot) is
     begin
@@ -15,6 +15,21 @@ package body PMot is
         return vide(Mot);
     end mot_Vide;
 
+    procedure ajout_Lettre_Fin(Mot: in out TMot; N: in Character) is
+    begin
+        ajout_Fin(T, N);
+    end ajout_Lettre_Fin;
+    
+    function valeur_Mot(Mot: in TMot) return Character is
+    begin
+        return valeur(Mot);
+    end valeur_Mot;
+    
+    function lettre_Suivante(Mot: in TMot) return TMot is
+    begin
+        return suivant(Mot);
+    end valeur_Mot;
+    
     -- TO BE REFACTORED
     function prefixe(Mot1: in TMot; Mot2: in TMot) return Boolean is
         prefx: Boolean := true;
@@ -100,5 +115,33 @@ package body PMot is
     begin
     	affiche_Liste(Mot);
     end affiche_Mot;
+    
+    function est_Petit_Mot(Mot: in TMot) return Boolean is
+    	found: Boolean := false;
+    	Temp: TMot := Mot;
+    	C: Character;
+    	Fichier: File_Type;
+    begin
+    	open(Fichier, In_File, "petit-mot.txt");
+	
+    	while (not end_of_file(Fichier) and then not found) loop
+    		get(Fichier, C);
+    		if (C = valeur(Mot)) then
+    			while (C = valeur(Temp)) loop
+    				Temp := suivant(Temp);
+    			end loop;
+			
+    			found := vide(Temp);
+			
+    			if (not found) then
+    				Temp := Mot;
+    			end if;
+    		else
+    			skip_line(Fichier);
+    		end if;
+    	end loop;
+	
+    	return found;
+    end est_Petit_Mot;
 
 end PMot;
