@@ -6,6 +6,8 @@ package PCouple is
     
     type TCouple is private;
     
+    procedure creer_Couple(Couple: out TCouple; Mot: in TMot; Occurrence: in Integer);
+    
     procedure affiche_Couple(Couple: in TCouple);
         -- Affiche le TCouple passé en paramètre
         
@@ -26,8 +28,8 @@ package PCouple is
 
     private
         type TCouple is record
-            mot: TMot;
-            occurrence: Integer;
+            val_mot: TMot;
+            occurrences: Integer;
         end record;
             
         procedure fusion_Occurrence(Couple1: in out TCouple; Couple2: in TCouple);

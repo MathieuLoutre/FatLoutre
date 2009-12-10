@@ -14,10 +14,15 @@ package body PMot is
     begin
         return vide(Mot);
     end mot_Vide;
+    
+    function longueur_Mot(Mot: in TMot) return Integer is
+    begin
+        return longueur(Mot);
+    end longueur_Mot;
 
     procedure ajout_Lettre_Fin(Mot: in out TMot; N: in Character) is
     begin
-        ajout_Fin(T, N);
+        ajout_Fin(Mot, N);
     end ajout_Lettre_Fin;
     
     function valeur_Mot(Mot: in TMot) return Character is
@@ -28,7 +33,7 @@ package body PMot is
     function lettre_Suivante(Mot: in TMot) return TMot is
     begin
         return suivant(Mot);
-    end valeur_Mot;
+    end lettre_Suivante;
     
     -- TO BE REFACTORED
     function prefixe(Mot1: in TMot; Mot2: in TMot) return Boolean is
@@ -108,7 +113,7 @@ package body PMot is
 	
     function mots_Egaux(Mot1: in TMot; Mot2: in TMot) return Boolean is
     begin
-    	return listes_egales(Mot1, Mot2);
+    	return listes_Egales(Mot1, Mot2);
     end mots_egaux;
 
     procedure affiche_Mot(Mot: in TMot) is

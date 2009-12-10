@@ -59,20 +59,20 @@ package body PListe_Gen is
     end suivant;
 
     -- TO BE REFACTORED
-    -- procedure insert_Trie_Croissant(T: in out TPtrCellule; N: in TElem) is
-    --     begin
-    --         if not vide(T) then
-    --             if (not vide(suivant(T)) and then (superieur(N, valeur(suivant(T))))) then
-    --                 T := suivant(T);
-    --                 T := insert_Trie_Croissant(T, N);
-    --             else
-    --                 T := suivant(T);
-    --                 T := new TCellule'(N, T);
-    --             end if;
-    --         else
-    --             ajout_Debut(T, N);
-    --         end if;
-    --     end insert_Trie_Croissant;
+    procedure insert_Trie_Croissant(T: in out TPtrCellule; N: in TElem) is
+        begin
+            if not vide(T) then
+                if (not vide(suivant(T)) and then (superieur(N, valeur(suivant(T))))) then
+                    T := suivant(T);
+                    insert_Trie_Croissant(T, N);
+                else
+                    T := suivant(T);
+                    T := new TCellule'(N, T);
+                end if;
+            else
+                ajout_Debut(T, N);
+            end if;
+        end insert_Trie_Croissant;
 
     function listes_Egales(T1: in TPtrCellule; T2: in TPtrCellule) return Boolean is
     begin

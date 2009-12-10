@@ -25,7 +25,7 @@ package PListe_Gen is
     procedure ajout_Debut (T: in out TPtrCellule; N: in TElem);
         -- Ajoute un élément en début de liste
 
-    --procedure insert_trie_Croissant (T: in out TPtrCellule; N: in TElem);
+    procedure insert_trie_Croissant (T: in out TPtrCellule; N: in TElem);
     	-- Insert l'élément à sa place dans la liste (croissante)
     	-- Utilise la fonction egal et superieur passé en paramètre du package générique
 

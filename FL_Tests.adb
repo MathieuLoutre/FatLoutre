@@ -5,14 +5,23 @@ package body FL_Tests is
     begin
         Set_Name (T, "Tests sur FatLoutre");
 
-        Framework.Add_Test_Routine(T, My_First_Test'Access, "Test sur les mots");
+        Framework.Add_Test_Routine(T, My_First_Test'Access, "Vacuité des mots");
     end Initialize;
       
     procedure My_First_Test is
-        L: TMot;
+        L: TCouple;
+        M: TMot;
+        T: TListe_Couple;
     begin
-        creer_Mot(L);
-        Assert(mot_Vide(L), "MEH");
+        creer_Mot(M);
+        creer_Liste_Couple(T);
+        
+        ajout_lettre_fin(M, 'L');
+        creer_Couple(L, M, 1);
+        
+        ajout_Mot(T, M);
+        
+        assert(mot_Vide(mot(valeur_Couple(T))), "FAIL MOTHERFUCKA");
     end My_First_Test;
       
 end FL_Tests;

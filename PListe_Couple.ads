@@ -52,11 +52,11 @@ package PListe_Couple is
         procedure affichage_Decroissant(T: in TListe_Couple; N: in Integer);
             -- Affiche les N premiers éléments de la liste ordonné par leurs occurrences décroissantes.
         
-        procedure fusion_Couples(T: in TListe_Couple; Mot1: in TCouple; Mot2: in TMot);
+        procedure fusion_Couples(T: in TListe_Couple; Couple1: in TCouple; Couple2: in TCouple);
             -- Augmente les occurrences de Couple1 de celles de Couple2 et supprime Couple2 de la liste
             -- Retourne une erreur si un des 2 mots ou les 2 ne sont pas dans la liste
         
-        procedure ajout_Mot(T: in TListe_Couple; Mot: in TMot);
+        procedure ajout_Mot(T: in out TListe_Couple; Mot: in TMot);
             -- Ajoute un nouveau couple contenant le mot si le mot n'est pas déjà présent, sinon augmente son occurrence de 1
             
     private
