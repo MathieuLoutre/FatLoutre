@@ -1,8 +1,8 @@
 package body PListe_Gen is
         
-    procedure creer_Liste(T: out TPtrCellule) is
+    procedure creer_Liste() return TPtrCellule is
     begin
-        T:= null;
+        return null;
     end creer_Liste;
 
     function vide(T: in TPtrCellule) return Boolean is
@@ -10,13 +10,14 @@ package body PListe_Gen is
         return (T = null);
     end vide;
 
-    procedure ajout_Debut(T: in out TPtrCellule; N: in TElem) is
+    procedure ajout_Debut(T: in TPtrCellule; N: in TElem) return TPtrCellule is
     begin
     	T:= new TCellule'(N, T);
+	return T;
     end ajout_Debut;
 
     -- TO BE REFACTORED
-    procedure ajout_Fin(T: in out TPtrCellule; N: in TElem) is
+    procedure ajout_Fin(T: in TPtrCellule; N: in TElem) return TPtrCellule is
     begin
         if not vide(T) then
 	    if not vide(suivant(T)) then
@@ -25,8 +26,9 @@ package body PListe_Gen is
 	    else
 		T.suiv := new TPtrCellule'(N, null);
 	    end if;
+	    return T;
         else
-            ajout_Debut(T, N);
+            return ajout_Debut(T, N);
         end if;
     end ajout_Fin;
 
@@ -63,18 +65,19 @@ package body PListe_Gen is
     end suivant;
 
     -- TO BE REFACTORED
-    procedure insert_Trie_Croissant(T: in out TPtrCellule; N: in TElem) is
+    procedure insert_Trie_Croissant(T: in TPtrCellule; N: in TElem) return TPtrCellule is
         begin
             if not vide(T) then
                 if (not vide(suivant(T)) and then (superieur(N, valeur(suivant(T))))) then
                     T := suivant(T);
-                    insert_Trie_Croissant(T, N);
+                    return insert_Trie_Croissant(T, N);
                 else
                     T := suivant(T);
                     T := new TCellule'(N, T);
+		    return T;
                 end if;
             else
-                ajout_Debut(T, N);
+                return ajout_Debut(T, N);
             end if;
         end insert_Trie_Croissant;
 
