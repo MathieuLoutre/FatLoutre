@@ -352,7 +352,7 @@ package body FL_Tests is
 	ajout_Lettre_Fin(Mot, 'N');
 	ajout_Lettre_Fin(Mot, 'i');
 	ajout_Lettre_Fin(Mot, 'h');
-	creer_Couple(Couple, Mot, 3);
+	creer_Couple(Liste_Couple, Mot, 3);
 
 	creer_Liste_Couple(Liste_Couple);
 	ajout_Fin(Liste_Couple, Mot);
