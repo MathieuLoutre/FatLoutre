@@ -10,7 +10,7 @@ package body PFichier is
     	
     	while (not end_of_file(Fichier)) loop
     		get(Fichier, C);
-    		if (C /= '.') then
+    		if (C /= '.' or C /= ' ' or C /= ',') then
     			ajout_Lettre_Fin(M, C);
     		else
     			if (significatif(M)) then
