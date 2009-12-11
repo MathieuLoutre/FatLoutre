@@ -200,7 +200,7 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'r');
         ajout_Lettre_Fin(Mot2, 'e');
         
-        assert(Egaux(Mot, Mot2) = True, "La verification de facteur ne marche pas");
+        assert(mots_Egaux(Mot, Mot2) = True, "La verification de facteur ne marche pas");
     end test_Mot_Egaux;
 
     procedure test_Mot_Egaux_Fail is
@@ -224,7 +224,7 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'o');
         ajout_Lettre_Fin(Mot2, 'r');
         
-        assert(Egaux(Mot, Mot2) = False, "La verification de facteur ne marche pas");
+        assert(mots_Egaux(Mot, Mot2) = False, "La verification de facteur ne marche pas");
     end test_Mot_Egaux_Fail;
     
     
@@ -247,7 +247,7 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'h');
 	    creer_Couple(Couple2, Mot2, 3);
         
-        assert(couple_Egaux(Couple1, Couple2) = True, "Les deux mots ne sont pas égaux");
+        assert(couples_Egaux(Couple1, Couple2) = True, "Les deux mots ne sont pas égaux");
     end test_Couple_Egaux;
 
     procedure test_Couple_Egaux_Fail is
@@ -268,7 +268,7 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'h');
 	    creer_Couple(Couple2, Mot2, 2);
         
-        assert(couple_Egaux(Couple1, Couple2) = False, "Les deux mots sont égaux");
+        assert(couples_Egaux(Couple1, Couple2) = False, "Les deux mots sont égaux");
     end test_Couple_Egaux_Fail;
 
     procedure test_Couple_Superieur is
@@ -332,7 +332,7 @@ package body FL_Tests is
 	    ajout_Lettre_Fin(Mot, 'h');
 	    creer_Couple(Couple, Mot, 3);
 
-	    assert(occurence(Couple) = 3, "Le Couple.occurence est égal à l'occurence donnée");
+	    assert(occurrence(Couple) = 3, "Le Couple.occurrence est égal à l'occurence donnée");
     end test_Couple_Occurrence;
 
 
