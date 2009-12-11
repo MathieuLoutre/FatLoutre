@@ -6,6 +6,7 @@ package PListe_Couple is
 
     type TListe_Couple is private;
     
+
         function creer_Liste_Couple return TListe_Couple;
         
         function liste_Couple_Vide(T: in TListe_Couple) return Boolean;
