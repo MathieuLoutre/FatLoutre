@@ -130,5 +130,52 @@ package body FL_Tests is
     procedure test_Mot_Facteur_Fail;
 
     procedure test_Mot_Egaux_Fail;
+
+
+-- Test sur le PCouple
+    procedure test_Couple_Egaux is
+    Couple1: TCouple;
+    Couple2: TCouple;
+    Mot1: TMot;
+    Mot2: TMot;
+
+    begin
+	creer_Mot(Mot1);
+	ajout_Lettre_Fin(Mot2, 'M');
+        ajout_Lettre_Fin(Mot2, 'e');
+        ajout_Lettre_Fin(Mot2, 'h');
+        creer_Couple(Couple1, Mot1, 3);
+
+        creer_Mot(Mot2);
+	ajout_Lettre_Fin(Mot2, 'M');
+        ajout_Lettre_Fin(Mot2, 'e');
+        ajout_Lettre_Fin(Mot2, 'h');
+	creer_Couple(Couple2, Mot2, 3);
+        
+        assert(couple_Egaux(Couple1, Couple2) = True, "Les deux mots sont égaux");
+    end test_Couple_Egaux;
+
+    procedure test_Couple_Egaux_Fail is
+    Couple1: TCouple;
+    Couple2: TCouple;
+    Mot1: TMot;
+    Mot2: TMot;
+
+    begin
+	creer_Mot(Mot1);
+	ajout_Lettre_Fin(Mot2, 'M');
+        ajout_Lettre_Fin(Mot2, 'e');
+        ajout_Lettre_Fin(Mot2, 'h');
+        creer_Couple(Couple1, Mot1, 3);
+
+        creer_Mot(Mot2);
+	ajout_Lettre_Fin(Mot2, 'N');
+        ajout_Lettre_Fin(Mot2, 'i');
+        ajout_Lettre_Fin(Mot2, 'h');
+	creer_Couple(Couple2, Mot2, 2);
+        
+        assert(couple_Egaux(Couple1, Couple2) = False, "Les deux mots ne sont pas égaux");
+    end test_Couple_Egaux_Fail;
+
       
 end FL_Tests;
