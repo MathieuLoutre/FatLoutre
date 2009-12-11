@@ -1,8 +1,8 @@
 package body PListe_Couple is
     
-    procedure creer_Liste_Couple(T: out TListe_Couple) is
+    function creer_Liste_Couple(T: out TListe_Couple) return TPtrCellule is
     begin
-        creer_Liste(T);
+        return creer_Liste(T);
     end creer_Liste_Couple;
     
     function liste_Couple_Vide(T: in TListe_Couple) return Boolean is

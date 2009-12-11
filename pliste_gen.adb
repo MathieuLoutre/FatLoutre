@@ -1,6 +1,6 @@
 package body PListe_Gen is
         
-    procedure creer_Liste() return TPtrCellule is
+    function creer_Liste() return TPtrCellule is
     begin
         return null;
     end creer_Liste;

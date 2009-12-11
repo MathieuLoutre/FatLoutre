@@ -6,7 +6,7 @@ package PListe_Couple is
 
     type TListe_Couple is private;
     
-        procedure creer_Liste_Couple(T: out TListe_Couple);
+        function creer_Liste_Couple(T: out TListe_Couple) return TPtrCellule;
         
         function liste_Couple_Vide(T: in TListe_Couple) return Boolean;
         	-- Retourne True si la liste est vide, False sinon

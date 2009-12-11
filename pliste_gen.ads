@@ -9,7 +9,7 @@ package PListe_Gen is
       
     type TPtrCellule is private;
 
-    procedure creer_Liste (T: out TPtrCellule) return TPtrCellule;
+    function creer_Liste (T: out TPtrCellule) return TPtrCellule;
         -- Créé une liste vide
     	
     function longueur (T: in TPtrCellule) return Integer;

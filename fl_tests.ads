@@ -38,5 +38,6 @@ package FL_Tests is
     procedure test_Liste_Couple_Vide;
     procedure test_Liste_Couple_Plein;
     procedure test_Liste_Couple_valeur;
+    procedure test_Liste_Couple_nb_Superieur;
         
 end FL_Tests;

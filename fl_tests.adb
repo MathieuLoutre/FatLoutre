@@ -27,22 +27,21 @@ package body FL_Tests is
         Framework.Add_Test_Routine(T, test_Couple_Mot'Access, "Get Mot");
 	Framework.Add_Test_Routine(T, test_Liste_Couple_Vide'Access, "Liste Couple Vide");
 	Framework.Add_Test_Routine(T, test_Liste_Couple_Plein'Access, "Liste Couple Plein");
+	Framework.Add_Test_Routine(T, test_Liste_Couple_valeur'Access, "Liste Couple Valeur");
+	Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Superieur'Access, "Liste Couple nb Superieur");
         
     end Initialize;
       
     procedure test_Mot_Vide is
-        Mot: TMot;
     begin
-        creer_Mot(Mot);
-        
-        assert(mot_Vide(Mot) = True, "La création de mot ne renvoi pas un mot vide");
+        assert(mot_Vide(creer_Mot()) = True, "La création de mot ne renvoi pas un mot vide");
     end test_Mot_Vide;
     
     procedure test_Mot_Plein is
         Mot: TMot;
     begin
-        creer_Mot(Mot);
-        ajout_Lettre_Fin(Mot, 'L');
+        Mot := creer_Mot();
+        Mot := ajout_Lettre_Fin(Mot, 'L');
         
         assert(mot_Vide(Mot) = False, "L'ajout de lettre en fin n'ajoute rien");
     end test_Mot_Plein;
@@ -50,9 +49,9 @@ package body FL_Tests is
     procedure test_Mot_Taille is
         Mot: TMot;
     begin
-        creer_Mot(Mot);
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
+        Mot := creer_Mot();
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
         
         assert(longueur_Mot(Mot) = 2, "La taille ne correspond pas au nombre d'ajout");
     end test_Mot_Taille;
@@ -61,19 +60,19 @@ package body FL_Tests is
         Mot: TMot;
         Mot2: TMot;
     begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
+        Mot := creer_Mot();
+        Mot2 := creer_Mot();
         
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 't');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        ajout_Lettre_Fin(Mot2, 't');
-        ajout_Lettre_Fin(Mot2, 'r');
-        ajout_Lettre_Fin(Mot2, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 't');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'r');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'e');
         
         assert(suffixe(Mot, Mot2) = True, "La verification de suffixe ne marche pas");
     end test_Mot_Suffixe;
@@ -82,19 +81,19 @@ package body FL_Tests is
         Mot: TMot;
         Mot2: TMot;
     begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
+        Mot := creer_Mot();
+        Mot2 := creer_Mot(Mot2);
         
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 't');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        ajout_Lettre_Fin(Mot2, 't');
-        ajout_Lettre_Fin(Mot2, 'r');
-        ajout_Lettre_Fin(Mot2, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 't');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'r');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'e');
         
         assert(suffixe(Mot, Mot2) = False, "La verification de suffixe ne marche pas");
     end test_Mot_Suffixe_Fail;
@@ -103,19 +102,19 @@ package body FL_Tests is
         Mot: TMot;
         Mot2: TMot;
     begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
+        Mot := creer_Mot();
+        Mot2 := creer_Mot(Mot2);
         
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 't');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        ajout_Lettre_Fin(Mot2, 'L');
-        ajout_Lettre_Fin(Mot2, 'o');
-        ajout_Lettre_Fin(Mot2, 'u');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'L');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'o');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'u');
         
         assert(prefixe(Mot, Mot2) = True, "La verification de préfixe ne marche pas");
     end test_Mot_Prefixe;
@@ -124,19 +123,19 @@ package body FL_Tests is
         Mot: TMot;
         Mot2: TMot;
     begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
+        Mot := creer_Mot();
+        Mot2 := creer_Mot();
         
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 't');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        ajout_Lettre_Fin(Mot2, 'M');
-        ajout_Lettre_Fin(Mot2, 'e');
-        ajout_Lettre_Fin(Mot2, 'h');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'M');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'h');
         
         assert(prefixe(Mot, Mot2) = False, "La verification de préfixe ne marche pas");
     end test_Mot_Prefixe_Fail;
@@ -145,18 +144,18 @@ package body FL_Tests is
         Mot: TMot;
         Mot2: TMot;
     begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
+        Mot := creer_Mot();
+        Mot2 := creer_Mot();
         
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 't');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        ajout_Lettre_Fin(Mot2, 'o');
-        ajout_Lettre_Fin(Mot2, 'u');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'o');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'u');
         
         assert(facteur(Mot, Mot2) = True, "La verification de facteur ne marche pas");
     end test_Mot_Facteur;
@@ -165,18 +164,18 @@ package body FL_Tests is
         Mot: TMot;
         Mot2: TMot;
     begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
+        Mot := creer_Mot();
+        Mot2 := creer_Mot();
         
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 't');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        ajout_Lettre_Fin(Mot2, 'm');
-        ajout_Lettre_Fin(Mot2, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'm');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'e');
         
         assert(facteur(Mot, Mot2) = False, "La verification de facteur ne marche pas");
     end test_Mot_Facteur_Fail;
@@ -185,22 +184,22 @@ package body FL_Tests is
         Mot: TMot;
         Mot2: TMot;
     begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
+        Mot := creer_Mot();
+        Mot2 := creer_Mot();
         
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 't');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        ajout_Lettre_Fin(Mot2, 'L');
-        ajout_Lettre_Fin(Mot2, 'o');
-        ajout_Lettre_Fin(Mot2, 'u');
-        ajout_Lettre_Fin(Mot2, 't');
-        ajout_Lettre_Fin(Mot2, 'r');
-        ajout_Lettre_Fin(Mot2, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'L');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'o');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'u');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 't');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'r');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'e');
         
         assert(mots_Egaux(Mot, Mot2) = True, "La verification de facteur ne marche pas");
     end test_Mot_Egaux;
@@ -209,22 +208,22 @@ package body FL_Tests is
         Mot: TMot;
         Mot2: TMot;
     begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
+        Mot := creer_Mot();
+        Mot2 := creer_Mot();
         
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 't');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        ajout_Lettre_Fin(Mot2, 'C');
-        ajout_Lettre_Fin(Mot2, 'a');
-        ajout_Lettre_Fin(Mot2, 's');
-        ajout_Lettre_Fin(Mot2, 't');
-        ajout_Lettre_Fin(Mot2, 'o');
-        ajout_Lettre_Fin(Mot2, 'r');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'C');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'a');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 's');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 't');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'o');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'r');
         
         assert(mots_Egaux(Mot, Mot2) = False, "La verification de facteur ne marche pas");
     end test_Mot_Egaux_Fail;
@@ -237,17 +236,17 @@ package body FL_Tests is
         Mot1: TMot;
         Mot2: TMot;
     begin
-	creer_Mot(Mot1);
-	ajout_Lettre_Fin(Mot1, 'M');
-        ajout_Lettre_Fin(Mot1, 'e');
-        ajout_Lettre_Fin(Mot1, 'h');
-        creer_Couple(Couple1, Mot1, 3);
+	Mot1 :=creer_Mot();
+	Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'M');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'h');
+        Couple := creer_Couple(Couple1, Mot1, 3);
 
-        creer_Mot(Mot2);
-	ajout_Lettre_Fin(Mot2, 'M');
-        ajout_Lettre_Fin(Mot2, 'e');
-        ajout_Lettre_Fin(Mot2, 'h');
-	creer_Couple(Couple2, Mot2, 3);
+        Mot2 := creer_Mot();
+	Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'M');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'h');
+	Couple := creer_Couple(Couple2, Mot2, 3);
         
         assert(couples_Egaux(Couple1, Couple2) = True, "Les deux mots ne sont pas égaux");
     end test_Couple_Egaux;
@@ -258,17 +257,17 @@ package body FL_Tests is
         Mot1: TMot;
         Mot2: TMot;
     begin
-	    creer_Mot(Mot1);
-	    ajout_Lettre_Fin(Mot1, 'M');
-        ajout_Lettre_Fin(Mot1, 'e');
-        ajout_Lettre_Fin(Mot1, 'h');
-        creer_Couple(Couple1, Mot1, 3);
+	Mot1 :=creer_Mot();
+	Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'M');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'h');
+        Couple := creer_Couple(Couple1, Mot1, 3);
 
-        creer_Mot(Mot2);
-	    ajout_Lettre_Fin(Mot2, 'N');
-        ajout_Lettre_Fin(Mot2, 'i');
-        ajout_Lettre_Fin(Mot2, 'h');
-	    creer_Couple(Couple2, Mot2, 2);
+        Mot2 := creer_Mot();
+	Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'N');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'i');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'h');
+	Couple := creer_Couple(Couple2, Mot2, 2);
         
         assert(couples_Egaux(Couple1, Couple2) = False, "Les deux mots sont égaux");
     end test_Couple_Egaux_Fail;
@@ -279,16 +278,17 @@ package body FL_Tests is
         Mot1: TMot;
         Mot2: TMot;
     begin
-    	ajout_Lettre_Fin(Mot1, 'M');
-        ajout_Lettre_Fin(Mot1, 'e');
-        ajout_Lettre_Fin(Mot1, 'h');
-        creer_Couple(Couple1, Mot1, 3);
+	Mot1 := creer_Mot();
+    	Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'M');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'e');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'h');
+        Couple := creer_Couple(Couple1, Mot1, 3);
 
-        creer_Mot(Mot2);
-	    ajout_Lettre_Fin(Mot2, 'N');
-        ajout_Lettre_Fin(Mot2, 'i');
-        ajout_Lettre_Fin(Mot2, 'h');
-	    creer_Couple(Couple2, Mot2, 2);
+        Mot2 := creer_Mot();
+	Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'N');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'i');
+        Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'h');
+	Couple := creer_Couple(Couple2, Mot2, 2);
 
 	    assert(couple_Superieur(Couple1, Couple2) = True, "Le couple 2 est Supérieur au couple 1");
     end test_Couple_Superieur;
@@ -299,28 +299,30 @@ package body FL_Tests is
         Mot1: TMot;
         Mot2: TMot;
     begin
-	    ajout_Lettre_Fin(Mot1, 'N');
-	    ajout_Lettre_Fin(Mot1, 'i');
-	    ajout_Lettre_Fin(Mot1, 'h');
-	    creer_Couple(Couple1, Mot1, 3);
+	Mot1 := creer_Mot();
+	Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'N');
+	Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'i');
+	Mot1 := Mot := ajout_Lettre_Fin(Mot1, 'h');
+	Couple := creer_Couple(Couple1, Mot1, 3);
 
-	    creer_Mot(Mot2);
-	    ajout_Lettre_Fin(Mot2, 'M');
-	    ajout_Lettre_Fin(Mot2, 'e');
-	    ajout_Lettre_Fin(Mot2, 'h');
-	    creer_Couple(Couple2, Mot2, 2);
+	Mot2 := creer_Mot();
+	Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'M');
+	Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'e');
+	Mot1 := Mot := ajout_Lettre_Fin(Mot2, 'h');
+	Couple := creer_Couple(Couple2, Mot2, 2);
 
-	    assert(couple_Superieur(Couple1, Couple2) = True, "Le couple 2 n'est pas Supérieur au couple 1");
+	assert(couple_Superieur(Couple1, Couple2) = True, "Le couple 2 n'est pas Supérieur au couple 1");
     end test_Couple_Superieur_Fail;
 
     procedure test_Couple_Mot is
         Couple: TCouple;
         Mot: TMot;
     begin
-        ajout_Lettre_Fin(Mot, 'N');
-        ajout_Lettre_Fin(Mot, 'i');
-        ajout_Lettre_Fin(Mot, 'h');
-        creer_Couple(Couple, Mot, 3);
+	Mot := creer_Mot();
+        Mot := ajout_Lettre_Fin(Mot, 'N');
+        Mot := ajout_Lettre_Fin(Mot, 'i');
+        Mot := ajout_Lettre_Fin(Mot, 'h');
+        Couple := creer_Couple(Couple, Mot, 3);
 
         assert(mot_Couple(Couple) = Mot, "Le Couple.Mot est égal au Mot");
     end test_Couple_Mot;
@@ -329,12 +331,13 @@ package body FL_Tests is
         Couple: TCouple;
         Mot: TMot;
     begin
-	    ajout_Lettre_Fin(Mot, 'N');
-	    ajout_Lettre_Fin(Mot, 'i');
-	    ajout_Lettre_Fin(Mot, 'h');
-	    creer_Couple(Couple, Mot, 3);
+	Mot := creer_Mot();
+	Mot := ajout_Lettre_Fin(Mot, 'N');
+	Mot := ajout_Lettre_Fin(Mot, 'i');
+	Mot := ajout_Lettre_Fin(Mot, 'h');
+	Couple := creer_Couple(Couple, Mot, 3);
 
-	    assert(occurrence(Couple) = 3, "Le Couple.occurrence est égal à l'occurence donnée");
+	assert(occurrence(Couple) = 3, "Le Couple.occurrence est égal à l'occurence donnée");
     end test_Couple_Occurrence;
 
 
@@ -342,7 +345,7 @@ package body FL_Tests is
     procedure test_Liste_Couple_Vide is
         Liste_Couple: TListe_Couple;
     begin
-	    creer_Liste_Couple(Liste_Couple);
+	Liste_Couple := creer_Liste_Couple(Liste_Couple);
 
         assert(liste_Couple_Vide(Liste_Couple) = True, "La création de liste ne renvoi pas une liste vide");
     end test_Liste_Couple_Vide;
@@ -351,18 +354,55 @@ package body FL_Tests is
 	Liste_Couple: TListe_Couple;
 	Mot : TMot;
     begin
-	ajout_Lettre_Fin(Mot, 'N');
-	ajout_Lettre_Fin(Mot, 'i');
-	ajout_Lettre_Fin(Mot, 'h');
+	Mot := creer_Mot();
+	Mot := ajout_Lettre_Fin(Mot, 'N');
+	Mot := ajout_Lettre_Fin(Mot, 'i');
+	Mot := ajout_Lettre_Fin(Mot, 'h');
 
-	creer_Liste_Couple(Liste_Couple);
-	ajout_Mot(Liste_Couple, Mot);
+	Liste_Couple := creer_Liste_Couple(Liste_Couple);
+	Liste_Couple := ajout_Mot(Liste_Couple, Mot);
 
         assert(liste_Couple_Vide(Liste_Couple) = False, "L'ajout de Couple en fin n'ajoute rien");
     end test_Liste_Couple_Plein;
 
     procedure test_Liste_Couple_valeur is
+	Liste_Couple: TListe_Couple;
+	Mot : TMot;
+	Couple : TCouple;
     begin
+	Mot := creer_Mot();
+	Mot := ajout_Lettre_Fin(Mot, 'N');
+	Mot := ajout_Lettre_Fin(Mot, 'i');
+	Mot := ajout_Lettre_Fin(Mot, 'h');
+
+	Couple := creer_Couple(Couple, Mot, 1);
+
+	Liste_Couple := creer_Liste_Couple(Liste_Couple);
+	Liste_Couple := ajout_Mot(Liste_Couple, Mot);
+
+        assert(valeur_Couple(Liste_Couple) = Couple, "Le Liste_Couple.valeur n'est pas la même valeur que celle entrée");
     end test_Liste_Couple_valeur;
+
+    procedure test_Liste_Couple_nb_Superieur is
+		Liste_Couple: TListe_Couple;
+	Mot1, Mot2 : TMot;
+	Couple1, Couple2 : TCouple;
+    begin
+	Mot1 := creer_Mot();
+	Mot1 := ajout_Lettre_Fin(Mot, 'N');
+	Mot1 := ajout_Lettre_Fin(Mot, 'i');
+	Mot1 := ajout_Lettre_Fin(Mot, 'h');
+	Couple1 := creer_Couple(Couple, Mot1, 1);
+
+	Mot2 := creer_Mot();
+	Mot2 := ajout_Lettre_Fin(Mot, 'N');
+	Couple2 := creer_Couple(Couple, Mot2, 1);
+
+	Liste_Couple := creer_Liste_Couple(Liste_Couple);
+	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+        assert(nb_Superieur(Liste_Couple, 2) = 1, "Le nombre de mots supérieur n'est pas bon");
+    end test_Liste_Couple_nb_Superieur;
 
 end FL_Tests;
