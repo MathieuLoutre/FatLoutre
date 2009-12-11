@@ -15,16 +15,20 @@ package body PListe_Gen is
 		T:= new TCellule'(N, T);
 	end ajout_Debut;
 
-	-- TO BE REFACTORED
-	procedure ajout_Fin(T: in out TPtrCellule; N: in TElem) is
-	begin
-		if not vide(T) then
+    -- TO BE REFACTORED
+    procedure ajout_Fin(T: in out TPtrCellule; N: in TElem) is
+    begin
+        if not vide(T) then
+	    if not vide(suivant(T)) then
 			T := suivant(T);
 			ajout_Fin(T, N);
-		else
-			ajout_Debut(T, N);
-		end if;
-	end ajout_Fin;
+	    else
+			T.suiv := new TPtrCellule'(N, null);
+	    end if;
+        else
+        	ajout_Debut(T, N);
+        end if;
+    end ajout_Fin;
 
 	function longueur(T: in TPtrCellule) return Integer is
 	begin
