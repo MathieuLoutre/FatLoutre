@@ -295,7 +295,7 @@ package body FL_Tests is
 
 -- Test sur le PListe_Couple
     procedure test_Liste_Couple_Vide is
-    Liste_Couple: TListe_Couple;
+	Liste_Couple: TListe_Couple;
     begin
 	creer_Liste_Couple(Liste_Couple);
 
@@ -303,5 +303,18 @@ package body FL_Tests is
     end test_Liste_Couple_Vide;
 
     procedure test_Liste_Couple_Plein is   
+	Liste_Couple: TListe_Couple;
+	Mot : TMot;
+    begin
+	ajout_Lettre_Fin(Mot, 'N');
+	ajout_Lettre_Fin(Mot, 'i');
+	ajout_Lettre_Fin(Mot, 'h');
+	creer_Couple(Couple, Mot, 3);
+
+	creer_Liste_Couple(Liste_Couple);
+	ajout_Fin(Liste_Couple, Mot);
+
+        assert(liste_Couple_Vide(Liste_Couple) = False, "L'ajout de Couple en fin n'ajoute rien");
+    end test_Liste_Couple_Plein;
 
 end FL_Tests;
