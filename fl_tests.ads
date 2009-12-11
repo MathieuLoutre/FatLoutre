@@ -31,5 +31,6 @@ package FL_Tests is
     procedure test_Couple_Egaux_Fail;
     procedure test_couple_Superieur;
     procedure test_couple_Superieur_Fail;
+    procedure test_mot_Couple;
         
 end FL_Tests;
