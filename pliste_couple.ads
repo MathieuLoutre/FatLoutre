@@ -6,7 +6,8 @@ package PListe_Couple is
 
     type TListe_Couple is private;
     
-        function creer_Liste_Couple(T: out TListe_Couple) return TPtrCellule;
+
+        function creer_Liste_Couple return TListe_Couple;
         
         function liste_Couple_Vide(T: in TListe_Couple) return Boolean;
         	-- Retourne True si la liste est vide, False sinon
@@ -56,7 +57,7 @@ package PListe_Couple is
             -- Augmente les occurrences de Couple1 de celles de Couple2 et supprime Couple2 de la liste
             -- Retourne une erreur si un des 2 mots ou les 2 ne sont pas dans la liste
         
-        procedure ajout_Mot(T: in out TListe_Couple; Mot: in TMot);
+        function ajout_Mot(T: in TListe_Couple; Mot: in TMot) return TListe_Couple;
             -- Ajoute un nouveau couple contenant le mot si le mot n'est pas déjà présent, sinon augmente son occurrence de 1
             
     private

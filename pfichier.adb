@@ -11,7 +11,7 @@ package body PFichier is
     	while (not end_of_file(Fichier)) loop
     		get(Fichier, C);
     		if (C /= '.' or C /= ' ' or C /= ',') then
-    			ajout_Lettre_Fin(M, C);
+    			M := ajout_Lettre_Fin(M, C);
     		else
     			if (significatif(M)) then
     			    ajout_mot(T, M);
@@ -56,7 +56,7 @@ package body PFichier is
     	    get(Fichier, C);
     		if (C /= ' ' or end_of_line(Fichier)) then
     		    M := mot_Couple(valeur_Couple(T));
-    		    ajout_Lettre_Fin(M, C);
+    		    M := ajout_Lettre_Fin(M, C);
     		elsif (C = ' ') then
     		    Couple := valeur_Couple(T);
     			ajout_Occurrence(Couple, Character'Pos(C));

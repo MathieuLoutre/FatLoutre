@@ -25,6 +25,7 @@ package body PListe_Gen is
 			ajout_Fin(T, N);
 	    else
 			T.suiv := new TCellule'(N, null);
+			ajout_Fin(T, N);
 	    end if;
 	    return T;
         else

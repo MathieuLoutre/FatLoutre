@@ -1,6 +1,6 @@
 package body PListe_Couple is
     
-    function creer_Liste_Couple(T: out TListe_Couple) return TPtrCellule is
+    procedure creer_Liste_Couple is
     begin
         return creer_Liste(T);
     end creer_Liste_Couple;
@@ -123,21 +123,21 @@ package body PListe_Couple is
       end if;
     end nb_Facteur;
 
-    procedure ajout_Mot(T: in out TListe_Couple; Mot: in TMot) is
+    function ajout_Mot(T: in TListe_Couple; Mot: in TMot) return TListe_Couple is
         Couple: TCouple;
-        L: TListe_Couple;
     begin
         if not vide(T) then
             if mots_Egaux(mot_Couple(valeur_Couple(T)), Mot) then
                 Couple := valeur_Couple(T);
                 ajout_Occurrence(Couple, 1);
+                return T;
             else
-                L := couple_Suivant(T);
-                ajout_Mot(L, Mot);
+                return ajout_Mot(couple_Suivant(T), Mot);
             end if;
         else
-            creer_Couple(Couple, Mot, 1);
+            Couple := creer_Couple(Mot, 1);
     	    insert_Trie_Croissant(T, Couple);
+    	    return T;
         end if;
     end ajout_Mot;
 

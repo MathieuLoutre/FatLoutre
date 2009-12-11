@@ -6,7 +6,7 @@ package PCouple is
     
     type TCouple is private;
     
-    procedure creer_Couple(Couple: out TCouple; Mot: in TMot; Occurrence: in Integer);
+    function creer_Couple(Mot: in TMot; Occurrence: in Integer) return TCouple;
     
     procedure affiche_Couple(Couple: in TCouple);
         -- Affiche le TCouple passé en paramètre
