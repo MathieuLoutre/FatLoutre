@@ -35,27 +35,6 @@ package body FL_Tests is
         assert(longueur_Mot(Mot) = 2, "La taille ne correspond pas au nombre d'ajout");
     end test_Mot_Taille;
 
-    procedure test_Mot_Prefixe is
-        Mot: TMot;
-        Mot2: TMot;
-    begin
-        creer_Mot(Mot);
-        creer_Mot(Mot2);
-        
-        ajout_Lettre_Fin(Mot, 'L');
-        ajout_Lettre_Fin(Mot, 'o');
-        ajout_Lettre_Fin(Mot, 'u');
-        ajout_Lettre_Fin(Mot, 't');
-        ajout_Lettre_Fin(Mot, 'r');
-        ajout_Lettre_Fin(Mot, 'e');
-        
-        ajout_Lettre_Fin(Mot2, 'L');
-        ajout_Lettre_Fin(Mot2, 'o');
-        ajout_Lettre_Fin(Mot2, 'u');
-        
-        assert(prefixe(Mot, Mot2) = True, "La verification de préfixe ne marche pas")
-    end test_Mot_Prefixe;
-
     procedure test_Mot_Suffixe is
         Mot: TMot;
         Mot2: TMot;
@@ -74,16 +53,50 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'r');
         ajout_Lettre_Fin(Mot2, 'e');
         
-        assert(prefixe(Mot, Mot2) = True, "La verification de suffixe ne marche pas")
+        assert(suffixe(Mot, Mot2) = True, "La verification de suffixe ne marche pas");
     end test_Mot_Suffixe;
-
-    procedure test_Mot_Facteur is
+    
+    procedure test_Mot_Suffixe_Fail is
+        Mot: TMot;
+        Mot2: TMot;
     begin
-    end test_Mot_Facteur;
+        creer_Mot(Mot);
+        creer_Mot(Mot2);
+        
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
+        ajout_Lettre_Fin(Mot, 'u');
+        ajout_Lettre_Fin(Mot, 't');
+        ajout_Lettre_Fin(Mot, 'r');
+        ajout_Lettre_Fin(Mot, 'e');
+        
+        ajout_Lettre_Fin(Mot2, 't');
+        ajout_Lettre_Fin(Mot2, 'r');
+        ajout_Lettre_Fin(Mot2, 'e');
+        
+        assert(suffixe(Mot, Mot2) = False, "La verification de suffixe ne marche pas");
+    end test_Mot_Suffixe_Fail;
 
-    procedure test_Mot_Egaux is
+    procedure test_Mot_Prefixe is
+        Mot: TMot;
+        Mot2: TMot;
     begin
-    end test_Mot_Egaux;
+        creer_Mot(Mot);
+        creer_Mot(Mot2);
+        
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
+        ajout_Lettre_Fin(Mot, 'u');
+        ajout_Lettre_Fin(Mot, 't');
+        ajout_Lettre_Fin(Mot, 'r');
+        ajout_Lettre_Fin(Mot, 'e');
+        
+        ajout_Lettre_Fin(Mot2, 'L');
+        ajout_Lettre_Fin(Mot2, 'o');
+        ajout_Lettre_Fin(Mot2, 'u');
+        
+        assert(prefixe(Mot, Mot2) = True, "La verification de préfixe ne marche pas");
+    end test_Mot_Prefixe;
 
     procedure test_Mot_Prefixe_Fail is
         Mot: TMot;
@@ -103,10 +116,10 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'e');
         ajout_Lettre_Fin(Mot2, 'h');
         
-        assert(prefixe(Mot, Mot2) = False, "La verification de préfixe ne marche pas")
+        assert(prefixe(Mot, Mot2) = False, "La verification de préfixe ne marche pas");
     end test_Mot_Prefixe_Fail;
 
-    procedure test_Mot_Suffixe is
+    procedure test_Mot_Facteur is
         Mot: TMot;
         Mot2: TMot;
     begin
@@ -120,17 +133,55 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot, 'r');
         ajout_Lettre_Fin(Mot, 'e');
         
+        ajout_Lettre_Fin(Mot2, 'o');
+        ajout_Lettre_Fin(Mot2, 'u');
+        
+        assert(facteur(Mot, Mot2) = True, "La verification de facteur ne marche pas");
+    end test_Mot_Facteur;
+    
+    procedure test_Mot_Facteur_Fail is
+        Mot: TMot;
+        Mot2: TMot;
+    begin
+        creer_Mot(Mot);
+        creer_Mot(Mot2);
+        
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
+        ajout_Lettre_Fin(Mot, 'u');
+        ajout_Lettre_Fin(Mot, 't');
+        ajout_Lettre_Fin(Mot, 'r');
+        ajout_Lettre_Fin(Mot, 'e');
+        
+        ajout_Lettre_Fin(Mot2, 'm');
+        ajout_Lettre_Fin(Mot2, 'e');
+        
+        assert(facteur(Mot, Mot2) = False, "La verification de facteur ne marche pas");
+    end test_Mot_Facteur_Fail;
+
+    procedure test_Mot_Egaux is
+        Mot: TMot;
+        Mot2: TMot;
+    begin
+        creer_Mot(Mot);
+        creer_Mot(Mot2);
+        
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
+        ajout_Lettre_Fin(Mot, 'u');
+        ajout_Lettre_Fin(Mot, 't');
+        ajout_Lettre_Fin(Mot, 'r');
+        ajout_Lettre_Fin(Mot, 'e');
+        
+        ajout_Lettre_Fin(Mot2, 'L');
+        ajout_Lettre_Fin(Mot2, 'o');
+        ajout_Lettre_Fin(Mot2, 'u');
         ajout_Lettre_Fin(Mot2, 't');
         ajout_Lettre_Fin(Mot2, 'r');
         ajout_Lettre_Fin(Mot2, 'e');
         
-        assert(prefixe(Mot, Mot2) = True, "La verification de suffixe ne marche pas")
-    end test_Mot_Suffixe;
-
-    procedure test_Mot_Facteur_Fail;
-
-    procedure test_Mot_Egaux_Fail;
-
+        assert(Egaux(Mot, Mot2) = True, "La verification de facteur ne marche pas");
+    end test_Mot_Egaux;
 
 -- Test sur le PCouple
     procedure test_Couple_Egaux is
@@ -252,4 +303,5 @@ package body FL_Tests is
     end test_Liste_Couple_Vide;
 
     procedure test_Liste_Couple_Plein is   
+
 end FL_Tests;
