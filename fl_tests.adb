@@ -117,6 +117,9 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'o');
         ajout_Lettre_Fin(Mot2, 'u');
         
+        put(valeur_mot(Mot));
+        put(valeur_mot(Mot2));
+        
         assert(prefixe(Mot, Mot2) = True, "La verification de préfixe ne marche pas");
     end test_Mot_Prefixe;
 
@@ -363,6 +366,7 @@ package body FL_Tests is
 
     procedure test_Liste_Couple_valeur is
     begin
+        null;
     end test_Liste_Couple_valeur;
 
 end FL_Tests;
