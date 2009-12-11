@@ -5,9 +5,9 @@ package body PMot is
         return (longueur(Mot) > 3 or est_Petit_Mot(Mot));
     end significatif;
 
-    procedure creer_Mot(Mot: out TMot) is
+    function creer_Mot return TMot is
     begin
-        creer_Liste(Mot);
+        return creer_Liste();
     end creer_Mot;
     
     function mot_Vide(Mot: in TMot) return Boolean is
@@ -20,9 +20,9 @@ package body PMot is
         return longueur(Mot);
     end longueur_Mot;
 
-    procedure ajout_Lettre_Fin(Mot: in out TMot; N: in Character) is
+    function ajout_Lettre_Fin(Mot: in TMot; N: in Character) return TMot is
     begin
-        ajout_Fin(Mot, N);
+        return ajout_Fin(Mot, N);
     end ajout_Lettre_Fin;
     
     function valeur_Mot(Mot: in TMot) return Character is
@@ -42,11 +42,11 @@ package body PMot is
         Mot_Temp2: TMot := Mot2;
     begin
     	while (not mot_Vide(Mot_Temp1) and then not mot_Vide(Mot_Temp2) and then prefx = true) loop
-    		prefx := (valeur(Mot_Temp1) = valeur(Mot_Temp2));
+    		prefx := (valeur_Mot(Mot_Temp1) = valeur_Mot(Mot_Temp2));
     		Mot_Temp1 := suivant(Mot_Temp1);
     		Mot_Temp2 := suivant(Mot_Temp2);
     	end loop;
-
+        
     	return (prefx and mot_Vide(Mot_Temp2));
     end prefixe;
 

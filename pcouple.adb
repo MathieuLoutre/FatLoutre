@@ -36,9 +36,9 @@ package body PCouple is
         return mot_Superieur(mot_Couple(Couple1), mot_Couple(Couple2));
     end couple_Superieur;
     
-    procedure creer_Couple(Couple: out TCouple; Mot: in TMot; Occurrence: in Integer) is
+    function creer_Couple(Mot: in TMot; Occurrence: in Integer) return TCouple is
     begin
-        Couple := TCouple'(Mot, Occurrence);
+        return new TCouple'(Mot, Occurrence);
     end creer_Couple;
 
 end PCouple;
