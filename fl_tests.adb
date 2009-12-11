@@ -228,5 +228,19 @@ package body FL_Tests is
 
 	assert(mot_Couple(Couple) = Mot, "Le Couple.Mot est égal au Mot");
     end test_mot_Couple;
+
+    procedure test_occurrence is
+    Couple: TCouple;
+    Mot: TMot;
+    begin
+	ajout_Lettre_Fin(Mot, 'N');
+	ajout_Lettre_Fin(Mot, 'i');
+	ajout_Lettre_Fin(Mot, 'h');
+	creer_Couple(Couple, Mot, 3);
+
+	assert(occurence(Couple) = 3, "Le Couple.occurence est égal à l'occurence donnée");
+    end test_occurrence;
+
+
     
 end FL_Tests;

@@ -32,5 +32,6 @@ package FL_Tests is
     procedure test_couple_Superieur;
     procedure test_couple_Superieur_Fail;
     procedure test_mot_Couple;
+    procedure test_occurrence;
         
 end FL_Tests;
