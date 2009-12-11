@@ -37,7 +37,7 @@ package PListe_Couple is
         	-- Renvoi 0 si il n'y en a pas
 
         function nb_Facteur(T: in TListe_Couple; Mot: in TMot) return Integer;
-        	-- Renvoi le nombre de mot ayant mot1 pour facteur
+        	-- Renvoi le nombre de mot ayant mot1 pour facteur.
         	-- Renvoi 0 si il n'y en a pas
 
         function moy_Longueur(T: in TListe_Couple) return Float;
