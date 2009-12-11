@@ -345,4 +345,19 @@ package body FL_Tests is
         assert(liste_Couple_Vide(Liste_Couple) = True, "La création de liste ne renvoi pas une liste vide");
     end test_Liste_Couple_Vide;
 
+    procedure test_Liste_Couple_Plein is   
+	Liste_Couple: TListe_Couple;
+	Mot : TMot;
+    begin
+	ajout_Lettre_Fin(Mot, 'N');
+	ajout_Lettre_Fin(Mot, 'i');
+	ajout_Lettre_Fin(Mot, 'h');
+	creer_Couple(Couple, Mot, 3);
+
+	creer_Liste_Couple(Liste_Couple);
+	ajout_Fin(Liste_Couple, Mot);
+
+        assert(liste_Couple_Vide(Liste_Couple) = False, "L'ajout de Couple en fin n'ajoute rien");
+    end test_Liste_Couple_Plein;
+
 end FL_Tests;
