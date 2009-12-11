@@ -19,8 +19,12 @@ package body PListe_Gen is
     procedure ajout_Fin(T: in out TPtrCellule; N: in TElem) is
     begin
         if not vide(T) then
-            T := suivant(T);
-            ajout_Fin(T, N);
+	    if not vide(suivant(T)) then
+		T := suivant(T);
+		ajout_Fin(T, N);
+	    else
+		T.suiv := new TPtrCellule'(N, null);
+	    end if;
         else
             ajout_Debut(T, N);
         end if;
