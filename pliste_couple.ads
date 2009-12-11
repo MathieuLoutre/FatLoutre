@@ -40,10 +40,10 @@ package PListe_Couple is
         	-- Renvoi le nombre de mot ayant mot1 pour facteur
         	-- Renvoi 0 si il n'y en a pas
 
-        function moy_Longueur(T: in TListe_Couple) return Integer;
+        function moy_Longueur(T: in TListe_Couple) return Float;
         	-- Renvoi la moyenne de la longueur des mots
 
-        function moy_Occurrence(T: in TListe_Couple) return Integer;
+        function moy_Occurrence(T: in TListe_Couple) return Float;
         	-- Renvoi la moyenne de l'occurrence des mots
         
         function nb_Occurrences(T: TListe_Couple; Mot: TMot) return Integer;

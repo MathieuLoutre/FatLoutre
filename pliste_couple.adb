@@ -34,7 +34,7 @@ package body PListe_Couple is
         return longueur(T);
     end nb_Mots_Differents;
 
-    function moy_Occurrence(T: in TListe_Couple) return Integer is
+    function moy_Occurrence(T: in TListe_Couple) return Float is
         nb: integer := 0;
         L: TListe_Couple := T;
     begin
@@ -43,10 +43,10 @@ package body PListe_Couple is
             L := suivant(L);
         end loop;
     
-        return (nb / nb_Mots_Differents(T));
+        return float((nb / nb_Mots_Differents(T)));
     end moy_Occurrence;
 
-    function moy_Longueur(T: in TListe_Couple) return Integer is
+    function moy_Longueur(T: in TListe_Couple) return Float is
         long: integer := 0;
         L: TListe_Couple := T;
     begin
@@ -55,7 +55,7 @@ package body PListe_Couple is
             L := suivant(L);
         end loop;
         
-        return (long / nb_Total_Occurrence(T));
+        return float((long / nb_Total_Occurrence(T)));
     end moy_Longueur;
 
     function nb_Superieur(T: in TListe_Couple; N: in Integer) return Integer is
