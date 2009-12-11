@@ -23,7 +23,7 @@ package body PListe_Gen is
 			T := suivant(T);
 			ajout_Fin(T, N);
 	    else
-			T.suiv := new TPtrCellule'(N, null);
+			T.suiv := new TCellule'(N, null);
 	    end if;
         else
         	ajout_Debut(T, N);
