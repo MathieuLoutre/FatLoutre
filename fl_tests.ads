@@ -30,12 +30,11 @@ package FL_Tests is
     procedure test_Couple_Egaux_Fail;
     procedure test_couple_Superieur;
     procedure test_couple_Superieur_Fail;
-    procedure test_mot_Couple;
-    procedure test_occurrence;
+    procedure test_Couple_Mot;
+    procedure test_Couple_Occurrence;
 
 
 -- Test sur le PListe_Couple
-    procedure test_Liste_Couple_Vide;    
-    procedure test_Liste_Couple_Plein;
+    procedure test_Liste_Couple_Vide;
         
 end FL_Tests;
