@@ -4,8 +4,8 @@ package body PFichier is
     	M: TMot;
     	C: Character;
     begin
-        creer_Mot(M);
-        creer_Liste_Couple(T);
+        M := creer_Mot;
+        T := creer_Liste_Couple;
     	open(Fichier, In_File, "texte.txt");
     	
     	while (not end_of_file(Fichier)) loop
@@ -14,9 +14,9 @@ package body PFichier is
     			M := ajout_Lettre_Fin(M, C);
     		else
     			if (significatif(M)) then
-    			    ajout_mot(T, M);
+    			    T := ajout_mot(T, M);
     			end if;
-    			creer_Mot(M);
+    			M := creer_Mot;
     		end if;
     	end loop;
 
@@ -49,7 +49,7 @@ package body PFichier is
     	C: Character;
     	M: TMot;
     begin
-        creer_Liste_Couple(T);
+        T := creer_Liste_Couple;
         open(Fichier, In_File, "liste-mot.txt");
         
     	while (not end_of_file(Fichier)) loop
@@ -63,7 +63,7 @@ package body PFichier is
     		else
     			skip_line(Fichier);
     			
-    			creer_Liste_Couple(L);
+    			L := creer_Liste_Couple;
     			T := couple_Suivant(T);
     			T := L;
     			L := couple_Suivant(T);

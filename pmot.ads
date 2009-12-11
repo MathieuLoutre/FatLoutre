@@ -8,13 +8,13 @@ package PMot is
     procedure affiche_Mot(Mot: in TMot);
         -- Affiche le mot donné
         
-    function creer_Mot() return TMot;
+    function creer_Mot return TMot;
     
     function mot_Vide(Mot: in TMot) return Boolean;
     
     function longueur_Mot(Mot: in TMot) return Integer;
     
-    function ajout_Lettre_Fin(N: in Character) return TMot;
+    function ajout_Lettre_Fin(Mot: in TMot; N: in Character) return TMot;
         
     function valeur_Mot(Mot: in TMot) return Character;
     

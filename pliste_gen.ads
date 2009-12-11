@@ -9,8 +9,9 @@ package PListe_Gen is
       
     type TPtrCellule is private;
 
-    function creer_Liste (T: out TPtrCellule) return TPtrCellule;
+    function creer_Liste return TPtrCellule;
         -- Créé une liste vide
+    function modif_Liste(T: in TPtrCellule; N: in TElem) return TPtrCellule;
     	
     function longueur (T: in TPtrCellule) return Integer;
        -- Retourne la taille de la liste
@@ -20,13 +21,13 @@ package PListe_Gen is
     	    
     -- -- -- -- -- -- -- SHOULD BE PRIVATE -- -- -- -- -- -- -- 
     
-    procedure ajout_Fin (T: in TPtrCellule; N: in TElem) return TPtrCellule;
+    function ajout_Fin (T: in TPtrCellule; N: in TElem) return TPtrCellule;
         -- Ajoute un élément en fin de liste
 
-    procedure ajout_Debut (T: in TPtrCellule; N: in TElem) return TPtrCellule;
+    function ajout_Debut (T: in TPtrCellule; N: in TElem) return TPtrCellule;
         -- Ajoute un élément en début de liste
 
-    procedure insert_trie_Croissant (T: in TPtrCellule; N: in TElem) return TPtrCellule;
+    function insert_trie_Croissant (T: in TPtrCellule; N: in TElem) return TPtrCellule;
     	-- Insert l'élément à sa place dans la liste (croissante)
     	-- Utilise la fonction egal et superieur passé en paramètre du package générique
 

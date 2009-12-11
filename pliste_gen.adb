@@ -1,6 +1,6 @@
 package body PListe_Gen is
         
-    function creer_Liste() return TPtrCellule is
+    function creer_Liste return TPtrCellule is
     begin
         return null;
     end creer_Liste;
@@ -10,72 +10,75 @@ package body PListe_Gen is
 		return (T = null);
 	end vide;
 
-    procedure ajout_Debut(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+    function ajout_Debut(T: in TPtrCellule; N: in TElem) return TPtrCellule is
     begin
-    	T:= new TCellule'(N, T);
-	return T;
+    	return new TCellule'(N, T);
     end ajout_Debut;
 
     -- TO BE REFACTORED
-    procedure ajout_Fin(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+    function ajout_Fin(T: in TPtrCellule; N: in TElem) return TPtrCellule is
     begin
         if not vide(T) then
 	    if not vide(suivant(T)) then
-			T := suivant(T);
-			ajout_Fin(T, N);
+			return ajout_Fin(suivant(T), N);
 	    else
 			T.suiv := new TCellule'(N, null);
-			ajout_Fin(T, N);
+			return ajout_Fin(T, N);
 	    end if;
-	    return T;
         else
             return ajout_Debut(T, N);
         end if;
     end ajout_Fin;
 
-	function longueur(T: in TPtrCellule) return Integer is
-	begin
-		if not vide(T) then
-			return (1 + longueur(suivant(T)));
-		else
-			return 0;
-		end if;
-	end longueur;
+    function longueur(T: in TPtrCellule) return Integer is
+    begin
+	    if not vide(T) then
+		    return (1 + longueur(suivant(T)));
+	    else
+		    return 0;
+	    end if;
+    end longueur;
 
-	procedure affiche_Liste(T: in TPtrCellule) is
-	begin
-		if not vide(T) then
-			affiche(valeur(T));
-			affiche_Liste(suivant(T));
-		end if;
-	end affiche_Liste;
-	
-	-- NEED ERROR CASE - REFACTORING
-	function valeur(T: in TPtrCellule) return TElem is
-	begin
-		return T.val;
-	end valeur;
+    procedure affiche_Liste(T: in TPtrCellule) is
+    begin
+	    if not vide(T) then
+		    affiche(valeur(T));
+		    affiche_Liste(suivant(T));
+	    end if;
+    end affiche_Liste;
+    
+    -- NEED ERROR CASE - REFACTORING
+    function valeur(T: in TPtrCellule) return TElem is
+    begin
+	    return T.val;
+    end valeur;
 
-	function suivant(T: in TPtrCellule) return TPtrCellule is
-	begin
-		if not vide(T) then
-			return T.suiv;
-		else
-			return null;
-	  end if;
-	end suivant;
+    function suivant(T: in TPtrCellule) return TPtrCellule is
+    begin
+	    if not vide(T) then
+		    return T.suiv;
+	    else
+		    return null;
+	end if;
+    end suivant;
+    
+    function modif_Liste(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+	L : TPtrCellule;
+    begin
+	L := T;
+	L := suivant(L);
+	L := new TCellule'(N, L);
+	return L;
+    end modif_Liste;
 
     -- TO BE REFACTORED
-    procedure insert_Trie_Croissant(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+    function insert_Trie_Croissant(T: in TPtrCellule; N: in TElem) return TPtrCellule is
         begin
             if not vide(T) then
                 if (not vide(suivant(T)) and then (superieur(N, valeur(suivant(T))))) then
-                    T := suivant(T);
-                    return insert_Trie_Croissant(T, N);
+                    return insert_Trie_Croissant(suivant(T), N);
                 else
-                    T := suivant(T);
-                    T := new TCellule'(N, T);
-		    return T;
+                    return modif_Liste(T, N);
                 end if;
             else
                 return ajout_Debut(T, N);

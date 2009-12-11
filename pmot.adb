@@ -7,7 +7,7 @@ package body PMot is
 
     function creer_Mot return TMot is
     begin
-        return creer_Liste();
+        return creer_Liste;
     end creer_Mot;
     
     function mot_Vide(Mot: in TMot) return Boolean is

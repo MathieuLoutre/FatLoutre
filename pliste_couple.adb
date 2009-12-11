@@ -1,8 +1,8 @@
 package body PListe_Couple is
     
-    procedure creer_Liste_Couple is
+    function creer_Liste_Couple return TListe_Couple is
     begin
-        return creer_Liste(T);
+        return creer_Liste;
     end creer_Liste_Couple;
     
     function liste_Couple_Vide(T: in TListe_Couple) return Boolean is
@@ -136,8 +136,7 @@ package body PListe_Couple is
             end if;
         else
             Couple := creer_Couple(Mot, 1);
-    	    insert_Trie_Croissant(T, Couple);
-    	    return T;
+    	    return insert_Trie_Croissant(T, Couple);
         end if;
     end ajout_Mot;
 
@@ -160,7 +159,7 @@ package body PListe_Couple is
         L: TListe_Couple;
     begin
         -- Retourne la liste de couple triée sur le nombre d'occurrences de manière croissante
-        creer_Liste_Couple(L);
+        L := creer_Liste_Couple;
         return L;
     end tri_Decroissant_Occurrences;
 

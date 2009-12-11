@@ -38,7 +38,7 @@ package body PCouple is
     
     function creer_Couple(Mot: in TMot; Occurrence: in Integer) return TCouple is
     begin
-        return new TCouple'(Mot, Occurrence);
+        return TCouple'(Mot, Occurrence);
     end creer_Couple;
 
 end PCouple;
