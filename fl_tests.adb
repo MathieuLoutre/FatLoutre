@@ -25,6 +25,8 @@ package body FL_Tests is
         Framework.Add_Test_Routine(T, test_Couple_Superieur_Fail'Access, "Superieur Fail");
         Framework.Add_Test_Routine(T, test_Couple_Occurrence'Access, "Occurrence");
         Framework.Add_Test_Routine(T, test_Couple_Mot'Access, "Get Mot");
+	Framework.Add_Test_Routine(T, test_Liste_Couple_Vide'Access, "Liste Couple Vide");
+	Framework.Add_Test_Routine(T, test_Liste_Couple_Plein'Access, "Liste Couple Plein");
         
     end Initialize;
       
@@ -235,17 +237,17 @@ package body FL_Tests is
         Mot1: TMot;
         Mot2: TMot;
     begin
-	    creer_Mot(Mot1);
-	    ajout_Lettre_Fin(Mot1, 'M');
+	creer_Mot(Mot1);
+	ajout_Lettre_Fin(Mot1, 'M');
         ajout_Lettre_Fin(Mot1, 'e');
         ajout_Lettre_Fin(Mot1, 'h');
         creer_Couple(Couple1, Mot1, 3);
 
         creer_Mot(Mot2);
-	    ajout_Lettre_Fin(Mot2, 'M');
+	ajout_Lettre_Fin(Mot2, 'M');
         ajout_Lettre_Fin(Mot2, 'e');
         ajout_Lettre_Fin(Mot2, 'h');
-	    creer_Couple(Couple2, Mot2, 3);
+	creer_Couple(Couple2, Mot2, 3);
         
         assert(couples_Egaux(Couple1, Couple2) = True, "Les deux mots ne sont pas égaux");
     end test_Couple_Egaux;
@@ -352,12 +354,15 @@ package body FL_Tests is
 	ajout_Lettre_Fin(Mot, 'N');
 	ajout_Lettre_Fin(Mot, 'i');
 	ajout_Lettre_Fin(Mot, 'h');
-	creer_Couple(Liste_Couple, Mot, 3);
 
 	creer_Liste_Couple(Liste_Couple);
-	ajout_Fin(Liste_Couple, Mot);
+	ajout_Mot(Liste_Couple, Mot);
 
         assert(liste_Couple_Vide(Liste_Couple) = False, "L'ajout de Couple en fin n'ajoute rien");
     end test_Liste_Couple_Plein;
+
+    procedure test_Liste_Couple_valeur is
+    begin
+    end test_Liste_Couple_valeur;
 
 end FL_Tests;
