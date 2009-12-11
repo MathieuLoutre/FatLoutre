@@ -152,7 +152,7 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'h');
 	creer_Couple(Couple2, Mot2, 3);
         
-        assert(couple_Egaux(Couple1, Couple2) = True, "Les deux mots sont égaux");
+        assert(couple_Egaux(Couple1, Couple2) = True, "Les deux mots ne sont pas égaux");
     end test_Couple_Egaux;
 
     procedure test_Couple_Egaux_Fail is
@@ -174,7 +174,7 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'h');
 	creer_Couple(Couple2, Mot2, 2);
         
-        assert(couple_Egaux(Couple1, Couple2) = False, "Les deux mots ne sont pas égaux");
+        assert(couple_Egaux(Couple1, Couple2) = False, "Les deux mots sont égaux");
     end test_Couple_Egaux_Fail;
 
     procedure test_couple_Superieur is
@@ -194,7 +194,7 @@ package body FL_Tests is
         ajout_Lettre_Fin(Mot2, 'h');
 	creer_Couple(Couple2, Mot2, 2);
 
-	assert(couple_Superieur(Couple1, Couple2) = True, "Le couple 2 est Supérieur au couple 1");
+	assert(couple_Superieur(Couple1, Couple2) = True, "Le couple 2 n'est pas Supérieur au couple 1");
     end test_couple_Superieur;
 
     procedure test_couple_Superieur_Fail is
@@ -214,7 +214,7 @@ package body FL_Tests is
 	ajout_Lettre_Fin(Mot2, 'h');
 	creer_Couple(Couple2, Mot2, 2);
 
-	assert(couple_Superieur(Couple1, Couple2) = True, "Le couple 2 n'est pas Supérieur au couple 1");
+	assert(couple_Superieur(Couple1, Couple2) = True, "Le couple 2 est Supérieur au couple 1");
     end test_couple_Superieur_Fail;
 
     procedure test_mot_Couple is
@@ -226,7 +226,7 @@ package body FL_Tests is
 	ajout_Lettre_Fin(Mot, 'h');
 	creer_Couple(Couple, Mot, 3);
 
-	assert(mot_Couple(Couple) = Mot, "Le Couple.Mot est égal au Mot");
+	assert(mot_Couple(Couple) = Mot, "Le Couple.Mot n'est pas égal au Mot");
     end test_mot_Couple;
 
     procedure test_occurrence is
@@ -238,9 +238,18 @@ package body FL_Tests is
 	ajout_Lettre_Fin(Mot, 'h');
 	creer_Couple(Couple, Mot, 3);
 
-	assert(occurence(Couple) = 3, "Le Couple.occurence est égal à l'occurence donnée");
+	assert(occurence(Couple) = 3, "Le Couple.occurence n'est pas égal à l'occurence donnée");
     end test_occurrence;
 
 
-    
+-- Test sur le PListe_Couple
+    procedure test_Liste_Couple_Vide is
+    Liste_Couple: TListe_Couple;
+    begin
+	creer_Liste_Couple(Liste_Couple);
+
+        assert(liste_Couple_Vide(Liste_Couple) = True, "La création de liste ne renvoi pas une liste vide");
+    end test_Liste_Couple_Vide;
+
+    procedure test_Liste_Couple_Plein is   
 end FL_Tests;

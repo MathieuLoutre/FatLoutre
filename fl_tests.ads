@@ -12,7 +12,6 @@ package FL_Tests is
 
 
 -- Test sur le PMot
-
     procedure test_Mot_Vide;    
     procedure test_Mot_Plein;
     procedure test_Mot_Taille;
@@ -25,13 +24,18 @@ package FL_Tests is
     procedure test_Mot_Facteur_Fail;
     procedure test_Mot_Egaux_Fail;
 
--- Test sur le PCouple
 
+-- Test sur le PCouple
     procedure test_Couple_Egaux;
     procedure test_Couple_Egaux_Fail;
     procedure test_couple_Superieur;
     procedure test_couple_Superieur_Fail;
     procedure test_mot_Couple;
     procedure test_occurrence;
+
+
+-- Test sur le PListe_Couple
+    procedure test_Liste_Couple_Vide;    
+    procedure test_Liste_Couple_Plein;
         
 end FL_Tests;
