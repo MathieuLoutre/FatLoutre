@@ -9,5 +9,4 @@ begin
    Ahven.Framework.Add_Test (S.all, new FL_Tests.Test);
    Ahven.Text_Runner.Run (S);
    Ahven.Framework.Release_Suite (S);
-   -- Release_Suite will release all its children also.
 end Tests_Runner;
