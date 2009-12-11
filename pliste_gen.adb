@@ -15,7 +15,6 @@ package body PListe_Gen is
 		T:= new TCellule'(N, T);
 	end ajout_Debut;
 
-    -- TO BE REFACTORED
     procedure ajout_Fin(T: in out TPtrCellule; N: in TElem) is
     begin
         if not vide(T) then
@@ -24,6 +23,7 @@ package body PListe_Gen is
 			ajout_Fin(T, N);
 	    else
 			T.suiv := new TCellule'(N, null);
+			ajout_Fin(T, N);
 	    end if;
         else
         	ajout_Debut(T, N);
