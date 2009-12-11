@@ -2,6 +2,7 @@ generic
     type TElem is private;
     with procedure affiche(E: in TElem);
     with function egaux(T1: in TElem; T2: in TElem) return Boolean;
+    -- TO BE REFACTORED. On utilisera plutôt les fonction générique dans le programme pour instancier la fonction de trie 2 fois.
     with function superieur(T1: in TElem; T2: in TElem) return Boolean;
       
 package PListe_Gen is
