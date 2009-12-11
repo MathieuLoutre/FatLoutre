@@ -116,6 +116,9 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'o');
         Mot2 := ajout_Lettre_Fin(Mot2, 'u');
         
+        put(valeur_mot(Mot));
+        put(valeur_mot(Mot2));
+        
         assert(prefixe(Mot, Mot2) = True, "La verification de préfixe ne marche pas");
     end test_Mot_Prefixe;
 
@@ -371,6 +374,7 @@ package body FL_Tests is
 	Couple : TCouple;
     begin
 	Mot := creer_Mot;
+
 	Mot := ajout_Lettre_Fin(Mot, 'N');
 	Mot := ajout_Lettre_Fin(Mot, 'i');
 	Mot := ajout_Lettre_Fin(Mot, 'h');
