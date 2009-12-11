@@ -5,25 +5,130 @@ package body FL_Tests is
     begin
         Set_Name (T, "Tests sur FatLoutre");
 
-        Framework.Add_Test_Routine(T, My_First_Test'Access, "Vacuité des mots");
+        Framework.Add_Test_Routine(T, test_Mot_Vide'Access, "Mot vide");
     end Initialize;
       
-    procedure My_First_Test is
-        L: TCouple;
-        M: TMot;
-        T: TListe_Couple;
+    procedure test_Mot_Vide is
+        Mot: TMot;
     begin
-        creer_Mot(M);
-        creer_Liste_Couple(T);
+        creer_Mot(Mot);
         
-        ajout_lettre_fin(M, 'L');
-        creer_Couple(L, M, 1);
+        assert(mot_Vide(Mot) = True, "La création de mot ne renvoi pas un mot vide");
+    end test_Mot_Vide;
+    
+    procedure test_Mot_Plein is
+        Mot: TMot;
+    begin
+        creer_Mot(Mot);
+        ajout_Lettre_Fin(Mot, 'L');
         
-        ajout_Mot(T, M);
+        assert(mot_Vide(Mot) = False, "L'ajout de lettre en fin n'ajoute rien");
+    end test_Mot_Plein;
+
+    procedure test_Mot_Taille is
+        Mot: TMot;
+    begin
+        creer_Mot(Mot);
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
         
-        affiche_mot(mot_Couple(valeur_Couple(T)));
+        assert(longueur_Mot(Mot) = 2, "La taille ne correspond pas au nombre d'ajout");
+    end test_Mot_Taille;
+
+    procedure test_Mot_Prefixe is
+        Mot: TMot;
+        Mot2: TMot;
+    begin
+        creer_Mot(Mot);
+        creer_Mot(Mot2);
         
-        assert(FALSE, "FAIL MOTHERFUCKA");
-    end My_First_Test;
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
+        ajout_Lettre_Fin(Mot, 'u');
+        ajout_Lettre_Fin(Mot, 't');
+        ajout_Lettre_Fin(Mot, 'r');
+        ajout_Lettre_Fin(Mot, 'e');
+        
+        ajout_Lettre_Fin(Mot2, 'L');
+        ajout_Lettre_Fin(Mot2, 'o');
+        ajout_Lettre_Fin(Mot2, 'u');
+        
+        assert(prefixe(Mot, Mot2) = True, "La verification de préfixe ne marche pas")
+    end test_Mot_Prefixe;
+
+    procedure test_Mot_Suffixe is
+        Mot: TMot;
+        Mot2: TMot;
+    begin
+        creer_Mot(Mot);
+        creer_Mot(Mot2);
+        
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
+        ajout_Lettre_Fin(Mot, 'u');
+        ajout_Lettre_Fin(Mot, 't');
+        ajout_Lettre_Fin(Mot, 'r');
+        ajout_Lettre_Fin(Mot, 'e');
+        
+        ajout_Lettre_Fin(Mot2, 't');
+        ajout_Lettre_Fin(Mot2, 'r');
+        ajout_Lettre_Fin(Mot2, 'e');
+        
+        assert(prefixe(Mot, Mot2) = True, "La verification de suffixe ne marche pas")
+    end test_Mot_Suffixe;
+
+    procedure test_Mot_Facteur is
+    begin
+    end test_Mot_Facteur;
+
+    procedure test_Mot_Egaux is
+    begin
+    end test_Mot_Egaux;
+
+    procedure test_Mot_Prefixe_Fail is
+        Mot: TMot;
+        Mot2: TMot;
+    begin
+        creer_Mot(Mot);
+        creer_Mot(Mot2);
+        
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
+        ajout_Lettre_Fin(Mot, 'u');
+        ajout_Lettre_Fin(Mot, 't');
+        ajout_Lettre_Fin(Mot, 'r');
+        ajout_Lettre_Fin(Mot, 'e');
+        
+        ajout_Lettre_Fin(Mot2, 'M');
+        ajout_Lettre_Fin(Mot2, 'e');
+        ajout_Lettre_Fin(Mot2, 'h');
+        
+        assert(prefixe(Mot, Mot2) = False, "La verification de préfixe ne marche pas")
+    end test_Mot_Prefixe_Fail;
+
+    procedure test_Mot_Suffixe is
+        Mot: TMot;
+        Mot2: TMot;
+    begin
+        creer_Mot(Mot);
+        creer_Mot(Mot2);
+        
+        ajout_Lettre_Fin(Mot, 'L');
+        ajout_Lettre_Fin(Mot, 'o');
+        ajout_Lettre_Fin(Mot, 'u');
+        ajout_Lettre_Fin(Mot, 't');
+        ajout_Lettre_Fin(Mot, 'r');
+        ajout_Lettre_Fin(Mot, 'e');
+        
+        ajout_Lettre_Fin(Mot2, 't');
+        ajout_Lettre_Fin(Mot2, 'r');
+        ajout_Lettre_Fin(Mot2, 'e');
+        
+        assert(prefixe(Mot, Mot2) = True, "La verification de suffixe ne marche pas")
+    end test_Mot_Suffixe;
+
+    procedure test_Mot_Facteur_Fail;
+
+    procedure test_Mot_Egaux_Fail;
       
 end FL_Tests;

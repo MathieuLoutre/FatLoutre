@@ -10,6 +10,26 @@ package FL_Tests is
 
     procedure Initialize(T : in out Test);
 
-    procedure My_First_Test;
+    procedure test_Mot_Vide;
+    
+    procedure test_Mot_Plein;
+        
+    procedure test_Mot_Taille;
+    
+    procedure test_Mot_Prefixe;
+        
+    procedure test_Mot_Suffixe;
+        
+    procedure test_Mot_Facteur;
+        
+    procedure test_Mot_Egaux;
+    
+    procedure test_Mot_Prefixe_Fail;
+
+    procedure test_Mot_Suffixe_Fail;
+
+    procedure test_Mot_Facteur_Fail;
+    
+    procedure test_Mot_Egaux_Fail;
         
 end FL_Tests;
