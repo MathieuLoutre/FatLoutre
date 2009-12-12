@@ -8,33 +8,35 @@ package body FL_Tests is
         -- Les Mots
         Framework.Add_Test_Routine(T, test_Mot_Vide'Access, "Mot vide");
         Framework.Add_Test_Routine(T, test_Mot_Plein'Access, "Mot vide Fail");
-        Framework.Add_Test_Routine(T, test_Mot_Taille'Access, "Taille Mot");
-        Framework.Add_Test_Routine(T, test_Mot_Suffixe'Access, "Suffixe");
-        Framework.Add_Test_Routine(T, test_Mot_Suffixe_Fail'Access, "Suffixe Fail");
-        Framework.Add_Test_Routine(T, test_Mot_Prefixe'Access, "Prefixe");
-        Framework.Add_Test_Routine(T, test_Mot_Prefixe_Fail'Access, "Prefixe Fail");
-        Framework.Add_Test_Routine(T, test_Mot_Facteur'Access, "Facteur");
-        Framework.Add_Test_Routine(T, test_Mot_Facteur_Fail'Access, "Facteur Fail");
+        Framework.Add_Test_Routine(T, test_Mot_Taille'Access, "Mot Taille");
+        Framework.Add_Test_Routine(T, test_Mot_Suffixe'Access, "Mot Suffixe");
+        Framework.Add_Test_Routine(T, test_Mot_Suffixe_Fail'Access, "Mot Suffixe Fail");
+        Framework.Add_Test_Routine(T, test_Mot_Prefixe'Access, "Mot Prefixe");
+        Framework.Add_Test_Routine(T, test_Mot_Prefixe_Fail'Access, "Mot Prefixe Fail");
+        Framework.Add_Test_Routine(T, test_Mot_Facteur'Access, "Mot Facteur");
+        Framework.Add_Test_Routine(T, test_Mot_Facteur_Fail'Access, "Mot Facteur Fail");
         Framework.Add_Test_Routine(T, test_Mot_Egaux'Access, "Mot Egaux");
         Framework.Add_Test_Routine(T, test_Mot_Egaux_Fail'Access, "Mot Egaux Fail");
         Framework.Add_Test_Routine(T, test_Mot_Superieur'Access, "Mot Superieur");
         Framework.Add_Test_Routine(T, test_Mot_Superieur_Fail'Access, "Mot Superieur Fail");
         
         -- Les Couples
-        Framework.Add_Test_Routine(T, test_Couple_Egaux'Access, "Egalité");
-        Framework.Add_Test_Routine(T, test_Couple_Egaux_Fail'Access, "Egalité Fail");
-        Framework.Add_Test_Routine(T, test_Couple_Superieur_Occurrence'Access, "Superieur Occurrence");
-        Framework.Add_Test_Routine(T, test_Couple_Superieur_Occurrence_Fail'Access, "Superieur Occurrence Fail");
+        Framework.Add_Test_Routine(T, test_Couple_Egaux'Access, "Couple Egalité");
+        Framework.Add_Test_Routine(T, test_Couple_Egaux_Fail'Access, "Couple Egalité Fail");
+        Framework.Add_Test_Routine(T, test_Couple_Superieur_Occurrence'Access, "Couple Superieur Occurrence");
+        Framework.Add_Test_Routine(T, test_Couple_Superieur_Occurrence_Fail'Access, "Couple Superieur Occurrence Fail");
         Framework.Add_Test_Routine(T, test_Couple_Inferieur_Mot'Access, "Couple Inferieur");
         Framework.Add_Test_Routine(T, test_Couple_Inferieur_Mot_Fail'Access, "Couple Inferieur Fail");
-        Framework.Add_Test_Routine(T, test_Couple_Occurrence'Access, "Occurrence");
-        Framework.Add_Test_Routine(T, test_Couple_Mot'Access, "Get Mot");
+        Framework.Add_Test_Routine(T, test_Couple_Occurrence'Access, "Couple Occurrence");
+        Framework.Add_Test_Routine(T, test_Couple_Mot'Access, "Couple Get Mot");
         
         -- Liste de couples
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Vide'Access, "Liste Couple Vide");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Plein'Access, "Liste Couple Plein");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_valeur'Access, "Liste Couple Valeur");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Superieur'Access, "Liste Couple nb Superieur");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Occurrence'Access, "Liste Couple nb Occurrence");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_Taille'Access, "Liste Couple Taille");
         
     end Initialize;
       
@@ -81,7 +83,7 @@ package body FL_Tests is
         Mot := ajout_Lettre_Fin(Mot2, 'r');
         Mot := ajout_Lettre_Fin(Mot2, 'e');
         
-        assert(suffixe(Mot, Mot2) = True, "La verification de suffixe ne marche pas");
+        assert(suffixe(Mot, Mot2) = True, "Mot2 devrait être suffixe de Mot1");
     end test_Mot_Suffixe;
     
     procedure test_Mot_Suffixe_Fail is
@@ -100,9 +102,9 @@ package body FL_Tests is
         
         Mot2 := ajout_Lettre_Fin(Mot2, 't');
         Mot2 := ajout_Lettre_Fin(Mot2, 'r');
-        Mot2 := ajout_Lettre_Fin(Mot2, 'e');
+        Mot2 := ajout_Lettre_Fin(Mot2, 'a');
         
-        assert(suffixe(Mot, Mot2) = False, "La verification de suffixe ne marche pas");
+        assert(suffixe(Mot, Mot2) = False, "Mot2 ne devrait pas être suffixe de Mot1");
     end test_Mot_Suffixe_Fail;
 
     procedure test_Mot_Prefixe is
@@ -123,7 +125,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'o');
         Mot2 := ajout_Lettre_Fin(Mot2, 'u');
         
-        assert(prefixe(Mot, Mot2) = True, "La verification de préfixe ne marche pas");
+        assert(prefixe(Mot, Mot2) = True, "Mot2 devrait être préfixe de Mot1");
     end test_Mot_Prefixe;
 
     procedure test_Mot_Prefixe_Fail is
@@ -140,11 +142,11 @@ package body FL_Tests is
         Mot := ajout_Lettre_Fin(Mot, 'r');
         Mot := ajout_Lettre_Fin(Mot, 'e');
         
-        Mot2 := ajout_Lettre_Fin(Mot2, 'M');
+        Mot2 := ajout_Lettre_Fin(Mot2, 'L');
         Mot2 := ajout_Lettre_Fin(Mot2, 'e');
         Mot2 := ajout_Lettre_Fin(Mot2, 'h');
         
-        assert(prefixe(Mot, Mot2) = False, "La verification de préfixe ne marche pas");
+        assert(prefixe(Mot, Mot2) = False, "Mot2 ne devrait pas être suffixe de Mot1");
     end test_Mot_Prefixe_Fail;
 
     procedure test_Mot_Facteur is
@@ -164,7 +166,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'o');
         Mot2 := ajout_Lettre_Fin(Mot2, 'u');
         
-        assert(facteur(Mot, Mot2) = True, "La verification de facteur ne marche pas");
+        assert(facteur(Mot, Mot2) = True, "Mot2 devrait être facteur de Mot1");
     end test_Mot_Facteur;
     
     procedure test_Mot_Facteur_Fail is
@@ -184,7 +186,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'm');
         Mot2 := ajout_Lettre_Fin(Mot2, 'e');
         
-        assert(facteur(Mot, Mot2) = False, "La verification de facteur ne marche pas");
+        assert(facteur(Mot, Mot2) = False, "Mot2 ne devrait pas être facteur de Mot1");
     end test_Mot_Facteur_Fail;
 
     procedure test_Mot_Egaux is
@@ -208,7 +210,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'r');
         Mot2 := ajout_Lettre_Fin(Mot2, 'e');
         
-        assert(mots_Egaux(Mot, Mot2) = True, "La verification de facteur ne marche pas");
+        assert(mots_Egaux(Mot, Mot2) = True, "Les 2 mots devraient être égaux");
     end test_Mot_Egaux;
 
     procedure test_Mot_Egaux_Fail is
@@ -232,7 +234,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'o');
         Mot2 := ajout_Lettre_Fin(Mot2, 'r');
         
-        assert(mots_Egaux(Mot, Mot2) = False, "La verification de facteur ne marche pas");
+        assert(mots_Egaux(Mot, Mot2) = False, "Les 2 mots ne devraient pas être égaux");
     end test_Mot_Egaux_Fail;
     
     procedure test_Mot_Superieur is
@@ -249,7 +251,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'i');
         Mot2 := ajout_Lettre_Fin(Mot2, 'h');
 
-	    assert(mot_Superieur(Mot2, Mot1) = True, "Le Mot2 ne devrait pas être superieur au Mot1");
+	    assert(mot_Superieur(Mot1, Mot2) = True, "Le Mot2 ne devrait pas être superieur au Mot1");
     end test_Mot_Superieur;
 
     procedure test_Mot_Superieur_Fail is
@@ -266,8 +268,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'i');
         Mot2 := ajout_Lettre_Fin(Mot2, 'h');
 
-
-	assert(mot_Superieur(Mot2, Mot1) = False, "Le couple1 devrait être inferieur au couple2");
+	    assert(mot_Superieur(Mot2, Mot1) = False, "Le Mot1 devrait être inferieur au Mot2");
     end test_Mot_Superieur_Fail;
     
 -- Test sur le PCouple
@@ -352,7 +353,7 @@ package body FL_Tests is
 	Mot2 := ajout_Lettre_Fin(Mot2, 'h');
 	Couple2 := creer_Couple(Mot2, 2);
 
-	assert(couple_Superieur_Occurrence(Couple2, Couple1) = False, "Le couple1 ne devrait pas avoir plus d'occurrence que le couple2");
+	assert(couple_Superieur_Occurrence(Couple1, Couple2) = False, "Le couple1 ne devrait pas avoir plus d'occurrence que le couple2");
     end test_Couple_Superieur_Occurrence_Fail;
 
     procedure test_Couple_Inferieur_Mot is
@@ -470,8 +471,8 @@ package body FL_Tests is
 
     procedure test_Liste_Couple_nb_Superieur is
 	Liste_Couple: TListe_Couple;
-	Mot1, Mot2 : TMot;
-	Couple1, Couple2 : TCouple;
+	Mot1, Mot2: TMot;
+	Couple1, Couple2: TCouple;
     begin
 	Mot1 := creer_Mot;
 	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
@@ -481,7 +482,7 @@ package body FL_Tests is
 
 	Mot2 := creer_Mot;
 	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
-	Couple2 := creer_Couple(Mot2, 1);
+	Couple2 := creer_Couple(Mot2, 3);
 
 	Liste_Couple := creer_Liste_Couple;
 	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
@@ -489,5 +490,43 @@ package body FL_Tests is
 
         assert(nb_Superieur(Liste_Couple, 2) = 1, "Le nombre de mots supérieur n'est pas bon");
     end test_Liste_Couple_nb_Superieur;
+    
+    procedure test_Liste_Couple_Taille is
+	Liste_Couple: TListe_Couple;
+	Mot1, Mot2: TMot;
+    begin
+	Mot1 := creer_Mot;
+	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+	
+	Mot2 := creer_Mot;
+	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
 
+	Liste_Couple := creer_Liste_Couple;
+	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+        assert(nb_Mots_Differents(Liste_Couple) = 2, "Le nombre de mots différents n'est pas bon");
+    end test_Liste_Couple_Taille;
+    
+    procedure test_Liste_Couple_nb_Occurrence is
+ 	Liste_Couple: TListe_Couple;
+ 	Mot1, Mot2: TMot;
+     begin
+ 	Mot1 := creer_Mot;
+ 	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+ 	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+ 	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+ 	Mot2 := creer_Mot;
+ 	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+ 	Liste_Couple := creer_Liste_Couple;
+ 	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+ 	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+         assert(nb_Total_Occurrence(Liste_Couple) = 2, "Le nombre d'occurrence n'est pas bon");
+     end test_Liste_Couple_nb_Occurrence;
+     
 end FL_Tests;

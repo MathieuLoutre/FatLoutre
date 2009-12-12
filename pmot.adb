@@ -50,30 +50,15 @@ package body PMot is
     	return (prefx and mot_Vide(Mot_Temp2));
     end prefixe;
 
-    -- TO BE REFACTORED
     function suffixe(Mot1: in TMot; Mot2: in TMot) return Boolean is
-        suff: Boolean := true;
-        Mot_Temp1: TMot := Mot1;
-        Mot_Temp2: TMot := Mot2;
     begin
-        if(not vide(Mot_Temp1) or longueur(Mot_Temp1) < longueur(Mot_Temp2)) then
-            for i in 1..(longueur(Mot_Temp2) - longueur(Mot_Temp1)) loop
-                Mot_Temp2 := suivant(Mot_Temp2);
-            end loop;
-                
-            while (not mot_Vide(Mot_Temp1) and suff) loop
-                if (valeur(Mot_Temp1) = valeur(Mot_Temp2)) then
-        	        Mot_Temp1 := suivant(Mot_Temp1);
-        	        Mot_Temp2 := suivant(Mot_Temp2);
-                else
-        	        suff := false;
-                end if;
-            end loop;
+        if (longueur(Mot1) > longueur(Mot2)) then
+            return suffixe(suivant(Mot1), Mot2);
+        elsif (longueur(Mot1) = longueur(Mot2)) then
+            return mots_Egaux(Mot1, Mot2);
         else
-            suff := false;
+            return false;
         end if;
-        
-        return suff;
     end suffixe;
 
     function facteur(Mot1: in TMot; Mot2: in TMot) return Boolean is
@@ -100,14 +85,16 @@ package body PMot is
 
     function mot_Superieur(Mot1: in TMot; Mot2: in TMot) return Boolean is
     begin
-        if (not vide(Mot2)) then
+        if (not vide(Mot2) and not vide(Mot1)) then
     	    if valeur(Mot2) >= valeur(Mot1) then
+    	        return true;
+    	    elsif (valeur(Mot2) = valeur(Mot1)) then
     	        return mot_Superieur(suivant(Mot1), suivant(Mot2));
     	    else
     	        return false;
     	    end if;
     	else
-    	    return true;
+    	    return vide(Mot1) and not vide(Mot2);
     	end if;
     end mot_Superieur;
     -- Pourrait être placé en générique avec un relation d'ordre générique
