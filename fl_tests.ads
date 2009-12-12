@@ -10,7 +10,6 @@ package FL_Tests is
 
     procedure Initialize(T : in out Test);
 
-
 -- Test sur le PMot
     procedure test_Mot_Vide;    
     procedure test_Mot_Plein;
@@ -23,13 +22,17 @@ package FL_Tests is
     procedure test_Mot_Suffixe_Fail;
     procedure test_Mot_Facteur_Fail;
     procedure test_Mot_Egaux_Fail;
+    procedure test_Mot_Superieur;
+    procedure test_Mot_Superieur_Fail;
 
 
 -- Test sur le PCouple
     procedure test_Couple_Egaux;
     procedure test_Couple_Egaux_Fail;
-    procedure test_couple_Superieur;
-    procedure test_couple_Superieur_Fail;
+    procedure test_couple_Superieur_Occurrence;
+    procedure test_couple_Superieur_Occurrence_Fail;
+    procedure test_couple_Inferieur_Mot;
+    procedure test_couple_Inferieur_Mot_Fail;
     procedure test_Couple_Mot;
     procedure test_Couple_Occurrence;
 
