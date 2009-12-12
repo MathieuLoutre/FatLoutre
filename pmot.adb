@@ -77,22 +77,22 @@ package body PMot is
     end suffixe;
 
     function facteur(Mot1: in TMot; Mot2: in TMot) return Boolean is
-        Mot3: TMot := Mot1;
+        Mot_Temp1: TMot := Mot1;
         Mot_Temp2: TMot := Mot2;
     begin        
-        if(not mot_Vide(Mot1)) or (longueur(Mot1) <= longueur(Mot_Temp2)) then
-            while (not mot_Vide(Mot_Temp2) and not mot_Vide(Mot3)) loop
-                if(valeur(Mot3) = valeur(Mot_Temp2)) then
-        	        Mot3 := suivant(Mot3);
+        if(not mot_Vide(Mot_Temp2)) or (longueur(Mot_Temp2) <= longueur(Mot_Temp1)) then
+            while (not mot_Vide(Mot_Temp2) and not mot_Vide(Mot_Temp1)) loop
+                if(valeur(Mot_Temp1) = valeur(Mot_Temp2)) then
+        	        Mot_Temp1 := suivant(Mot_Temp1);
                 else
-        	        Mot3 := Mot1;
+        	        Mot_Temp1 := Mot1;
                 end if;
-                if mots_Egaux(Mot3, Mot1) then
+                if mots_Egaux(Mot_Temp1, Mot1) then
         	        Mot_Temp2 := suivant(Mot_Temp2);
         	    end if;
             end loop;
                 
-            return mot_Vide(Mot3);
+            return mot_Vide(Mot_Temp1);
         else
             return false;
         end if;
@@ -110,11 +110,7 @@ package body PMot is
     	    return true;
     	end if;
     end mot_Superieur;
-	
-    function mots_Egaux(Mot1: in TMot; Mot2: in TMot) return Boolean is
-    begin
-    	return listes_Egales(Mot1, Mot2);
-    end mots_egaux;
+    -- Pourrait être placé en générique avec un relation d'ordre générique
 
     procedure affiche_Mot(Mot: in TMot) is
     begin

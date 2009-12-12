@@ -136,7 +136,7 @@ package body PListe_Couple is
             end if;
         else
             Couple := creer_Couple(Mot, 1);
-    	    return insert_Trie_Croissant(T, Couple);
+    	    return insert_Croissant_Mot(T, Couple);
         end if;
     end ajout_Mot;
 

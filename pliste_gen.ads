@@ -1,11 +1,6 @@
-with ada.text_io; use ada.text_io;
-
 generic
     type TElem is private;
     with procedure affiche(E: in TElem);
-    with function egaux(T1: in TElem; T2: in TElem) return Boolean;
-    -- TO BE REFACTORED. On utilisera plutôt les fonction générique dans le programme pour instancier la fonction de trie 2 fois.
-    with function superieur(T1: in TElem; T2: in TElem) return Boolean;
       
 package PListe_Gen is
       
@@ -13,6 +8,7 @@ package PListe_Gen is
 
     function creer_Liste return TPtrCellule;
         -- Créé une liste vide
+        
     function modif_Liste(T: in TPtrCellule; N: in TElem) return TPtrCellule;
     	
     function longueur (T: in TPtrCellule) return Integer;
@@ -29,10 +25,6 @@ package PListe_Gen is
     function ajout_Debut (T: in TPtrCellule; N: in TElem) return TPtrCellule;
         -- Ajoute un élément en début de liste
 
-    function insert_trie_Croissant (T: in TPtrCellule; N: in TElem) return TPtrCellule;
-    	-- Insert l'élément à sa place dans la liste (croissante)
-    	-- Utilise la fonction egal et superieur passé en paramètre du package générique
-
     function vide (T: in TPtrCellule) return Boolean;
     	-- Retourne True si la liste est vide, False sinon
 
@@ -43,13 +35,23 @@ package PListe_Gen is
     function suivant (T: in TPtrCellule) return TPtrCellule;
     	-- Retourne l'élément suivant de la liste.
     	-- Retourne une erreur si la cellule est vide
-
+    
+    generic
+        with function egaux(T1: in TElem; T2: in TElem) return Boolean;
     procedure supprimer (T: in out TPtrCellule; N: in TElem);
         -- Retourne une liste sans le premier TElem rencontré
         -- Retourne la même liste si le TElem n'est pas dans la liste
-    
+
+    generic 
+        with function egaux(T1: in TElem; T2: in TElem) return Boolean;
     function listes_Egales (T1: in TPtrCellule; T2: in TPtrCellule) return Boolean;
        	-- Retourne Vrai si les 2 listes sont égales. Utilise la fonction egal passée en paramètre du package générique
+
+    generic
+        with function ordre(T1: in TElem; T2: in TElem) return Boolean;
+    function insert_trie(T: in TPtrCellule; N: in TElem) return TPtrCellule;
+        -- Insert l'élément à sa place dans la liste (suivant la relation d'ordre générique)
+    	-- Utilise la fonction egal et superieur passé en paramètre du package générique
     	    
     private
         type TCellule;

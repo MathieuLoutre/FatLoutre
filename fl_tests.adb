@@ -25,8 +25,8 @@ package body FL_Tests is
         Framework.Add_Test_Routine(T, test_Couple_Egaux_Fail'Access, "Egalité Fail");
         Framework.Add_Test_Routine(T, test_Couple_Superieur_Occurrence'Access, "Superieur Occurrence");
         Framework.Add_Test_Routine(T, test_Couple_Superieur_Occurrence_Fail'Access, "Superieur Occurrence Fail");
-        Framework.Add_Test_Routine(T, test_Couple_Inferieur_Mot'Access, "Superieur Inferieur");
-        Framework.Add_Test_Routine(T, test_Couple_Inferieur_Mot_Fail'Access, "Superieur Inferieur Fail");
+        Framework.Add_Test_Routine(T, test_Couple_Inferieur_Mot'Access, "Couple Inferieur");
+        Framework.Add_Test_Routine(T, test_Couple_Inferieur_Mot_Fail'Access, "Couple Inferieur Fail");
         Framework.Add_Test_Routine(T, test_Couple_Occurrence'Access, "Occurrence");
         Framework.Add_Test_Routine(T, test_Couple_Mot'Access, "Get Mot");
         
@@ -249,7 +249,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'i');
         Mot2 := ajout_Lettre_Fin(Mot2, 'h');
 
-	    assert(mot_Superieur(Couple2, Couple1) = True, "Le couple 2 ne devrait pas être superieur au couple 1");
+	    assert(mot_Superieur(Mot2, Mot1) = True, "Le Mot2 ne devrait pas être superieur au Mot1");
     end test_Mot_Superieur;
 
     procedure test_Mot_Superieur_Fail is
@@ -267,7 +267,7 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'h');
 
 
-	assert(mot_Superieur(Couple2, Couple1) = False, "Le couple1 devrait être inferieur au couple2");
+	assert(mot_Superieur(Mot2, Mot1) = False, "Le couple1 devrait être inferieur au couple2");
     end test_Mot_Superieur_Fail;
     
 -- Test sur le PCouple

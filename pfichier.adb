@@ -49,6 +49,7 @@ package body PFichier is
     	C: Character;
     	M: TMot;
     begin
+        -- On doit sauter la première ligne de stats qu'on pourra regénerer facilement à partir de la liste une fois complète
         T := creer_Liste_Couple;
         open(Fichier, In_File, "liste-mot.txt");
         

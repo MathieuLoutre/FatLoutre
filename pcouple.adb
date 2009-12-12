@@ -26,15 +26,20 @@ package body PCouple is
        	Couple.occurrences := occurrence(Couple) + N;
     end ajout_Occurrence;
 
-    function couples_Egaux(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
+    function couples_Egaux_Mot(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
     begin
         return mots_Egaux(mot_Couple(Couple1), mot_Couple(Couple2));
-    end couples_Egaux;
+    end couples_Egaux_Mot;
 
-    function couple_Superieur(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
+    function couple_Inferieur_Mot(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
     begin
-        return mot_Superieur(mot_Couple(Couple1), mot_Couple(Couple2));
-    end couple_Superieur;
+        return not (mot_Superieur(mot_Couple(Couple1), mot_Couple(Couple2)));
+    end couple_Inferieur_Mot;
+    
+    function couple_Superieur_Occurrence(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
+    begin
+        return occurrence(Couple2) > occurrence(Couple1);
+    end couple_Superieur_Occurrence;
     
     function creer_Couple(Mot: in TMot; Occurrence: in Integer) return TCouple is
     begin

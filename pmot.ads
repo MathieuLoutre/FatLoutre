@@ -2,8 +2,9 @@ with PListe_Gen;
 with Text_IO; use Text_IO;
 
 package PMot is
-   
-    type TMot is private;    
+    
+    package Liste_Char is new PListe_Gen(Character, Put); use Liste_Char;
+    subtype TMot is TPtrCellule;    
         
     procedure affiche_Mot(Mot: in TMot);
         -- Affiche le mot donné
@@ -20,11 +21,10 @@ package PMot is
     
     function lettre_Suivante(Mot: in TMot) return TMot;
     
-    function mot_superieur(Mot1: in TMot; Mot2: in TMot) return Boolean;
+    function mot_Superieur(Mot1: in TMot; Mot2: in TMot) return Boolean;
         -- Retourne True si le mot2 est superieur au Mot1, False sinon
-
-    function mots_Egaux(Mot1: in TMot; Mot2: in TMot) return Boolean;
-        -- Retourne True si les 2 mots sont égaux, False sinon
+        -- On pourrait éventuellement faire un mot_Inferieur si not mot_Superieur est bancal
+        -- => Pourrait devenir générique avec relation d'ordre générique aussi
     
     function significatif(Mot: in TMot) return Boolean;
         -- Retourne True si le mot est significatif, False sinon
@@ -37,10 +37,11 @@ package PMot is
 
     function facteur(Mot1: in TMot; Mot2: in TMot) return Boolean;
         -- Retourne True si le mot2 est facteur du mot1, False sinon
-    
+        
+    function mots_Egaux is new listes_Egales("=");
+        -- On utilise l'égalité pour faire la comparaison des mots
+  
     private
-        package Liste_Char is new PListe_Gen(Character, Put, "=", ">"); use Liste_Char;
-        type TMot is new Liste_Char.TPtrCellule;
         
         function est_Petit_Mot(Mot: in TMot) return Boolean;
         	-- True si le mot est présent dans petits-mots, False sinon

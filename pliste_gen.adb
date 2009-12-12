@@ -74,41 +74,34 @@ package body PListe_Gen is
 	return L;
     end modif_Liste;
 
+
+--------------------------- GENERIQUE ---------------------------
+
     -- TO BE REFACTORED
-    function insert_Trie_Croissant(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+    function insert_Trie(T: in TPtrCellule; N: in TElem) return TPtrCellule is
         begin
             if not vide(T) then
-                if (not vide(suivant(T)) and then (superieur(N, valeur(suivant(T))))) then
-                    return insert_Trie_Croissant(suivant(T), N);
+                if (not vide(suivant(T)) and then (ordre(N, valeur(suivant(T))))) then
+                    return insert_Trie(suivant(T), N);
                 else
                     return modif_Liste(T, N);
                 end if;
             else
                 return ajout_Debut(T, N);
             end if;
-        end insert_Trie_Croissant;
+        end insert_Trie;
 
 	function listes_Egales(T1: in TPtrCellule; T2: in TPtrCellule) return Boolean is
-	    I : Boolean;
-           R: Tptrcellule := T1;
-           Q: TptrCellule := T2;
 	begin
-        -- if (not vide(T1)) and not (vide(T2)) then
-        --     if (egaux(valeur(T1), valeur(T2))) then
-        --         return listes_Egales(suivant(T1), suivant(T2));
-        --     else
-        --         return False;
-        --     end if;
-        -- else
-        --     return (vide(T1) and vide(T2));
-        -- end if;
-
-                 while (R /= null and Q /= null) and then R.val = Q.val loop
-                     R := R.suiv;
-                     Q := Q.suiv;
-                end loop;
-                    
-                    return (R = null and Q = null);
+        if (not vide(T1)) and then not (vide(T2)) then
+            if (egaux(valeur(T1), valeur(T2))) then
+                return listes_Egales(suivant(T1), suivant(T2));
+            else
+                return False;
+            end if;
+        else
+            return (vide(T1) and vide(T2));
+        end if;
 	end listes_Egales;
 
 	procedure supprimer(T: in out TPtrCellule; N: in TElem) is

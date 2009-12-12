@@ -11,10 +11,13 @@ package PCouple is
     procedure affiche_Couple(Couple: in TCouple);
         -- Affiche le TCouple passé en paramètre
         
-    function couples_Egaux(Couple1: in TCouple; Couple2: in TCouple) return Boolean;
+    function couples_Egaux_Mot(Couple1: in TCouple; Couple2: in TCouple) return Boolean;
         -- Retourne True si les 2 mots des couples sont égaux, False sinon
 
-    function couple_Superieur(Couple1: in TCouple; Couple2: in TCouple) return Boolean;
+    function couple_Inferieur_Mot(Couple1: in TCouple; Couple2: in TCouple) return Boolean;
+        -- Retourne True si le Couple2 est superieur au Couple1, False sinon
+    
+    function couple_Superieur_Occurrence(Couple1: in TCouple; Couple2: in TCouple) return Boolean;
         -- Retourne True si le Couple2 est superieur au Couple1, False sinon
     
     function mot_Couple(Couple: in TCouple) return TMot;
