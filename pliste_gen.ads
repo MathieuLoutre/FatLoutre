@@ -1,3 +1,5 @@
+with ada.text_io; use ada.text_io;
+
 generic
     type TElem is private;
     with procedure affiche(E: in TElem);

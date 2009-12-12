@@ -41,7 +41,7 @@ package body FL_Tests is
         Mot: TMot;
     begin
         Mot := creer_Mot;
-        Mot := ajout_Lettre_Fin(Mot, 'L');
+        Mot := ajout_Lettre_Fin(Mot, 'l');
         
         assert(mot_Vide(Mot) = False, "L'ajout de lettre en fin n'ajoute rien");
     end test_Mot_Plein;
@@ -50,10 +50,11 @@ package body FL_Tests is
         Mot: TMot;
     begin
         Mot := creer_Mot;
-        Mot := ajout_Lettre_Fin(Mot, 'L');
-        Mot := ajout_Lettre_Fin(Mot, 'o');
+        Mot := ajout_Lettre_Fin(Mot, 'M');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'h');
         
-        assert(longueur_Mot(Mot) = 2, "La taille ne correspond pas au nombre d'ajout");
+        assert(longueur_Mot(Mot) = 3, "La taille ne correspond pas au nombre d'ajout");
     end test_Mot_Taille;
 
     procedure test_Mot_Suffixe is
@@ -115,9 +116,6 @@ package body FL_Tests is
         Mot2 := ajout_Lettre_Fin(Mot2, 'L');
         Mot2 := ajout_Lettre_Fin(Mot2, 'o');
         Mot2 := ajout_Lettre_Fin(Mot2, 'u');
-        
-        put(valeur_mot(Mot));
-        put(valeur_mot(Mot2));
         
         assert(prefixe(Mot, Mot2) = True, "La verification de préfixe ne marche pas");
     end test_Mot_Prefixe;

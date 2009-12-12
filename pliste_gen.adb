@@ -12,22 +12,25 @@ package body PListe_Gen is
 
     function ajout_Debut(T: in TPtrCellule; N: in TElem) return TPtrCellule is
     begin
-    	return new TCellule'(N, T);
+    	return new TCellule'(N, null);
     end ajout_Debut;
 
     -- TO BE REFACTORED
     function ajout_Fin(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+        L: TPtrCellule := T;
     begin
-        if not vide(T) then
-	    if not vide(suivant(T)) then
-			return ajout_Fin(suivant(T), N);
-	    else
-			T.suiv := new TCellule'(N, null);
-			return ajout_Fin(T, N);
-	    end if;
+        
+        if not vide(L) then
+	        while L.suiv /= null loop
+			    L := L.suiv;
+	        end loop;
+	        
+	        L.suiv := ajout_Debut(L, N);
+	        return T;
         else
             return ajout_Debut(T, N);
         end if;
+        
     end ajout_Fin;
 
     function longueur(T: in TPtrCellule) return Integer is
@@ -86,16 +89,26 @@ package body PListe_Gen is
         end insert_Trie_Croissant;
 
 	function listes_Egales(T1: in TPtrCellule; T2: in TPtrCellule) return Boolean is
+	    I : Boolean;
+           R: Tptrcellule := T1;
+           Q: TptrCellule := T2;
 	begin
-		if (not vide(T1)) and not (vide(T2)) then
-			if (egaux(valeur(T1), valeur(T2))) then
-				return listes_Egales(suivant(T1), suivant(T2));
-			else
-				return False;
-			end if;
-		else
-			return (vide(T1) and vide(T2));
-		end if;
+        -- if (not vide(T1)) and not (vide(T2)) then
+        --     if (egaux(valeur(T1), valeur(T2))) then
+        --         return listes_Egales(suivant(T1), suivant(T2));
+        --     else
+        --         return False;
+        --     end if;
+        -- else
+        --     return (vide(T1) and vide(T2));
+        -- end if;
+
+                 while (R /= null and Q /= null) and then R.val = Q.val loop
+                     R := R.suiv;
+                     Q := Q.suiv;
+                end loop;
+                    
+                    return (R = null and Q = null);
 	end listes_Egales;
 
 	procedure supprimer(T: in out TPtrCellule; N: in TElem) is
