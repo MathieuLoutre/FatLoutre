@@ -36,9 +36,17 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_valeur'Access, "Liste Couple Valeur");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Superieur'Access, "Liste Couple nb Superieur");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Occurrence'Access, "Liste Couple nb Occurrence");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Mots'Access, "Liste Couple nb Mots Differents");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Taille'Access, "Liste Couple Taille");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Presence'Access, "Liste Couple Presence");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Presence_Fail'Access, "Liste Couple Presence Fail");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Prefixe'Access, "Liste Couple nb Prefixe");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Suffixe'Access, "Liste Couple nb Suffixe");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Facteur'Access, "Liste Couple nb Facteur");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_Moy_Occur'Access, "Liste Couple moy Occurrence");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_Moy_Long'Access, "Liste Couple moy Longueur");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Occur_Mot'Access, "Liste Couple nb Occurrence Mot");
+	    
         
     end Initialize;
       
@@ -542,24 +550,211 @@ package body FL_Tests is
     end test_Liste_Couple_Taille;
     
     procedure test_Liste_Couple_nb_Occurrence is
- 	Liste_Couple: TListe_Couple;
- 	Mot1, Mot2: TMot;
+ 	    Liste_Couple: TListe_Couple;
+ 	    Mot1, Mot2: TMot;
      begin
- 	Mot1 := creer_Mot;
- 	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
- 	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
- 	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+     	Mot1 := creer_Mot;
+     	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+     	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+     	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
 
- 	Mot2 := creer_Mot;
- 	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+     	Mot2 := creer_Mot;
+     	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
 
- 	Liste_Couple := creer_Liste_Couple;
- 	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
- 	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
- 	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
- 	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+     	Liste_Couple := creer_Liste_Couple;
+     	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+     	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+     	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+     	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
 
-         assert(nb_Total_Occurrence(Liste_Couple) = 4, "Le nombre d'occurrence n'est pas bon");
+        assert(nb_Total_Occurrence(Liste_Couple) = 4, "Le nombre d'occurrence n'est pas bon");
      end test_Liste_Couple_nb_Occurrence;
+     
+     procedure test_Liste_Couple_nb_Mots is
+  	    Liste_Couple: TListe_Couple;
+  	    Mot1, Mot2: TMot;
+      begin
+      	Mot1 := creer_Mot;
+      	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+      	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+      	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+      	Mot2 := creer_Mot;
+      	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+      	Liste_Couple := creer_Liste_Couple;
+      	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+      	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+      	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+      	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+
+         assert(nb_Mots_Differents(Liste_Couple) = 2, "Le nombre total de mot est incorrect");
+      end test_Liste_Couple_nb_Mots;
+      
+      procedure test_Liste_Couple_nb_Prefixe is
+          Liste_Couple: TListe_Couple;
+          Mot1, Mot2, Mot3: TMot;
+      begin
+          Mot1 := creer_Mot;
+          Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+          Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+          Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+        	
+          Mot3 := creer_Mot;
+          Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+          Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+          Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+    	  Mot2 := creer_Mot;
+          Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+    	  Liste_Couple := creer_Liste_Couple;
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+        	
+
+          assert(nb_Prefixe(Liste_Couple, Mot2) = 2, "Le nombre de préfixes est incorrect");
+      end test_Liste_Couple_nb_Prefixe;
+        
+      procedure test_Liste_Couple_nb_Suffixe is
+          Liste_Couple: TListe_Couple;
+      	  Mot1, Mot2, Mot3: TMot;
+      begin
+          	Mot1 := creer_Mot;
+          	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+          	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+          	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          	Mot3 := creer_Mot;
+          	Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+          	Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+          	Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+          	Mot2 := creer_Mot;
+          	Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+          	Mot2 := ajout_Lettre_Fin(Mot2, 'h');
+
+          	Liste_Couple := creer_Liste_Couple;
+          	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+          	Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+          	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+          	Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+
+            assert(nb_Suffixe(Liste_Couple, Mot2) = 2, "Le nombre de suffixes est incorrect");
+          end test_Liste_Couple_nb_Suffixe;
+          
+          procedure test_Liste_Couple_nb_Facteur is
+              Liste_Couple: TListe_Couple;
+              Mot1, Mot2, Mot3: TMot;
+          begin
+            Mot1 := creer_Mot;
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+        	Mot3 := creer_Mot;
+        	Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+        	Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+        	Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+        	Mot2 := creer_Mot;
+        	Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+
+        	Liste_Couple := creer_Liste_Couple;
+        	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+        	Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+        	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+        	Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+
+            assert(nb_Facteur(Liste_Couple, Mot2) = 4, "Le nombre de facteurs est incorrect");
+      end test_Liste_Couple_nb_Facteur;
+
+      procedure test_Liste_Couple_Moy_Occur is
+  	      Liste_Couple: TListe_Couple;
+      	  Mot1, Mot2, Mot3: TMot;
+      begin
+  	      Mot1 := creer_Mot;
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+      	  
+      	  Mot2 := creer_Mot;
+      	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+      	  Liste_Couple := creer_Liste_Couple;
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+          assert(moy_Occurrence(Liste_Couple) = 2.00, "La moyenne d'occurrence n'est pas bonne");
+      end test_Liste_Couple_Moy_Occur;
+      
+      procedure test_Liste_Couple_Moy_Long is
+  	      Liste_Couple: TListe_Couple;
+      	  Mot1, Mot2, Mot3: TMot;
+      begin
+  	      Mot1 := creer_Mot;
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+      	  
+      	  Mot2 := creer_Mot;
+      	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+      	  Liste_Couple := creer_Liste_Couple;
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+          assert(moy_Longueur(Liste_Couple) = 2.00, "La moyenne n'est pas bonne");
+      end test_Liste_Couple_Moy_Long;
+
+       procedure test_Liste_Couple_nb_Occur_Mot is
+    	      Liste_Couple: TListe_Couple;
+        	  Mot1, Mot2, Mot3: TMot;
+        begin
+    	      Mot1 := creer_Mot;
+        	  Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+        	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+              Mot3 := creer_Mot;
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+        	  Mot2 := creer_Mot;
+        	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+        	  Liste_Couple := creer_Liste_Couple;
+        	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+        	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+        	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+        	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+        	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+        	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+        	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+              assert(nb_Occurrences(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
+        end test_Liste_Couple_nb_Occur_Mot;
      
 end FL_Tests;

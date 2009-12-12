@@ -22,7 +22,7 @@ package body PCouple is
     end fusion_Occurrence;
        	
     function ajout_Occurrence(Couple: in TCouple; N: in Integer) return TCouple is
-        Couple_Temp: TCouple;
+        Couple_Temp: TCouple := Couple;
     begin
        	Couple_Temp.occurrences := occurrence(Couple) + N;
        	return Couple_Temp;
@@ -37,6 +37,7 @@ package body PCouple is
     begin
         return not (mot_Superieur(mot_Couple(Couple1), mot_Couple(Couple2)));
     end couple_Inferieur_Mot;
+    -- NEED CHECK ON INSERT TRIE
     
     function couple_Superieur_Occurrence(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
     begin

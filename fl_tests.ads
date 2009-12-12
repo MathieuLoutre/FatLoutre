@@ -43,8 +43,15 @@ package FL_Tests is
     procedure test_Liste_Couple_valeur;
     procedure test_Liste_Couple_nb_Superieur;
     procedure test_Liste_Couple_nb_Occurrence;
+    procedure test_Liste_Couple_nb_Mots;
     procedure test_Liste_Couple_Taille;
     procedure test_Liste_Couple_Presence;
     procedure test_Liste_Couple_Presence_Fail;
+    procedure test_Liste_Couple_nb_Prefixe;
+    procedure test_Liste_Couple_nb_Suffixe;
+    procedure test_Liste_Couple_nb_Facteur;
+    procedure test_Liste_Couple_Moy_Occur;
+    procedure test_Liste_Couple_Moy_Long;
+    procedure test_Liste_Couple_nb_Occur_Mot;        
         
 end FL_Tests;

@@ -1,3 +1,4 @@
+with text_io; use text_io;
 package body PListe_Couple is
     
     function creer_Liste_Couple return TListe_Couple is
@@ -45,18 +46,20 @@ package body PListe_Couple is
     
         return float((nb / nb_Mots_Differents(T)));
     end moy_Occurrence;
+    -- NEED CHECK
 
     function moy_Longueur(T: in TListe_Couple) return Float is
         long: integer := 0;
         L: TListe_Couple := T;
     begin
-        while not vide(T) loop
+        while not vide(L) loop
             long := (long + longueur_Mot(mot_Couple(valeur_Couple(L))));
             L := suivant(L);
         end loop;
         
-        return float((long / nb_Total_Occurrence(T)));
+        return float((long / nb_Mots_Differents(T)));
     end moy_Longueur;
+    -- NEED CHECK
 
     function nb_Superieur(T: in TListe_Couple; N: in Integer) return Integer is
     begin
