@@ -62,22 +62,13 @@ package body PMot is
     end suffixe;
 
     function facteur(Mot1: in TMot; Mot2: in TMot) return Boolean is
-        Mot_Temp1: TMot := Mot1;
-        Mot_Temp2: TMot := Mot2;
     begin        
-        if(not mot_Vide(Mot_Temp2)) or (longueur(Mot_Temp2) <= longueur(Mot_Temp1)) then
-            while (not mot_Vide(Mot_Temp2) and not mot_Vide(Mot_Temp1)) loop
-                if(valeur(Mot_Temp1) = valeur(Mot_Temp2)) then
-        	        Mot_Temp1 := suivant(Mot_Temp1);
-                else
-        	        Mot_Temp1 := Mot1;
-                end if;
-                if mots_Egaux(Mot_Temp1, Mot1) then
-        	        Mot_Temp2 := suivant(Mot_Temp2);
-        	    end if;
-            end loop;
-                
-            return mot_Vide(Mot_Temp1);
+        if longueur(Mot1) >= longueur(Mot2) then
+            if (prefixe(Mot1, Mot2)) then
+                return true;
+            else
+                return facteur(suivant(Mot1), Mot2);
+            end if;
         else
             return false;
         end if;
