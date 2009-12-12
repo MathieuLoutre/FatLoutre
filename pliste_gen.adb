@@ -14,18 +14,35 @@ package body PListe_Gen is
     begin
     	return new TCellule'(N, null);
     end ajout_Debut;
+    
+    procedure modif_Val_Suivant(T: in out TPtrCellule; N: in TPtrCellule) is
+    begin
+        T.suiv := N;
+    end modif_Val_Suivant;
+    
+    procedure modif_Val(T: in out TPtrCellule; N: in TElem) is
+    begin
+        T.val := N;
+    end modif_Val;
+    
+    function Inserer(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+        L1: TPtrCellule := new TCellule'(N, suivant(T));
+        L2: TPtrCellule := T;
+    begin
+        modif_Val_Suivant(L2, L1);
+        return T;
+    end Inserer;
 
-    -- TO BE REFACTORED
     function ajout_Fin(T: in TPtrCellule; N: in TElem) return TPtrCellule is
         L: TPtrCellule := T;
     begin
         
         if not vide(L) then
-	        while L.suiv /= null loop
-			    L := L.suiv;
+	        while not vide(suivant(L)) loop
+			    L := suivant(L);
 	        end loop;
 	        
-	        L.suiv := ajout_Debut(L, N);
+	        modif_Val_Suivant(L, ajout_Debut(L, N));
 	        return T;
         else
             return ajout_Debut(T, N);
@@ -64,32 +81,26 @@ package body PListe_Gen is
 		    return null;
 	end if;
     end suivant;
-    
-    function modif_Liste(T: in TPtrCellule; N: in TElem) return TPtrCellule is
-	L : TPtrCellule;
-    begin
-	L := T;
-	L := suivant(L);
-	L := new TCellule'(N, L);
-	return L;
-    end modif_Liste;
 
 
 --------------------------- GENERIQUE ---------------------------
 
     -- TO BE REFACTORED
     function insert_Trie(T: in TPtrCellule; N: in TElem) return TPtrCellule is
-        begin
-            if not vide(T) then
-                if (not vide(suivant(T)) and then (ordre(N, valeur(suivant(T))))) then
-                    return insert_Trie(suivant(T), N);
-                else
-                    return modif_Liste(T, N);
-                end if;
-            else
-                return ajout_Debut(T, N);
-            end if;
-        end insert_Trie;
+        L: TPtrCellule := T;
+    begin
+        if vide(L) then
+            L := ajout_Debut(L, N);
+            return L;
+        else
+            while (not vide(suivant(L))) and then ordre(N, valeur(suivant(L))) loop
+                L := suivant(L);
+            end loop;
+
+            L := Inserer(L, N);
+            return T;
+        End if;
+    end insert_Trie;
 
 	function listes_Egales(T1: in TPtrCellule; T2: in TPtrCellule) return Boolean is
 	begin
@@ -115,5 +126,5 @@ package body PListe_Gen is
 			end if;
 		end if;
 	end supprimer;
-
+      
 end PListe_Gen;

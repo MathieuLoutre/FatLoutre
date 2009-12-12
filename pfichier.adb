@@ -59,8 +59,7 @@ package body PFichier is
     		    M := mot_Couple(valeur_Couple(T));
     		    M := ajout_Lettre_Fin(M, C);
     		elsif (C = ' ') then
-    		    Couple := valeur_Couple(T);
-    			ajout_Occurrence(Couple, Character'Pos(C));
+    			Couple := ajout_Occurrence(valeur_Couple(T), Character'Pos(C));
     		else
     			skip_line(Fichier);
     			

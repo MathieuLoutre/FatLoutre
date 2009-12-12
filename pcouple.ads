@@ -26,7 +26,7 @@ package PCouple is
     function occurrence(Couple: in TCouple) return Integer;
         -- Retourne le nombre d'occurrence du TCouple
         
-    procedure ajout_Occurrence(Couple: in out TCouple; N: in Integer);
+    function ajout_Occurrence(Couple: in TCouple; N: in Integer) return TCouple;
         -- Retourne un TCouple avec ses occurrences augmentées du nombre passé en paramètre
 
     private

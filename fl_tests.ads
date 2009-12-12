@@ -44,5 +44,7 @@ package FL_Tests is
     procedure test_Liste_Couple_nb_Superieur;
     procedure test_Liste_Couple_nb_Occurrence;
     procedure test_Liste_Couple_Taille;
+    procedure test_Liste_Couple_Presence;
+    procedure test_Liste_Couple_Presence_Fail;
         
 end FL_Tests;

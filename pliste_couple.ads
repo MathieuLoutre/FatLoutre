@@ -59,7 +59,9 @@ package PListe_Couple is
     
     function ajout_Mot(T: in TListe_Couple; Mot: in TMot) return TListe_Couple;
         -- Ajoute un nouveau couple contenant le mot si le mot n'est pas déjà présent, sinon augmente son occurrence de 1
-            
+    
+    function present(T: in TListe_Couple; Mot: in TMot) return Boolean;
+    
     private
     
         function insert_Decroissant_Occurrences is new insert_Trie(couple_Superieur_Occurrence);

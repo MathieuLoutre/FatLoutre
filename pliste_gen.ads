@@ -8,8 +8,6 @@ package PListe_Gen is
 
     function creer_Liste return TPtrCellule;
         -- Créé une liste vide
-        
-    function modif_Liste(T: in TPtrCellule; N: in TElem) return TPtrCellule;
     	
     function longueur (T: in TPtrCellule) return Integer;
        -- Retourne la taille de la liste
@@ -35,6 +33,12 @@ package PListe_Gen is
     function suivant (T: in TPtrCellule) return TPtrCellule;
     	-- Retourne l'élément suivant de la liste.
     	-- Retourne une erreur si la cellule est vide
+    
+    procedure modif_Val(T: in out TPtrCellule; N: in TElem);
+    
+    procedure modif_Val_Suivant(T: in out TPtrCellule; N: in TPtrCellule);
+        
+    function Inserer(T: in TPtrCellule; N: in TElem) return TPtrCellule;
     
     generic
         with function egaux(T1: in TElem; T2: in TElem) return Boolean;

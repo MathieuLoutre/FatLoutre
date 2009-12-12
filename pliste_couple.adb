@@ -123,29 +123,49 @@ package body PListe_Couple is
       end if;
     end nb_Facteur;
 
-    function ajout_Mot(T: in TListe_Couple; Mot: in TMot) return TListe_Couple is
-        Couple: TCouple;
+    function present(T: in TListe_Couple; Mot: in TMot) return Boolean is
     begin
         if not vide(T) then
             if mots_Egaux(mot_Couple(valeur_Couple(T)), Mot) then
-                Couple := valeur_Couple(T);
-                ajout_Occurrence(Couple, 1);
-                return T;
+                return true;
             else
-                return ajout_Mot(couple_Suivant(T), Mot);
+                return present(suivant(T), Mot);
             end if;
         else
-            Couple := creer_Couple(Mot, 1);
-    	    return insert_Croissant_Mot(T, Couple);
+            return false;
+        end if;
+    end present;
+    
+    function ajout_Mot(T: in TListe_Couple; Mot: in TMot) return TListe_Couple is
+        Couple: TCouple;
+        L: TListe_Couple := T;
+    begin
+        if not vide(T) then
+            if present(T, Mot) then
+                while not mots_Egaux(mot_Couple(valeur_Couple(L)), Mot) loop
+                    L := suivant(L);
+                end loop;
+                
+                Couple := ajout_Occurrence(valeur_Couple(L), 1);
+                modif_Val(L, Couple);
+                
+                return T;
+            else
+                return insert_Croissant_Mot(T, creer_Couple(Mot, 1));
+            end if;
+        else
+    	    return insert_Croissant_Mot(T, creer_Couple(Mot, 1));
         end if;
     end ajout_Mot;
-
+    
     procedure affichage_Decroissant(T: in TListe_Couple; N: in Integer) is
-    	L: TListe_Couple := tri_Decroissant_Occurrences(T);
+    	-- L: TListe_Couple := tri_Decroissant_Occurrences(T);
     	I: Integer := 0;
+    	L: TListe_Couple := T;
 	begin
-    	while (not vide(T) and then I < N) loop
-    	    affiche_Couple(valeur_Couple(T));
+    	while (not vide(L) and then I < N) loop
+    	    affiche_Couple(valeur_Couple(L));
+    	    L := suivant(L);
     	    I := I + 1;
     	end loop;
     end affichage_Decroissant;

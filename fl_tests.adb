@@ -37,6 +37,8 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Superieur'Access, "Liste Couple nb Superieur");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Occurrence'Access, "Liste Couple nb Occurrence");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Taille'Access, "Liste Couple Taille");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_Presence'Access, "Liste Couple Presence");
+	    Framework.Add_Test_Routine(T, test_Liste_Couple_Presence_Fail'Access, "Liste Couple Presence Fail");
         
     end Initialize;
       
@@ -440,9 +442,7 @@ package body FL_Tests is
 	    Mot : TMot;
     begin
 	    Mot := creer_Mot;
-    	Mot := ajout_Lettre_Fin(Mot, 'N');
-    	Mot := ajout_Lettre_Fin(Mot, 'i');
-    	Mot := ajout_Lettre_Fin(Mot, 'h');
+    	Mot := ajout_Lettre_Fin(Mot, 'L');
 
     	Liste_Couple := creer_Liste_Couple;
     	Liste_Couple := ajout_Mot(Liste_Couple, Mot);
@@ -470,26 +470,56 @@ package body FL_Tests is
     end test_Liste_Couple_valeur;
 
     procedure test_Liste_Couple_nb_Superieur is
-	Liste_Couple: TListe_Couple;
-	Mot1, Mot2: TMot;
-	Couple1, Couple2: TCouple;
+	    Liste_Couple: TListe_Couple;
+    	Mot1, Mot2: TMot;
     begin
-	Mot1 := creer_Mot;
-	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
-	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
-	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
-	Couple1 := creer_Couple(Mot1, 1);
+	    Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+    	
+    	Mot2 := creer_Mot;
+    	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
 
-	Mot2 := creer_Mot;
-	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
-	Couple2 := creer_Couple(Mot2, 3);
-
-	Liste_Couple := creer_Liste_Couple;
-	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
-	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
-
+    	Liste_Couple := creer_Liste_Couple;
+    	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+    	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+        
         assert(nb_Superieur(Liste_Couple, 2) = 1, "Le nombre de mots supérieur n'est pas bon");
     end test_Liste_Couple_nb_Superieur;
+    
+    procedure test_Liste_Couple_Presence is
+	    Liste_Couple: TListe_Couple;
+    	Mot1: TMot;
+    begin
+	    Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+    	Liste_Couple := creer_Liste_Couple;
+    	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+        
+        assert(present(Liste_Couple, Mot1) = True, "Le Mot1 devrait être présent dans la liste");
+    end test_Liste_Couple_Presence;
+    
+    procedure test_Liste_Couple_Presence_Fail is
+	    Liste_Couple: TListe_Couple;
+    	Mot1, Mot2: TMot;
+    begin
+	    Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+    	
+    	Mot2 := creer_Mot;
+    	Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+    	Liste_Couple := creer_Liste_Couple;
+    	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+        
+        assert(present(Liste_Couple, Mot2) = False, "Le Mot2 ne devrait pas être présent dans la liste");
+    end test_Liste_Couple_Presence_Fail;
     
     procedure test_Liste_Couple_Taille is
 	Liste_Couple: TListe_Couple;
@@ -506,6 +536,7 @@ package body FL_Tests is
 	Liste_Couple := creer_Liste_Couple;
 	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
 	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+	Liste_Couple := ajout_Mot(Liste_Couple, Mot2); -- ajout de 2 fois le même mot pour test
 
         assert(nb_Mots_Differents(Liste_Couple) = 2, "Le nombre de mots différents n'est pas bon");
     end test_Liste_Couple_Taille;
@@ -525,8 +556,10 @@ package body FL_Tests is
  	Liste_Couple := creer_Liste_Couple;
  	Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
  	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+ 	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+ 	Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
 
-         assert(nb_Total_Occurrence(Liste_Couple) = 2, "Le nombre d'occurrence n'est pas bon");
+         assert(nb_Total_Occurrence(Liste_Couple) = 4, "Le nombre d'occurrence n'est pas bon");
      end test_Liste_Couple_nb_Occurrence;
      
 end FL_Tests;

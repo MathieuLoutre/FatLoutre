@@ -18,12 +18,14 @@ package body PCouple is
 
     procedure fusion_Occurrence(Couple1: in out TCouple; Couple2: in TCouple) is
     begin
-    	ajout_Occurrence(Couple1, occurrence(Couple2));
+    	Couple1 := ajout_Occurrence(Couple1, occurrence(Couple2));
     end fusion_Occurrence;
        	
-    procedure ajout_Occurrence(Couple: in out TCouple; N: in Integer) is
+    function ajout_Occurrence(Couple: in TCouple; N: in Integer) return TCouple is
+        Couple_Temp: TCouple;
     begin
-       	Couple.occurrences := occurrence(Couple) + N;
+       	Couple_Temp.occurrences := occurrence(Couple) + N;
+       	return Couple_Temp;
     end ajout_Occurrence;
 
     function couples_Egaux_Mot(Couple1: in TCouple; Couple2: in TCouple) return Boolean is
