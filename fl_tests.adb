@@ -789,13 +789,17 @@ package body FL_Tests is
 -- Sur les fichiers
 
     procedure test_Fichier_Gen_Liste_Couples is
-        Liste_Couple: TListe_Couple;
+        Liste_Couple, Liste_Couple2: TListe_Couple;
         Fichier: File_Type;
+        Fichier2: File_Type;
+        Fichier3: File_Type;
     begin
         
         gen_Liste_Couples(Fichier, Liste_Couple);
         
-        affichage_decroissant(Liste_Couple, 100);
+        gen_Fichier(Liste_Couple, Fichier2);
+        
+        regen_Liste_Couples(Fichier3, Liste_Couple2);
         
         --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
     end test_Fichier_Gen_Liste_Couples;

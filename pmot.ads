@@ -41,6 +41,8 @@ package PMot is
     function mots_Egaux is new listes_Egales("=");
         -- On utilise l'égalité pour faire la comparaison des mots
   
+    function mot_to_Int(Mot: in TMot) return Integer;
+  
     private
         
         function est_Petit_Mot(Mot: in TMot) return Boolean;

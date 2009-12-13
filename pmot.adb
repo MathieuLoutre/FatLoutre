@@ -122,5 +122,20 @@ package body PMot is
 	    
     	return found;
     end est_Petit_Mot;
+    
+    function mot_to_Int(Mot: in TMot) return Integer is
+	    M: TMot := Mot;
+	    S: String(1..longueur_Mot(Mot));
+	    I: Integer := 1;
+	begin
+
+	    while not mot_Vide(M) and I <= longueur_Mot(Mot) loop
+	        S(I) := valeur_Mot(M);
+	        M := suivant(M);
+	        I := I + 1;
+	    end loop;
+
+	    return integer'value(S);
+	end mot_to_Int;
 
 end PMot;

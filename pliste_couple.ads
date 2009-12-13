@@ -62,14 +62,14 @@ package PListe_Couple is
     
     function present(T: in TListe_Couple; Mot: in TMot) return Boolean;
     
+    function insert_Croissant_Mot is new insert_Trie(couple_Inferieur_Mot);
+        -- Quand on insert croissant des couples sur les mots, il faut regarder l'infériorité des mots (cf algo insert_trie)
+    
     private
     
         function insert_Decroissant_Occurrences is new insert_Trie(couple_Superieur_Occurrence);
             -- Quand on veut insert des couples de manière décroisante sur les couples (pour le tri decroissant sur occurrence)
             -- on passe la superiorité sur les occurrences
-            
-        function insert_Croissant_Mot is new insert_Trie(couple_Inferieur_Mot);
-            -- Quand on insert croissant des couples sur les mots, il faut regarder l'infériorité des mots (cf algo insert_trie)
             
         procedure supprimer_Couple is new supprimer(couples_Egaux_Mot);
             -- Quand on supprime on regarde l'égalité sur les mots

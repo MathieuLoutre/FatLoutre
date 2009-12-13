@@ -161,9 +161,8 @@ package body PListe_Couple is
     end ajout_Mot;
     
     procedure affichage_Decroissant(T: in TListe_Couple; N: in Integer) is
-    	-- L: TListe_Couple := tri_Decroissant_Occurrences(T);
+    	L: TListe_Couple := tri_Decroissant_Occurrences(T);
     	I: Integer := 0;
-    	L: TListe_Couple := T;
 	begin
     	while (not vide(L) and then I < N) loop
     	    affiche_Couple(valeur_Couple(L));
@@ -179,9 +178,15 @@ package body PListe_Couple is
 
     function tri_Decroissant_Occurrences(T: in TListe_Couple) return TListe_Couple is
         L: TListe_Couple;
+        K: TListe_Couple := T;
     begin
-        -- Retourne la liste de couple triée sur le nombre d'occurrences de manière croissante
         L := creer_Liste_Couple;
+        
+        while not vide(K) loop
+            L := insert_Decroissant_Occurrences(L, valeur_Couple(K));
+            K := suivant(K);
+        end loop;
+            
         return L;
     end tri_Decroissant_Occurrences;
 
