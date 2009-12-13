@@ -14,6 +14,7 @@ package body PCouple is
     begin
     	affiche_Mot(mot_Couple(Couple));
     	put(occurrence(Couple));
+    	new_line;
     end affiche_Couple;
 
     procedure fusion_Occurrence(Couple1: in out TCouple; Couple2: in TCouple) is

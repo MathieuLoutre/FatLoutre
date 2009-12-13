@@ -49,6 +49,9 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Moy_Long'Access, "Liste Couple moy Longueur");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Occur_Mot'Access, "Liste Couple nb Occurrence Mot");
 	    
+	    -- Sur les fichiers
+	    Framework.Add_Test_Routine(T, test_Fichier_Gen_Liste_Couples'Access, "Generer Fichier");
+	    
         
     end Initialize;
       
@@ -782,5 +785,19 @@ package body FL_Tests is
 
               assert(nb_Occurrences(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
         end test_Liste_Couple_nb_Occur_Mot;
+    
+-- Sur les fichiers
+
+    procedure test_Fichier_Gen_Liste_Couples is
+        Liste_Couple: TListe_Couple;
+        Fichier: File_Type;
+    begin
+        
+        gen_Liste_Couples(Fichier, Liste_Couple);
+        
+        affichage_decroissant(Liste_Couple, 100);
+        
+        --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
+    end test_Fichier_Gen_Liste_Couples;
      
 end FL_Tests;

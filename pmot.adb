@@ -35,7 +35,6 @@ package body PMot is
         return suivant(Mot);
     end lettre_Suivante;
     
-    -- TO BE REFACTORED
     function prefixe(Mot1: in TMot; Mot2: in TMot) return Boolean is
         prefx: Boolean := true;
         Mot_Temp1: TMot := Mot1;

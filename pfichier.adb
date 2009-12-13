@@ -1,3 +1,5 @@
+with Ada.Characters.Handling; use Ada.Characters.Handling;
+
 package body PFichier is
     
     procedure gen_Liste_Couples(Fichier: in out File_Type; T: out TListe_Couple) is
@@ -10,10 +12,15 @@ package body PFichier is
     	
     	while (not end_of_file(Fichier)) loop
     		get(Fichier, C);
-    		if (C /= '.' or C /= ' ' or C /= ',') then
+    		if (is_Letter(C)) then
+    			if (is_Upper(C)) then
+    			    -- Si c'est une majuscule, on la lowercase !
+    			    C := to_Lower(C);
+    			end if;
+    			    
     			M := ajout_Lettre_Fin(M, C);
     		else
-    			if (significatif(M)) then
+    			if (not mot_Vide(M) and then significatif(M)) then
     			    T := ajout_mot(T, M);
     			end if;
     			M := creer_Mot;
