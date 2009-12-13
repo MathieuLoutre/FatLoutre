@@ -1,4 +1,3 @@
-with text_io; use text_io;
 package body PListe_Couple is
     
     function creer_Liste_Couple return TListe_Couple is

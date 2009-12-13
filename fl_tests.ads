@@ -18,6 +18,8 @@ package FL_Tests is
     procedure test_Mot_Suffixe;
     procedure test_Mot_Facteur;
     procedure test_Mot_Egaux;
+    procedure test_Mot_Petit;
+    procedure test_Mot_Petit_Fail;
     procedure test_Mot_Prefixe_Fail;
     procedure test_Mot_Suffixe_Fail;
     procedure test_Mot_Facteur_Fail;

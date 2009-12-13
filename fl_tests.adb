@@ -19,6 +19,8 @@ package body FL_Tests is
         Framework.Add_Test_Routine(T, test_Mot_Egaux_Fail'Access, "Mot Egaux Fail");
         Framework.Add_Test_Routine(T, test_Mot_Superieur'Access, "Mot Superieur");
         Framework.Add_Test_Routine(T, test_Mot_Superieur_Fail'Access, "Mot Superieur Fail");
+        Framework.Add_Test_Routine(T, test_Mot_Petit'Access, "Mot Petit");
+        Framework.Add_Test_Routine(T, test_Mot_Petit_Fail'Access, "Mot Petit Fail");
         
         -- Les Couples
         Framework.Add_Test_Routine(T, test_Couple_Egaux'Access, "Couple Egalité");
@@ -222,6 +224,30 @@ package body FL_Tests is
         
         assert(mots_Egaux(Mot, Mot2) = True, "Les 2 mots devraient être égaux");
     end test_Mot_Egaux;
+    
+    procedure test_Mot_Petit is
+        Mot: TMot;
+    begin
+        Mot := creer_Mot;
+        
+        Mot := ajout_Lettre_Fin(Mot, 'f');
+        Mot := ajout_Lettre_Fin(Mot, 'u');
+        Mot := ajout_Lettre_Fin(Mot, 'r');
+        
+        assert(significatif(Mot) = True, "Le mot devrait être significatif");
+    end test_Mot_Petit;
+    
+    procedure test_Mot_Petit_Fail is
+        Mot: TMot;
+    begin
+        Mot := creer_Mot;
+        
+        Mot := ajout_Lettre_Fin(Mot, 'm');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'h');
+        
+        assert(significatif(Mot) = False, "Le mot ne devrait pas être significatif");
+    end test_Mot_Petit_Fail;
 
     procedure test_Mot_Egaux_Fail is
         Mot: TMot;

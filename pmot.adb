@@ -97,29 +97,30 @@ package body PMot is
     
     function est_Petit_Mot(Mot: in TMot) return Boolean is
     	found: Boolean := false;
-    	Temp: TMot := Mot;
+    	Temp: TMot;
     	C: Character;
     	Fichier: File_Type;
     begin
-    	open(Fichier, In_File, "petit-mot.txt");
+    	open(Fichier, In_File, "petits-mots.txt");
 	
-    	while (not end_of_file(Fichier) and then not found) loop
+    	while (not end_of_file(Fichier) and not found) loop
     		get(Fichier, C);
     		if (C = valeur(Mot)) then
-    			while (C = valeur(Temp)) loop
-    				Temp := suivant(Temp);
+    		    Temp := ajout_Lettre_Fin(Temp, C);
+    			while not end_of_line(Fichier) loop
+    				get(Fichier, C);
+    				Temp := ajout_Lettre_Fin(Temp, C);
     			end loop;
-			
-    			found := vide(Temp);
-			
-    			if (not found) then
-    				Temp := Mot;
-    			end if;
+			    
+    			found := mots_Egaux(Mot, Temp);
+    			Temp := creer_Mot;
     		else
     			skip_line(Fichier);
     		end if;
     	end loop;
-	
+    	    
+	    close(Fichier);
+	    
     	return found;
     end est_Petit_Mot;
 
