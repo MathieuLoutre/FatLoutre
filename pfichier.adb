@@ -66,8 +66,8 @@ package body PFichier is
     	I: Integer := 0;
     begin
         T := creer_Liste_Couple;
-        -- On doit sauter la première ligne de stats qu'on pourra regénerer facilement à partir de la liste une fois complète
         open(Fichier, In_File, "liste-mot.txt");
+        skip_line(Fichier); -- On saute la ligne des stats
         
         while (not end_of_file(Fichier)) loop
     		if (not end_of_line(Fichier)) then
@@ -97,6 +97,10 @@ package body PFichier is
         close(Fichier);
         open(Fichier, Out_File, "liste-mot.txt");
         -- NE PAS OUBLIER LE NB MOTS ET OCCURRENCES
+        put(Fichier, nb_Mots_Differents(L));
+        put(Fichier, " ");
+        put(Fichier, nb_Total_Occurrence(L));
+        new_line(Fichier);
         
         while not liste_Couple_Vide(L) loop
             ecrire_ligne(Fichier, valeur_Couple(L));

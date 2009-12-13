@@ -801,6 +801,8 @@ package body FL_Tests is
         
         regen_Liste_Couples(Fichier3, Liste_Couple2);
         
+        affichage_decroissant(Liste_Couple2, 200);
+        
         --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
     end test_Fichier_Gen_Liste_Couples;
      
