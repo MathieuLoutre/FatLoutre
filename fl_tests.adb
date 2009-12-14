@@ -643,7 +643,6 @@ package body FL_Tests is
     	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
     	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
         	
-
           assert(nb_Prefixe(Liste_Couple, Mot2) = 2, "Le nombre de préfixes est incorrect");
       end test_Liste_Couple_nb_Prefixe;
         

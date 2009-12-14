@@ -12,7 +12,7 @@ package body PListe_Gen is
 
     function ajout_Debut(T: in TPtrCellule; N: in TElem) return TPtrCellule is
     begin
-    	return new TCellule'(N, null);
+        return new TCellule'(N, null);
     end ajout_Debut;
     
     procedure modif_Val_Suivant(T: in out TPtrCellule; N: in TPtrCellule) is
@@ -84,22 +84,21 @@ package body PListe_Gen is
 
 
 --------------------------- GENERIQUE ---------------------------
-
-    -- TO BE REFACTORED
+    
     function insert_Trie(T: in TPtrCellule; N: in TElem) return TPtrCellule is
-        L: TPtrCellule := T;
+        L1 : TPtrCellule;
     begin
-        if vide(L) then
-            L := ajout_Debut(L, N);
-            return L;
+        if vide(T) then
+             L1 := ajout_Debut(L1, N);
+            return L1;
+        elsif ordre(valeur(T), N) then
+            L1 := new TCellule'(N, T);
+            return L1;
         else
-            while (not vide(suivant(L))) and then ordre(N, valeur(suivant(L))) loop
-                L := suivant(L);
-            end loop;
-
-            L := Inserer(L, N);
+            L1 := T;
+            modif_Val_Suivant(L1, insert_Trie(T.suiv, N));
             return T;
-        End if;
+        end if;
     end insert_Trie;
 
 	function listes_Egales(T1: in TPtrCellule; T2: in TPtrCellule) return Boolean is
