@@ -1,39 +1,11 @@
 package body PMot is
-
+    
     function significatif(Mot: in TMot) return Boolean is
     begin
-        return (longueur(Mot) > 3 or est_Petit_Mot(Mot));
+        return (longueur_Mot(Mot) > 3 or est_Petit_Mot(Mot));
+        -- Le mot est significatif si il est de longueur supérieur à 3
+        -- Ou si il est inclu dans petits-mots.txt
     end significatif;
-
-    function creer_Mot return TMot is
-    begin
-        return creer_Liste;
-    end creer_Mot;
-    
-    function mot_Vide(Mot: in TMot) return Boolean is
-    begin
-        return vide(Mot);
-    end mot_Vide;
-    
-    function longueur_Mot(Mot: in TMot) return Integer is
-    begin
-        return longueur(Mot);
-    end longueur_Mot;
-
-    function ajout_Lettre_Fin(Mot: in TMot; N: in Character) return TMot is
-    begin
-        return ajout_Fin(Mot, N);
-    end ajout_Lettre_Fin;
-    
-    function valeur_Mot(Mot: in TMot) return Character is
-    begin
-        return valeur(Mot);
-    end valeur_Mot;
-    
-    function lettre_Suivante(Mot: in TMot) return TMot is
-    begin
-        return suivant(Mot);
-    end lettre_Suivante;
     
     function prefixe(Mot1: in TMot; Mot2: in TMot) return Boolean is
         prefx: Boolean := true;
@@ -42,11 +14,17 @@ package body PMot is
     begin
     	while (not mot_Vide(Mot_Temp1) and then not mot_Vide(Mot_Temp2) and then prefx = true) loop
     		prefx := (valeur_Mot(Mot_Temp1) = valeur_Mot(Mot_Temp2));
+    		-- On continue tant que les 2 lettres sont égales
     		Mot_Temp1 := suivant(Mot_Temp1);
     		Mot_Temp2 := suivant(Mot_Temp2);
+    		-- On passe aux lettres suivantes
     	end loop;
+    	-- On est sorti soit car les 2 lettres ne sont plus égales
+    	-- Soit car un des 2 mots (ou les 2) est vide
         
     	return (prefx and mot_Vide(Mot_Temp2));
+    	-- Le cas qui nous interesse est bien sûr celui ou prefx est toujours à true
+        -- et où le mot2 (le préfixe) est vide (on est arrivé jusqu'au bout sans encombres)
     end prefixe;
 
     function suffixe(Mot1: in TMot; Mot2: in TMot) return Boolean is
@@ -128,7 +106,6 @@ package body PMot is
 	    S: String(1..longueur_Mot(Mot));
 	    I: Integer := 1;
 	begin
-
 	    while not mot_Vide(M) and I <= longueur_Mot(Mot) loop
 	        S(I) := valeur_Mot(M);
 	        M := suivant(M);
@@ -137,5 +114,37 @@ package body PMot is
 
 	    return integer'value(S);
 	end mot_to_Int;
+	
+	-- Ces fonctions ne sont que des renames des fonctions génériques 
+    -- pour qu'elles puissent être appellées dans d'autres packages
+    function creer_Mot return TMot is
+    begin
+        return creer_Liste;
+    end creer_Mot;
+    
+    function mot_Vide(Mot: in TMot) return Boolean is
+    begin
+        return vide(Mot);
+    end mot_Vide;
+    
+    function longueur_Mot(Mot: in TMot) return Integer is
+    begin
+        return longueur(Mot);
+    end longueur_Mot;
+
+    function ajout_Lettre_Fin(Mot: in TMot; N: in Character) return TMot is
+    begin
+        return ajout_Fin(Mot, N);
+    end ajout_Lettre_Fin;
+    
+    function valeur_Mot(Mot: in TMot) return Character is
+    begin
+        return valeur(Mot);
+    end valeur_Mot;
+    
+    function lettre_Suivante(Mot: in TMot) return TMot is
+    begin
+        return suivant(Mot);
+    end lettre_Suivante;
 
 end PMot;

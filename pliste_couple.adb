@@ -46,7 +46,6 @@ package body PListe_Couple is
         return (float(nb) / float(nb_Mots_Differents(T)));
     end moy_Occurrence;
 
-
     function moy_Longueur(T: in TListe_Couple) return Float is
         long: integer := 0;
         L: TListe_Couple := T;
