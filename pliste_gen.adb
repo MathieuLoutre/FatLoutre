@@ -114,15 +114,16 @@ package body PListe_Gen is
 
 	function supprimer(T: in TPtrCellule; N: in TElem) return TPtrCellule is
 	begin
-		if (not vide(T)) then 
-			if egaux(valeur(T), N) then 
-			    return suivant(T);
-			else 
-				return supprimer(suivant(T), N);
-			end if;
-		else
-		    return null;
+	    if vide(T) then
+		return T; 
+	    else
+		if egaux(valeur(T), N) then
+		    return T.suiv;
+		else 
+		    T.suiv := supprimer(T.suiv,N);
+		    return T;
 		end if;
+	    end if;
 	end supprimer;
       
 end PListe_Gen;
