@@ -182,6 +182,7 @@ package body PListe_Couple is
                 modif_Val(L, ajout_Occurrence(valeur(L), nb_Occurrences(T, Mot2)));
                 L := T;
                 L := supprimer_Couple(L, creer_Couple(Mot2, 1));
+                
                 return L; 
             else
                 return T;--put("YOU THOUGHT YOU WERE A CLEVER BASTERD");
