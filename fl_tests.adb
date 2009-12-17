@@ -48,6 +48,7 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Moy_Occur'Access, "Liste Couple moy Occurrence");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Moy_Long'Access, "Liste Couple moy Longueur");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Occur_Mot'Access, "Liste Couple nb Occurrence Mot");
+	    Framework.Add_Test_Routine(T, test_Liste_Fusion_Couple'Access, "Fusion de Mots");
 	    
 	    -- Sur les fichiers
 	    Framework.Add_Test_Routine(T, test_Fichier_Gen_Liste_Couples'Access, "Generer Fichier");
@@ -735,6 +736,8 @@ package body FL_Tests is
       	  Mot1 := ajout_Lettre_Fin(Mot1, 'N');
       	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
       	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
 
           Mot3 := creer_Mot;
       	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
@@ -752,8 +755,8 @@ package body FL_Tests is
       	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
       	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
       	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
-
-          assert(moy_Longueur(Liste_Couple) = 2.00, "La moyenne n'est pas bonne");
+          
+          assert(moy_Longueur(Liste_Couple) = 3.00, "La moyenne n'est pas bonne");
       end test_Liste_Couple_Moy_Long;
 
        procedure test_Liste_Couple_nb_Occur_Mot is
@@ -785,6 +788,43 @@ package body FL_Tests is
               assert(nb_Occurrences(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
         end test_Liste_Couple_nb_Occur_Mot;
     
+    
+    procedure test_Liste_Fusion_Couple is
+        Liste_Couple: TListe_Couple;
+    	Mot1, Mot2, Mot3: TMot;
+    	lol, lol2: integer;
+    begin
+	    Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+       	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+    	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+    	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+    	  Mot3 := ajout_Lettre_Fin(Mot3, 's');
+
+    	  Mot2 := creer_Mot;
+    	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+    	  Liste_Couple := creer_Liste_Couple;
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+    	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+          
+          lol := nb_Occurrences(Liste_Couple, Mot1);
+          lol2 := nb_Occurrences(Liste_Couple, Mot2);
+          
+          Liste_Couple := fusion_Mots(Liste_Couple, Mot1, Mot2);
+          
+          assert(nb_Occurrences(Liste_Couple, Mot1) = lol+lol2 and (present(Liste_Couple, Mot2) = False), "La Fusion ne marche pas");
+    end test_Liste_Fusion_Couple;
+    
 -- Sur les fichiers
 
     procedure test_Fichier_Gen_Liste_Couples is
@@ -798,9 +838,9 @@ package body FL_Tests is
         
         gen_Fichier(Liste_Couple, Fichier2);
         
-        regen_Liste_Couples(Fichier3, Liste_Couple2);
+        --regen_Liste_Couples(Fichier3, Liste_Couple2);
         
-        affichage_decroissant(Liste_Couple2, 200);
+        --affichage_decroissant(Liste_Couple2, 200);
         
         --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
     end test_Fichier_Gen_Liste_Couples;

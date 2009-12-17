@@ -1,7 +1,7 @@
 with PListe_Gen;
 with PCouple; use PCouple;
 with PMot; use PMot;
-
+with text_io; use text_io;
 package PListe_Couple is
     
     package Liste_Couple is new PListe_Gen(TCouple, affiche_Couple); use Liste_Couple;
@@ -53,7 +53,7 @@ package PListe_Couple is
     procedure affichage_Decroissant(T: in TListe_Couple; N: in Integer);
         -- Affiche les N premiers éléments de la liste ordonné par leurs occurrences décroissantes.
     
-    procedure fusion_Couples(T: in TListe_Couple; Couple1: in TCouple; Couple2: in TCouple);
+    function fusion_Mots(T: in TListe_Couple; Mot1: in TMot; Mot2: in TMot) return TListe_Couple;
         -- Augmente les occurrences de Couple1 de celles de Couple2 et supprime Couple2 de la liste
         -- Retourne une erreur si un des 2 mots ou les 2 ne sont pas dans la liste
     
@@ -71,7 +71,7 @@ package PListe_Couple is
             -- Quand on veut insert des couples de manière décroisante sur les couples (pour le tri decroissant sur occurrence)
             -- on passe la superiorité sur les occurrences
             
-        procedure supprimer_Couple is new supprimer(couples_Egaux_Mot);
+        function supprimer_Couple is new supprimer(couples_Egaux_Mot);
             -- Quand on supprime on regarde l'égalité sur les mots
         
         function tri_Decroissant_Occurrences(T: in TListe_Couple) return TListe_Couple;

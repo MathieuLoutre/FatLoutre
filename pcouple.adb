@@ -16,11 +16,6 @@ package body PCouple is
     	put(occurrence(Couple));
     	new_line;
     end affiche_Couple;
-
-    procedure fusion_Occurrence(Couple1: in out TCouple; Couple2: in TCouple) is
-    begin
-    	Couple1 := ajout_Occurrence(Couple1, occurrence(Couple2));
-    end fusion_Occurrence;
        	
     function ajout_Occurrence(Couple: in TCouple; N: in Integer) return TCouple is
         Couple_Temp: TCouple := Couple;

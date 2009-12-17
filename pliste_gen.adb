@@ -67,7 +67,6 @@ package body PListe_Gen is
 	    end if;
     end affiche_Liste;
     
-    -- NEED ERROR CASE - REFACTORING
     function valeur(T: in TPtrCellule) return TElem is
     begin
 	    return T.val;
@@ -81,7 +80,6 @@ package body PListe_Gen is
 		    return null;
 	end if;
     end suivant;
-
 
 --------------------------- GENERIQUE ---------------------------
     
@@ -114,15 +112,16 @@ package body PListe_Gen is
         end if;
 	end listes_Egales;
 
-	procedure supprimer(T: in out TPtrCellule; N: in TElem) is
+	function supprimer(T: in TPtrCellule; N: in TElem) return TPtrCellule is
 	begin
 		if (not vide(T)) then 
-			if egaux(valeur(T), N)
-				then T:= suivant(T);
+			if egaux(valeur(T), N) then 
+			    return suivant(T);
 			else 
-				T := suivant(T);
-				supprimer(T, N);
+				return supprimer(suivant(T), N);
 			end if;
+		else
+		    return null;
 		end if;
 	end supprimer;
       

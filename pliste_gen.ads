@@ -42,7 +42,7 @@ package PListe_Gen is
     
     generic
         with function egaux(T1: in TElem; T2: in TElem) return Boolean;
-    procedure supprimer (T: in out TPtrCellule; N: in TElem);
+    function supprimer (T: in TPtrCellule; N: in TElem) return TPtrCellule;
         -- Retourne une liste sans le premier TElem rencontré
         -- Retourne la même liste si le TElem n'est pas dans la liste
 

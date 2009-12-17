@@ -54,7 +54,8 @@ package FL_Tests is
     procedure test_Liste_Couple_nb_Facteur;
     procedure test_Liste_Couple_Moy_Occur;
     procedure test_Liste_Couple_Moy_Long;
-    procedure test_Liste_Couple_nb_Occur_Mot;    
+    procedure test_Liste_Couple_nb_Occur_Mot;  
+    procedure test_Liste_Fusion_Couple;  
         
 -- Test sur les fichiers
     procedure test_Fichier_Gen_Liste_Couples;

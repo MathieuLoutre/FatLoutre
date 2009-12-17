@@ -34,8 +34,5 @@ package PCouple is
             mot: TMot;
             occurrences: Integer;
         end record;
-            
-        procedure fusion_Occurrence(Couple1: in out TCouple; Couple2: in TCouple);
-            -- Retourne un TCouple avec les occurrences de T1 augmentés des occurrences de T2
 
 end PCouple;

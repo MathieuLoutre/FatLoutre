@@ -43,9 +43,9 @@ package body PListe_Couple is
             L := suivant(L);
         end loop;
     
-        return float((nb / nb_Mots_Differents(T)));
+        return (float(nb) / float(nb_Mots_Differents(T)));
     end moy_Occurrence;
-    -- NEED CHECK
+
 
     function moy_Longueur(T: in TListe_Couple) return Float is
         long: integer := 0;
@@ -56,9 +56,8 @@ package body PListe_Couple is
             L := suivant(L);
         end loop;
         
-        return float((long / nb_Mots_Differents(T)));
+        return (float(long) / float(nb_Mots_Differents(T)));
     end moy_Longueur;
-    -- NEED CHECK
 
     function nb_Superieur(T: in TListe_Couple; N: in Integer) return Integer is
     begin
@@ -171,10 +170,26 @@ package body PListe_Couple is
     	end loop;
     end affichage_Decroissant;
 
-    procedure fusion_Couples(T: in TListe_Couple; Couple1: in TCouple; Couple2: in TCouple) is
+    function fusion_Mots(T: in TListe_Couple; Mot1: in TMot; Mot2: in TMot) return TListe_Couple is
+        L: TListe_Couple := T;
     begin
-        null;
-    end fusion_Couples;
+        if (not vide(T)) then
+            if (present(T, Mot1) and present(T, Mot2)) then
+                while not (mots_Egaux(mot_couple(valeur(L)), Mot1)) loop
+                    L := suivant(L);
+                end loop;
+                
+                modif_Val(L, ajout_Occurrence(valeur(L), nb_Occurrences(T, Mot2)));
+                L := T;
+                L := supprimer_Couple(L, creer_Couple(Mot2, 1));
+                return L; 
+            else
+                return T;--put("YOU THOUGHT YOU WERE A CLEVER BASTERD");
+            end if;
+        else
+            return T;--put("LISTE VIDE");
+        end if;
+    end fusion_Mots;
 
     function tri_Decroissant_Occurrences(T: in TListe_Couple) return TListe_Couple is
         L: TListe_Couple;
