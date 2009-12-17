@@ -113,17 +113,18 @@ package body PListe_Gen is
         end if;
 	end listes_Egales;
 
-	procedure supprimer(T: in out TPtrCellule; N: in TElem) is
+	function supprimer(T: in TPtrCellule; N: in TElem) return TPtrCellule is
 	begin
-		if (not vide(T)) then 
-			if egaux(valeur(T), N) then 
-			    T:= suivant(T);
-			    put("lol");
-			else 
-				T := suivant(T);
-				supprimer(T, N);
-			end if;
-		end if;
+	    if vide(T) then
+		    return T; 
+	    else
+		    if egaux(valeur(T), N) then
+		        return suivant(T);
+		    else 
+		        T.suiv := supprimer(T.suiv, N);
+		        return T;
+		    end if;
+	    end if;
 	end supprimer;
       
 end PListe_Gen;
