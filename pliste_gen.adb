@@ -1,4 +1,3 @@
-with text_io; use text_io;
 package body PListe_Gen is
 
     function creer_Liste return TPtrCellule is
