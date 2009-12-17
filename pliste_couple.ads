@@ -71,7 +71,7 @@ package PListe_Couple is
             -- Quand on veut insert des couples de manière décroisante sur les couples (pour le tri decroissant sur occurrence)
             -- on passe la superiorité sur les occurrences
             
-        function supprimer_Couple is new supprimer(couples_Egaux_Mot);
+        procedure supprimer_Couple is new supprimer(couples_Egaux_Mot);
             -- Quand on supprime on regarde l'égalité sur les mots
         
         function tri_Decroissant_Occurrences(T: in TListe_Couple) return TListe_Couple;

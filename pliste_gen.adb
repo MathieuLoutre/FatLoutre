@@ -1,3 +1,4 @@
+with text_io; use text_io;
 package body PListe_Gen is
 
     function creer_Liste return TPtrCellule is
@@ -112,16 +113,16 @@ package body PListe_Gen is
         end if;
 	end listes_Egales;
 
-	function supprimer(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+	procedure supprimer(T: in out TPtrCellule; N: in TElem) is
 	begin
 		if (not vide(T)) then 
 			if egaux(valeur(T), N) then 
-			    return suivant(T);
+			    T:= suivant(T);
+			    put("lol");
 			else 
-				return supprimer(suivant(T), N);
+				T := suivant(T);
+				supprimer(T, N);
 			end if;
-		else
-		    return null;
 		end if;
 	end supprimer;
       
