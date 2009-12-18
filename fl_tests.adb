@@ -1,3 +1,12 @@
+--  _____     _   _                _            
+-- |  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+-- | |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+-- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+-- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+--
+-- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- Modifications: http://github.com/Nagy/FatLoutre/commits/master/fl_tests.adb
+
 with Ahven; use Ahven;
 
 package body FL_Tests is
@@ -821,7 +830,7 @@ package body FL_Tests is
           lol2 := nb_Occurrences(Liste_Couple, Mot2);
           
           Liste_Couple := fusion_Mots(Liste_Couple, Mot1, Mot2);
-          affichage_decroissant(Liste_Couple, 100);
+          --affichage_decroissant(Liste_Couple, 100);
           assert(nb_Occurrences(Liste_Couple, Mot1) = lol+lol2 and (present(Liste_Couple, Mot2) = False), "La Fusion ne marche pas");
     end test_Liste_Fusion_Couple;
     
@@ -840,7 +849,7 @@ package body FL_Tests is
         
         regen_Liste_Couples(Fichier3, Liste_Couple2);
         
-        affichage_decroissant(Liste_Couple2, 200);
+        --affichage_decroissant(Liste_Couple2, 200);
         
         --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
     end test_Fichier_Gen_Liste_Couples;

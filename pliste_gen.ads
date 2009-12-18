@@ -1,3 +1,12 @@
+--  _____     _   _                _            
+-- |  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+-- | |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+-- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+-- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+--
+-- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pliste_gen.ads
+
 generic
     type TElem is private;
     with procedure affiche(E: in TElem);
@@ -14,8 +23,6 @@ package PListe_Gen is
 
     procedure affiche_Liste (T: in TPtrCellule);
     	-- Parcours la liste et affiche à l'aide de la fonction affiche passée en paramètre du package générique
-    	    
-    -- -- -- -- -- -- -- SHOULD BE PRIVATE -- -- -- -- -- -- -- 
     
     function ajout_Fin (T: in TPtrCellule; N: in TElem) return TPtrCellule;
         -- Ajoute un élément en fin de liste

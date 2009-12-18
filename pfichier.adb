@@ -1,3 +1,12 @@
+--  _____     _   _                _            
+-- |  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+-- | |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+-- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+-- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+--
+-- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pfichier.adb
+
 with Ada.Characters.Handling; use Ada.Characters.Handling;
 with ada.integer_text_io; use ada.integer_text_io;
 
@@ -14,7 +23,7 @@ package body PFichier is
     	while (not end_of_file(Fichier)) loop
     		get(Fichier, C);
     		
-    		if (is_Letter(C) and end_of_line(Fichier)) then
+    		if ((is_Letter(C) or (Character'pos(C) = 39 or Character'pos(C) = 45)) and end_of_line(Fichier)) then
     		    if (is_Upper(C)) then
     			    -- Si c'est une majuscule, on la lowercase !
     			    C := to_Lower(C);
@@ -26,7 +35,7 @@ package body PFichier is
         			T := ajout_mot(T, M);
         		end if;
         		M := creer_Mot;
-        	elsif (is_Letter(C)) then
+        	elsif ((is_Letter(C) or (Character'pos(C) = 39 or Character'pos(C) = 45))) then
         		if (is_Upper(C)) then
         		    -- Si c'est une majuscule, on la lowercase !
         			C := to_Lower(C);
@@ -96,10 +105,11 @@ package body PFichier is
         create(Fichier, Name => "liste-mot.txt");
         close(Fichier);
         open(Fichier, Out_File, "liste-mot.txt");
-        -- NE PAS OUBLIER LE NB MOTS ET OCCURRENCES
-        put(Fichier, nb_Mots_Differents(L));
-        put(Fichier, " ");
-        put(Fichier, nb_Total_Occurrence(L));
+        put(Fichier, "Mots differents: ");
+        put(Fichier, nb_Mots_Differents(L), 1);
+        put(Fichier, "    ");
+        put(Fichier, "Nombre occurrences: ");
+        put(Fichier, nb_Total_Occurrence(L), 1);
         new_line(Fichier);
         
         while not liste_Couple_Vide(L) loop

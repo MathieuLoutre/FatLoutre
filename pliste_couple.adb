@@ -1,49 +1,29 @@
-package body PListe_Couple is
-    
-    function creer_Liste_Couple return TListe_Couple is
-    begin
-        return creer_Liste;
-    end creer_Liste_Couple;
-    
-    function liste_Couple_Vide(T: in TListe_Couple) return Boolean is
-    begin
-        return vide(T);
-    end liste_Couple_Vide;
-    
-    function valeur_Couple(T: in TListe_Couple) return TCouple is
-    begin
-        return valeur(T);
-    end valeur_Couple;
+--  _____     _   _                _            
+-- |  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+-- | |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+-- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+-- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+--
+-- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pliste_couple.adb
 
-    function couple_Suivant(T: in TListe_Couple) return TListe_Couple is
-    begin
-        return suivant(T);
-    end couple_Suivant;
+package body PListe_Couple is
     
     function nb_Total_Occurrence(T: in TListe_Couple) return Integer is
     begin
         if not vide(T) then
             return (occurrence(valeur_Couple(T)) + nb_Total_Occurrence(couple_Suivant(T)));
+            -- le nombre d'occurrence, ce'st le nombre d'occurrence d'un couple + celui du reste de la liste
         else
             return 0;
         end if;
     end nb_Total_Occurrence;
 
-    function nb_Mots_Differents(T: in TListe_Couple) return Integer is
-    begin
-        return longueur(T);
-    end nb_Mots_Differents;
-
     function moy_Occurrence(T: in TListe_Couple) return Float is
-        nb: integer := 0;
         L: TListe_Couple := T;
     begin
-        while not vide(L) loop
-            nb := (nb + occurrence(valeur_Couple(T)));
-            L := suivant(L);
-        end loop;
-    
-        return (float(nb) / float(nb_Mots_Differents(T)));
+        return (float(nb_Total_Occurrence(T)) / float(nb_Mots_Differents(T)));
+        -- On fait simplement le nombre total d'occurrences divisé par le nombre de mots différents
     end moy_Occurrence;
 
     function moy_Longueur(T: in TListe_Couple) return Float is
@@ -54,17 +34,116 @@ package body PListe_Couple is
             long := (long + longueur_Mot(mot_Couple(valeur_Couple(L))));
             L := suivant(L);
         end loop;
+        -- On additionne la longueur des mots 
+        -- (on ne prend pas en compte le nombre d'occurrence (pas de coef))
         
         return (float(long) / float(nb_Mots_Differents(T)));
+        -- On divise par le nombre de mots différents
     end moy_Longueur;
 
+    function present(T: in TListe_Couple; Mot: in TMot) return Boolean is
+    begin
+        if not vide(T) then
+            -- On part à la recherche du mot perdu !
+            if mots_Egaux(mot_Couple(valeur_Couple(T)), Mot) then
+                return true;
+                -- Ouf ! On l'a enfin retrouvé :)
+            else
+                return present(suivant(T), Mot);
+                -- Encore une chance, voyons ce qu'il y a à la suite !
+            end if;
+        else
+            return false;
+            -- Pas trouvé :(
+        end if;
+    end present;
+    
+    function ajout_Mot(T: in TListe_Couple; Mot: in TMot) return TListe_Couple is
+        Couple: TCouple;
+        L: TListe_Couple := T;
+    begin
+        if not vide(T) then
+            if present(T, Mot) then
+                -- Si on est sûr que le mot est là...
+                while not mots_Egaux(mot_Couple(valeur_Couple(L)), Mot) loop
+                    L := suivant(L);
+                end loop;
+                -- On l'a trouvé !
+                
+                Couple := ajout_Occurrence(valeur_Couple(L), 1);
+                -- On lui ajoute 1
+                modif_Val(L, Couple);
+                -- et on l'affecte à la liste
+                
+                return T;
+            else
+                return insert_Croissant_Mot(T, creer_Couple(Mot, 1));
+                -- Il est nouveau, on l'insert à sa place dans la liste
+            end if;
+        else
+    	    return insert_Croissant_Mot(T, creer_Couple(Mot, 1));
+    	    -- Il est tout neuf, on fait pareil
+        end if;
+    end ajout_Mot;
+    
+    procedure affichage_Decroissant(T: in TListe_Couple; N: in Integer) is
+    	L: TListe_Couple := tri_Decroissant_Occurrences(T);
+    	I: Integer := 0;
+	begin
+    	while (not vide(L) and then I < N) loop
+    	    affiche_Couple(valeur_Couple(L));
+    	    L := suivant(L);
+    	    I := I + 1;
+    	end loop;
+    end affichage_Decroissant;
+
+    function fusion_Mots(T: in TListe_Couple; Mot1: in TMot; Mot2: in TMot) return TListe_Couple is
+        L: TListe_Couple := T;
+    begin
+        if (not vide(T)) then
+            if (present(T, Mot1) and present(T, Mot2)) then
+                while not (mots_Egaux(mot_couple(valeur(L)), Mot1)) loop
+                    L := suivant(L);
+                end loop;
+                
+                modif_Val(L, ajout_Occurrence(valeur(L), nb_Occurrences(T, Mot2)));
+                L := T;
+                L := supprimer_Couple(L, creer_Couple(Mot2, 1));
+                
+                return L; 
+            else
+                return T;
+            end if;
+        else
+            return T;
+        end if;
+    end fusion_Mots;
+
+    function tri_Decroissant_Occurrences(T: in TListe_Couple) return TListe_Couple is
+        L: TListe_Couple;
+        K: TListe_Couple := T;
+    begin
+        L := creer_Liste_Couple;
+        
+        while not vide(K) loop
+            L := insert_Decroissant_Occurrences(L, valeur_Couple(K));
+            K := suivant(K);
+        end loop;
+            
+        return L;
+    end tri_Decroissant_Occurrences;
+    
+    -- les fonctions suivantes ont toutes le même fonctionnement
     function nb_Superieur(T: in TListe_Couple; N: in Integer) return Integer is
     begin
         if not vide(T) then
+            -- Tant que c'est pas vide on regarde
             if (longueur_Mot(mot_Couple(valeur_Couple(T))) >= N) then
                 return (1 + nb_Superieur(couple_Suivant(T), N));
+                -- Si c'est bon, on ajoute un et on regarde la suite
             else
                 return (nb_Superieur(couple_Suivant(T), N));
+                -- Sinon, on passe juste à la suite
             end if;
         else
             return 0;
@@ -122,87 +201,32 @@ package body PListe_Couple is
             return 0;
       end if;
     end nb_Facteur;
-
-    function present(T: in TListe_Couple; Mot: in TMot) return Boolean is
-    begin
-        if not vide(T) then
-            if mots_Egaux(mot_Couple(valeur_Couple(T)), Mot) then
-                return true;
-            else
-                return present(suivant(T), Mot);
-            end if;
-        else
-            return false;
-        end if;
-    end present;
     
-    function ajout_Mot(T: in TListe_Couple; Mot: in TMot) return TListe_Couple is
-        Couple: TCouple;
-        L: TListe_Couple := T;
-    begin
-        if not vide(T) then
-            if present(T, Mot) then
-                while not mots_Egaux(mot_Couple(valeur_Couple(L)), Mot) loop
-                    L := suivant(L);
-                end loop;
-                
-                Couple := ajout_Occurrence(valeur_Couple(L), 1);
-                modif_Val(L, Couple);
-                
-                return T;
-            else
-                return insert_Croissant_Mot(T, creer_Couple(Mot, 1));
-            end if;
-        else
-    	    return insert_Croissant_Mot(T, creer_Couple(Mot, 1));
-        end if;
-    end ajout_Mot;
     
-    procedure affichage_Decroissant(T: in TListe_Couple; N: in Integer) is
-    	L: TListe_Couple := tri_Decroissant_Occurrences(T);
-    	I: Integer := 0;
-	begin
-    	while (not vide(L) and then I < N) loop
-    	    affiche_Couple(valeur_Couple(L));
-    	    L := suivant(L);
-    	    I := I + 1;
-    	end loop;
-    end affichage_Decroissant;
-
-    function fusion_Mots(T: in TListe_Couple; Mot1: in TMot; Mot2: in TMot) return TListe_Couple is
-        L: TListe_Couple := T;
+    -- Renames de fonctions génériques pour les utiliser, notamment dans les Unit Tests
+    function creer_Liste_Couple return TListe_Couple is
     begin
-        if (not vide(T)) then
-            if (present(T, Mot1) and present(T, Mot2)) then
-                while not (mots_Egaux(mot_couple(valeur(L)), Mot1)) loop
-                    L := suivant(L);
-                end loop;
-                
-                modif_Val(L, ajout_Occurrence(valeur(L), nb_Occurrences(T, Mot2)));
-                L := T;
-                L := supprimer_Couple(L, creer_Couple(Mot2, 1));
-                
-                return L; 
-            else
-                return T;--put("YOU THOUGHT YOU WERE A CLEVER BASTERD");
-            end if;
-        else
-            return T;--put("LISTE VIDE");
-        end if;
-    end fusion_Mots;
-
-    function tri_Decroissant_Occurrences(T: in TListe_Couple) return TListe_Couple is
-        L: TListe_Couple;
-        K: TListe_Couple := T;
+        return creer_Liste;
+    end creer_Liste_Couple;
+    
+    function liste_Couple_Vide(T: in TListe_Couple) return Boolean is
     begin
-        L := creer_Liste_Couple;
-        
-        while not vide(K) loop
-            L := insert_Decroissant_Occurrences(L, valeur_Couple(K));
-            K := suivant(K);
-        end loop;
-            
-        return L;
-    end tri_Decroissant_Occurrences;
+        return vide(T);
+    end liste_Couple_Vide;
+    
+    function valeur_Couple(T: in TListe_Couple) return TCouple is
+    begin
+        return valeur(T);
+    end valeur_Couple;
 
+    function couple_Suivant(T: in TListe_Couple) return TListe_Couple is
+    begin
+        return suivant(T);
+    end couple_Suivant;
+    
+    function nb_Mots_Differents(T: in TListe_Couple) return Integer is
+    begin
+        return longueur(T);
+    end nb_Mots_Differents;
+    
 end PListe_Couple;

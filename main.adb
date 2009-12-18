@@ -1,3 +1,12 @@
+--  _____     _   _                _            
+-- |  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+-- | |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+-- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+-- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+--
+-- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- Modifications: http://github.com/Nagy/FatLoutre/commits/master/main.adb
+
 with Text_Io; use Text_Io;
 with ada.Integer_Text_Io; use ada.Integer_Text_Io;
 with ada.Float_Text_Io; use ada.Float_Text_Io;
@@ -16,7 +25,11 @@ procedure FatLoutre is
         begin
     	get(c);
     	while c /= '.' loop
-    	    mot := ajout_Lettre_Fin(mot, to_lower(c));
+    	    if (is_Upper(c)) then
+    	        c := to_lower(c);
+    	    end if;
+    	    
+    	    mot := ajout_Lettre_Fin(mot, c);
     	    get(c);
     	end loop;
     	return mot;
@@ -29,7 +42,7 @@ Mot1, Mot2, Suff: TMot := creer_Mot;
 n: Integer := 1;
 n1: Integer;
 begin
-        gen_Liste_Couples(Fichier, Liste_Couple);
+        gen_Liste_Couples(Fichier, Liste_Couple2);
         gen_Fichier(Liste_Couple, Fichier2);
         --regen_Liste_Couples(Fichier3, Liste_Couple2);
         -- Optionnel
@@ -37,7 +50,7 @@ begin
 	while n /= 0 loop
 	    new_line;
 	    put_Line("########################################");
-	    put_Line("########          MENU         #########");
+	    put_Line("########        FatLoutre      #########");
 	    put_Line("########################################");
 	    new_line;
 	    put_line("Le contenu de texte.txt à été chargé");
@@ -51,7 +64,8 @@ begin
 	    put_Line("7. Enregistrer la liste de mots dans le fichier liste-mot.txt");
 	    put_Line("8. Charger la liste à partir du fichier liste-mot.txt");
 	    put_Line("9. Statistiques de la liste");
-	    put_Line("0. Exit");new_line;
+	    put_Line("0. Exit");
+	    new_line;
 	    put("Entrer un chiffre : ");
 	    
 	    get(n);
