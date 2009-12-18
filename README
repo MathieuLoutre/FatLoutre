@@ -31,7 +31,7 @@ mathieu.triay(at)gmail(dot)com ou yann.pravo(at)gmail(dot)com
 
 2. Liste des fichiers et dépendances
 
-* main.adb
+* fatloutre.adb
 
 Le fichier contenant la procédure principale, il suffit de le compiler et de le lancer pour exécuter le programme.
 
@@ -76,7 +76,7 @@ Pfichier n'est pas encore couvert.
 
 4. Guide d'Utilisation
 
-Il est recommandé de compiler les tests unitaires pour vérifier que la compilation sur votre machine ne cause pas d'erreur (le projet a été compilé avec succès sous Linux (Kubuntu) et Mac OSX (Leopard)). Une fois que les tests sont finis, vous pouvez compiler main.adb et lancer le programme.
+Il est recommandé de compiler les tests unitaires pour vérifier que la compilation sur votre machine ne cause pas d'erreur (le projet a été compilé avec succès sous Linux (Kubuntu) et Mac OSX (Leopard)). Une fois que les tests sont finis, vous pouvez compiler fatloutre.adb et lancer le programme.
 Le programme charge automatiquement le contenu de texte.txt. Placez votre texte dans ce fichier pour l'analyser.
 Ne supprimez ni liste-mot.txt, ni texte.txt, ni petits-mots.txt, ce sont des fichiers essentiels au fonctionnement du logiciel.
 Vous pouvez placer les mots de moins de 4 caractères que vous trouvez important dans petits-mots.txt, une ligne par mot.
