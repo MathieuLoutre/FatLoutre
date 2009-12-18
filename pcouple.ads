@@ -6,6 +6,9 @@
 --
 -- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pcouple.ads
+--
+-- Le couple est l'unité de base de la liste de couple. Elle contient un Tmot et un integer.
+-- Le paquetage dédié permet une meilleure abstraction si on doit changer de structure ou rajouter des éléments
 
 with PMot; use PMot;
 with Text_IO; use Text_IO;

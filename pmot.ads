@@ -6,6 +6,9 @@
 --
 -- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pmot.adb
+--
+-- Une liste de character utilisant pliste_gen. Utilisation de la liste plutôt
+-- que les strings car non bornée, parcours et opérations faciles et connus.
 
 with PListe_Gen;
 with Text_IO; use Text_IO;

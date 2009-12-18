@@ -6,6 +6,8 @@
 --
 -- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pfichier.ads
+--
+-- Abstraction et centralisation des fonctions sur les fichiers. 
 
 with PCouple; use PCouple;
 with PListe_Couple; use PListe_Couple;

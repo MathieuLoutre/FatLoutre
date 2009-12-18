@@ -6,6 +6,9 @@
 --
 -- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pliste_gen.ads
+-- 
+-- Paquetage de liste générique. Il est utilisé pour PMot et PListe_Couple. Permettra une meilleure
+-- flexibilité si jamais on cherche à changer de structure. Meilleure abstraction
 
 generic
     type TElem is private;

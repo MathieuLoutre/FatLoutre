@@ -6,6 +6,10 @@
 --
 -- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pliste_couple.ads
+--
+-- Liste de couples. Instancie pliste_gen et utilise principalement les couples. La liste de
+-- couple est plus simple à maitriser car la structure de liste est déjà connue.
+-- C'est les fonctions de ce paquetage sont principalement directement utilisé par l'utilisateur
 
 with PListe_Gen;
 with PCouple; use PCouple;
