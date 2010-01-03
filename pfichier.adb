@@ -1,20 +1,29 @@
+--  _____     _   _                _            
+-- |  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+-- | |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+-- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+-- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+--
+-- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pfichier.adb
+
 with Ada.Characters.Handling; use Ada.Characters.Handling;
 with ada.integer_text_io; use ada.integer_text_io;
 
 package body PFichier is
     
-    procedure gen_Liste_Couples(Fichier: in out File_Type; T: out TListe_Couple) is
+    procedure gen_Liste_Couples(Fichier: in out File_Type; T: out TListe_Couple; nomFichier : in String) is
     	M: TMot;
     	C: Character;
     begin
         M := creer_Mot;
         T := creer_Liste_Couple;
-    	open(Fichier, In_File, "texte.txt");
+    	open(Fichier, In_File, nomFichier);
     	
     	while (not end_of_file(Fichier)) loop
     		get(Fichier, C);
     		
-    		if (is_Letter(C) and end_of_line(Fichier)) then
+    		if ((is_Letter(C) or (Character'pos(C) = 39 or Character'pos(C) = 45)) and end_of_line(Fichier)) then
     		    if (is_Upper(C)) then
     			    -- Si c'est une majuscule, on la lowercase !
     			    C := to_Lower(C);
@@ -26,7 +35,7 @@ package body PFichier is
         			T := ajout_mot(T, M);
         		end if;
         		M := creer_Mot;
-        	elsif (is_Letter(C)) then
+        	elsif ((is_Letter(C) or (Character'pos(C) = 39 or Character'pos(C) = 45))) then
         		if (is_Upper(C)) then
         		    -- Si c'est une majuscule, on la lowercase !
         			C := to_Lower(C);
@@ -58,7 +67,7 @@ package body PFichier is
     	
     end ecrire_ligne;
 	
-    procedure regen_Liste_Couples(Fichier: in out File_Type; T: out TListe_Couple) is
+    procedure regen_Liste_Couples(Fichier: in out File_Type; T: out TListe_Couple; nomFichier : in String) is
     	Couple: TCouple;
     	C: Character;
     	M: TMot := creer_Mot;
@@ -66,7 +75,7 @@ package body PFichier is
     	I: Integer := 0;
     begin
         T := creer_Liste_Couple;
-        open(Fichier, In_File, "liste-mot.txt");
+        open(Fichier, In_File, nomFichier);
         skip_line(Fichier); -- On saute la ligne des stats
         
         while (not end_of_file(Fichier)) loop
@@ -90,16 +99,17 @@ package body PFichier is
     	close(Fichier);
     end regen_Liste_Couples;
     
-    procedure gen_Fichier(T: in TListe_Couple; Fichier: out File_Type) is
+    procedure gen_Fichier(T: in TListe_Couple; Fichier: out File_Type; nomFichier : in String) is
         L: TListe_Couple := T;
     begin
-        create(Fichier, Name => "liste-mot.txt");
+        create(Fichier, Name => nomFichier);
         close(Fichier);
-        open(Fichier, Out_File, "liste-mot.txt");
-        -- NE PAS OUBLIER LE NB MOTS ET OCCURRENCES
-        put(Fichier, nb_Mots_Differents(L));
-        put(Fichier, " ");
-        put(Fichier, nb_Total_Occurrence(L));
+        open(Fichier, Out_File, nomFichier);
+        put(Fichier, "Mots differents: ");
+        put(Fichier, nb_Mots_Differents(L), 1);
+        put(Fichier, "    ");
+        put(Fichier, "Nombre occurrences: ");
+        put(Fichier, nb_Total_Occurrence(L), 1);
         new_line(Fichier);
         
         while not liste_Couple_Vide(L) loop
