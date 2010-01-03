@@ -1,3 +1,15 @@
+--  _____     _   _                _            
+-- |  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+-- | |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+-- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+-- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+--
+-- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pmot.adb
+--
+-- Une liste de character utilisant pliste_gen. Utilisation de la liste plutôt
+-- que les strings car non bornée, parcours et opérations faciles et connus.
+
 with PListe_Gen;
 with Text_IO; use Text_IO;
 
@@ -10,16 +22,23 @@ package PMot is
         -- Affiche le mot donné
         
     function creer_Mot return TMot;
+        -- Créé un mot vide
     
     function mot_Vide(Mot: in TMot) return Boolean;
+        -- Retourne vrai si le mot est vide, faux sinon
     
     function longueur_Mot(Mot: in TMot) return Integer;
+        -- retourne la longueur du mot
     
     function ajout_Lettre_Fin(Mot: in TMot; N: in Character) return TMot;
+        -- Ajoute une lettre en fin de mot
         
     function valeur_Mot(Mot: in TMot) return Character;
+        -- Retourne la valeur de la première lettre du mot
     
     function lettre_Suivante(Mot: in TMot) return TMot;
+        -- Retourne l'adresse de la lettre suivante
+        -- Retourne vide si il n'y a pas de lettre suivante
     
     function mot_Superieur(Mot1: in TMot; Mot2: in TMot) return Boolean;
         -- Retourne True si le mot2 est superieur au Mot1, False sinon
@@ -42,10 +61,12 @@ package PMot is
         -- On utilise l'égalité pour faire la comparaison des mots
   
     function mot_to_Int(Mot: in TMot) return Integer;
+        -- Permet de convertir des Mots en integer
+        -- Cette fonction est utile pour convertir le nombre d'occurrence récupérée
+        -- En integer pour régénérer la liste
   
     private
-        
         function est_Petit_Mot(Mot: in TMot) return Boolean;
-        	-- True si le mot est présent dans petits-mots, False sinon
+        	-- True si le mot est présent dans petits-mots.txt, False sinon
 
 end Pmot;

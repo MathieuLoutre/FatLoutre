@@ -1,13 +1,28 @@
+--  _____     _   _                _            
+-- |  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+-- | |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+-- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+-- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+--
+-- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pliste_couple.ads
+--
+-- Liste de couples. Instancie pliste_gen et utilise principalement les couples. La liste de
+-- couple est plus simple à maitriser car la structure de liste est déjà connue.
+-- C'est les fonctions de ce paquetage sont principalement directement utilisé par l'utilisateur
+
 with PListe_Gen;
 with PCouple; use PCouple;
 with PMot; use PMot;
 with text_io; use text_io;
+
 package PListe_Couple is
     
     package Liste_Couple is new PListe_Gen(TCouple, affiche_Couple); use Liste_Couple;
     subtype TListe_Couple is TPtrCellule;
     
     function creer_Liste_Couple return TListe_Couple;
+        -- Créé un liste de couples vide
         
     function liste_Couple_Vide(T: in TListe_Couple) return Boolean;
     	-- Retourne True si la liste est vide, False sinon
@@ -21,7 +36,7 @@ package PListe_Couple is
     	-- Retourne une erreur si la cellule est vide
     
     function nb_Superieur(T: in TListe_Couple; N: in Integer) return Integer;
-    	-- Retourne le nombre de mot de longueur supérieur au nb passé
+    	-- Retourne le nombre de mot différents de longueur supérieur au nb passé
 
     function nb_Mots_Differents(T: in TListe_Couple) return Integer;
     	-- Renvoi le nombre de mots significatifs différents (utilise seulement longueur de la liste)
@@ -58,9 +73,11 @@ package PListe_Couple is
         -- Retourne une erreur si un des 2 mots ou les 2 ne sont pas dans la liste
     
     function ajout_Mot(T: in TListe_Couple; Mot: in TMot) return TListe_Couple;
-        -- Ajoute un nouveau couple contenant le mot si le mot n'est pas déjà présent, sinon augmente son occurrence de 1
+        -- Ajoute un nouveau couple contenant le mot si le mot n'est pas déjà présent, 
+        -- sinon augmente son occurrence de 1
     
     function present(T: in TListe_Couple; Mot: in TMot) return Boolean;
+        -- retourne True si le mot est présent dans la liste, faux sinon
     
     function insert_Croissant_Mot is new insert_Trie(couple_Inferieur_Mot);
         -- Quand on insert croissant des couples sur les mots, il faut regarder l'infériorité des mots (cf algo insert_trie)

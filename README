@@ -1,4 +1,82 @@
-School Project in ADA.
-Writing algorithms to handle text analysis.
-The program is in French. Sorry.
-MEH.
+ _____     _   _                _            
+|  ___|_ _| |_| |    ___  _   _| |_ _ __ ___ 
+| |_ / _` | __| |   / _ \| | | | __| '__/ _ \
+|  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
+|_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
+
+FatLoutre is an Analysis Tool for Linguist Oriented Unanomously Towards Revolution and Economics
+
+
+__Sommaire__
+
+1. Introduction
+2. Liste des fichiers et dépendances
+3. Avhen
+4. Guide d'Utilisation
+
+
+
+1. Introdcution
+
+Projet d'étude de Yann Pravossoudovitch & Mathieu Triay.
+Le logiciel utilise le langage ADA et une librairie externe pour les tests unitaires (voir 3. Avhen).
+Les fichiers fournis ne concerne que le R1.
+Chaque fichier est commenté, et dispose d'une URL dans son en-tête qui mène au répertoire Git du projet sur GitHub.com.
+Ces URLs mènent vers la liste des modifications sur un fichier donné.
+
+Nous pouvons être contacté via:
+mathieu.triay(at)gmail(dot)com ou yann.pravo(at)gmail(dot)com
+
+
+
+2. Liste des fichiers et dépendances
+
+* fatloutre.adb
+
+Le fichier contenant la procédure principale, il suffit de le compiler et de le lancer pour exécuter le programme.
+
+* pliste_gen.ads et pliste_gen.adb
+
+Il s'agit du package de liste générique. Contient toutes les fonctions relatives aux listes génériques et qui sont utilisé par pliste_couple et pmot.
+
+* pmot.ads et pmot.adb
+
+Instancie le package générique de liste. C'est une liste de character.
+
+* pcouple.ads et pcouple.adb
+
+Fichier relatif aux couples (un mot et un nombre d'occurrence). Il dépend de pmot.
+
+* pliste_couple.ads et pliste_couple.adb
+
+Fichier relatif aux liste de couples. Instancie pliste_gen, et dépend de pmot et pcouple.
+
+* pfichier.ads et pfichier.adb
+
+Contient toutes les procédures et fonctions de manipulation de fichier. Dépend de pmot, pcouple, et pliste_couple.
+
+* fl_tests.ads, fl_tests.adb, tests_runner.adb
+
+fl_tests contient tout les tests unitaires, et tests_runner se contente de les exécuter et faire le rapport.
+Voir 3. Avhen pour plus d'informations à ce sujet.
+
+* Autres fichiers
+
+La librairie Avhen.
+
+
+
+3. Avhen
+
+Avhen est une librairie de tests unitaire gratuite et libre pour ADA.
+Son code source peut être récupéré ici: http://ahven.stronglytyped.org/
+Le code fournit est la version pour Unix (Linux et OSX).
+Il suffit de compiler tests_runner.adb et de l'executer pour lancer l'exécution des tests unitaires.
+Pfichier n'est pas encore couvert.
+
+4. Guide d'Utilisation
+
+Il est recommandé de compiler les tests unitaires pour vérifier que la compilation sur votre machine ne cause pas d'erreur (le projet a été compilé avec succès sous Linux (Kubuntu) et Mac OSX (Leopard)). Une fois que les tests sont finis, vous pouvez compiler fatloutre.adb et lancer le programme.
+Le programme charge automatiquement le contenu de texte.txt. Placez votre texte dans ce fichier pour l'analyser.
+Ne supprimez ni liste-mot.txt, ni texte.txt, ni petits-mots.txt, ce sont des fichiers essentiels au fonctionnement du logiciel.
+Vous pouvez placer les mots de moins de 4 caractères que vous trouvez important dans petits-mots.txt, une ligne par mot.
