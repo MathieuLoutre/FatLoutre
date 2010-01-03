@@ -104,11 +104,7 @@ package body PFichier is
     begin
         create(Fichier, Name => nomFichier);
         close(Fichier);
-<<<<<<< HEAD:pfichier.adb
         open(Fichier, Out_File, nomFichier);
-=======
-        open(Fichier, Out_File, "liste-mot.txt");
->>>>>>> 2a4e53945401b9540b35f6878e33034d2707a85e:pfichier.adb
         put(Fichier, "Mots differents: ");
         put(Fichier, nb_Mots_Differents(L), 1);
         put(Fichier, "    ");

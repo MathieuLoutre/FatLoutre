@@ -58,6 +58,9 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Moy_Long'Access, "Liste Couple moy Longueur");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Occur_Mot'Access, "Liste Couple nb Occurrence Mot");
 	    Framework.Add_Test_Routine(T, test_Liste_Fusion_Couple'Access, "Fusion de Mots");
+	    Framework.Add_Test_Routine(T, test_Liste_Fusion_Listes'Access, "Fusion de listes");
+	    Framework.Add_Test_Routine(T, test_Liste_Mots_Communs'Access, "Mots Communs");
+	    Framework.Add_Test_Routine(T, test_Liste_Mots_Differents'Access, "Mots Différents");
 	    
 	    -- Sur les fichiers
 	    Framework.Add_Test_Routine(T, test_Fichier_Gen_Liste_Couples'Access, "Generer Fichier");
@@ -834,6 +837,120 @@ package body FL_Tests is
           assert(nb_Occurrences(Liste_Couple, Mot1) = lol+lol2 and (present(Liste_Couple, Mot2) = False), "La Fusion ne marche pas");
     end test_Liste_Fusion_Couple;
     
+    procedure test_Liste_Fusion_Listes is 
+        Liste_Couple, Liste_Couple2, Liste_Couple3: TListe_Couple;
+      	Mot1, Mot2, Mot3, Mot4: TMot;
+    begin
+  	    Mot1 := creer_Mot;
+  	    Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+  	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+      Mot3 := creer_Mot;
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+  
+  	  Mot2 := creer_Mot;
+  	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+  	  
+  	  Mot4 := creer_Mot;
+      Mot4 := ajout_Lettre_Fin(Mot4, 'M');
+      Mot4 := ajout_Lettre_Fin(Mot4, 'e');
+      Mot4 := ajout_Lettre_Fin(Mot4, 'h');
+
+  	  Liste_Couple := creer_Liste_Couple;
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+  	  
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot3);
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot2);
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot4);
+  	  
+  	  Liste_Couple3 := fusion_Listes(Liste_Couple, Liste_Couple2);
+  	  
+  	  assert(nb_Mots_Differents(Liste_Couple3) = 4, "La Fusion de listes ne marche pas");
+    end test_Liste_Fusion_Listes;
+    
+    procedure test_Liste_Mots_Communs is
+        Liste_Couple, Liste_Couple2, Liste_Couple3: TListe_Couple;
+      	Mot1, Mot2, Mot3, Mot4: TMot;
+    begin
+  	    Mot1 := creer_Mot;
+  	    Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+  	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+      Mot3 := creer_Mot;
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+  	  Mot2 := creer_Mot;
+  	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+  	  Mot4 := creer_Mot;
+      Mot4 := ajout_Lettre_Fin(Mot4, 'M');
+      Mot4 := ajout_Lettre_Fin(Mot4, 'e');
+      Mot4 := ajout_Lettre_Fin(Mot4, 'h');
+
+  	  Liste_Couple := creer_Liste_Couple;
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot3);
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot2);
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot4);
+
+  	  Liste_Couple3 := mots_Communs(Liste_Couple, Liste_Couple2);
+
+  	  assert(nb_Mots_Differents(Liste_Couple3) = 2, "L'intersection ne marche pas");
+    end test_Liste_Mots_Communs;
+    
+    procedure test_Liste_Mots_Differents is
+        Liste_Couple, Liste_Couple2, Liste_Couple3: TListe_Couple;
+      	Mot1, Mot2, Mot3, Mot4: TMot;
+    begin
+  	    Mot1 := creer_Mot;
+  	    Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+  	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+  	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+      Mot3 := creer_Mot;
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+  	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+  	  Mot2 := creer_Mot;
+  	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+  	  Mot4 := creer_Mot;
+      Mot4 := ajout_Lettre_Fin(Mot4, 'M');
+      Mot4 := ajout_Lettre_Fin(Mot4, 'e');
+      Mot4 := ajout_Lettre_Fin(Mot4, 'h');
+
+  	  Liste_Couple := creer_Liste_Couple;
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+  	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot3);
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot2);
+  	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot4);
+
+  	  Liste_Couple3 := mots_Differents(Liste_Couple, Liste_Couple2);
+
+  	  assert(nb_Mots_Differents(Liste_Couple3) = 2, "La différence ne marche pas");
+    end test_Liste_Mots_Differents;
+    
 -- Sur les fichiers
 
     procedure test_Fichier_Gen_Liste_Couples is
@@ -843,11 +960,11 @@ package body FL_Tests is
         Fichier3: File_Type;
     begin
         
-        gen_Liste_Couples(Fichier, Liste_Couple);
+        gen_Liste_Couples(Fichier, Liste_Couple, "texte.txt");
         
-        gen_Fichier(Liste_Couple, Fichier2);
+        gen_Fichier(Liste_Couple, Fichier2, "liste-mots.txt");
         
-        regen_Liste_Couples(Fichier3, Liste_Couple2);
+        regen_Liste_Couples(Fichier3, Liste_Couple2, "liste-mots.txt");
         
         --affichage_decroissant(Liste_Couple2, 200);
         

@@ -65,6 +65,9 @@ package FL_Tests is
     procedure test_Liste_Couple_Moy_Long;
     procedure test_Liste_Couple_nb_Occur_Mot;  
     procedure test_Liste_Fusion_Couple;  
+    procedure test_Liste_Fusion_Listes;  
+    procedure test_Liste_Mots_Communs;  
+    procedure test_Liste_Mots_Differents;  
         
 -- Test sur les fichiers
     procedure test_Fichier_Gen_Liste_Couples;
