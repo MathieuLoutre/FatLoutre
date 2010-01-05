@@ -12,6 +12,7 @@ with ada.integer_text_io; use ada.integer_text_io;
 
 package body PFichier is
     
+    -- TODO: Check le saut de ligne en fin de doc !!!
     procedure gen_Liste_Couples(Fichier: in out File_Type; T: out TListe_Couple; nomFichier : in String) is
     	M: TMot;
     	C: Character;

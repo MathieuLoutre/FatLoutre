@@ -12,6 +12,7 @@ with Text_IO; use Text_IO;
 with PMot; use PMot;
 with PCouple; use PCouple;
 with PListe_Couple; use PListe_Couple;
+with PListe_Trio; use PListe_Trio;
 with PFichier; use PFichier;
 
 package FL_Tests is
@@ -64,12 +65,14 @@ package FL_Tests is
     procedure test_Liste_Couple_Moy_Occur;
     procedure test_Liste_Couple_Moy_Long;
     procedure test_Liste_Couple_nb_Occur_Mot;  
-    procedure test_Liste_Fusion_Couple;  
-    procedure test_Liste_Fusion_Listes;  
-    procedure test_Liste_Mots_Communs;  
-    procedure test_Liste_Mots_Differents;  
+    procedure test_Liste_Fusion_Couple; 
         
 -- Test sur les fichiers
     procedure test_Fichier_Gen_Liste_Couples;
+        
+-- Test sur les listes de trios
+    procedure test_Liste_Trio_Fusion_Listes;  
+    procedure test_Liste_Trio_Mots_Communs;  
+    procedure test_Liste_Trio_Mots_Differents;
         
 end FL_Tests;

@@ -58,12 +58,14 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_Moy_Long'Access, "Liste Couple moy Longueur");
 	    Framework.Add_Test_Routine(T, test_Liste_Couple_nb_Occur_Mot'Access, "Liste Couple nb Occurrence Mot");
 	    Framework.Add_Test_Routine(T, test_Liste_Fusion_Couple'Access, "Fusion de Mots");
-	    Framework.Add_Test_Routine(T, test_Liste_Fusion_Listes'Access, "Fusion de listes");
-	    Framework.Add_Test_Routine(T, test_Liste_Mots_Communs'Access, "Mots Communs");
-	    Framework.Add_Test_Routine(T, test_Liste_Mots_Differents'Access, "Mots Différents");
 	    
 	    -- Sur les fichiers
 	    Framework.Add_Test_Routine(T, test_Fichier_Gen_Liste_Couples'Access, "Generer Fichier");
+	    
+	    -- Sur les listes de Trio
+	    Framework.Add_Test_Routine(T, test_Liste_Trio_Fusion_Listes'Access, "Fusion de listes");
+	    Framework.Add_Test_Routine(T, test_Liste_Trio_Mots_Communs'Access, "Mots Communs");
+	    Framework.Add_Test_Routine(T, test_Liste_Trio_Mots_Differents'Access, "Mots Différents");
 	    
         
     end Initialize;
@@ -837,8 +839,9 @@ package body FL_Tests is
           assert(nb_Occurrences(Liste_Couple, Mot1) = lol+lol2 and (present(Liste_Couple, Mot2) = False), "La Fusion ne marche pas");
     end test_Liste_Fusion_Couple;
     
-    procedure test_Liste_Fusion_Listes is 
-        Liste_Couple, Liste_Couple2, Liste_Couple3: TListe_Couple;
+    procedure test_Liste_Trio_Fusion_Listes is 
+        Liste_Couple, Liste_Couple2: TListe_Couple;
+	Liste_Couple3 : TListe_Trio;
       	Mot1, Mot2, Mot3, Mot4: TMot;
     begin
   	    Mot1 := creer_Mot;
@@ -871,12 +874,12 @@ package body FL_Tests is
   	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot4);
   	  
   	  Liste_Couple3 := fusion_Listes(Liste_Couple, Liste_Couple2);
-  	  
-  	  assert(nb_Mots_Differents(Liste_Couple3) = 4, "La Fusion de listes ne marche pas");
-    end test_Liste_Fusion_Listes;
+  	  assert(nb_Mots_Differents_Trio(Liste_Couple3) = 4, "La Fusion de listes ne marche pas");
+    end test_Liste_Trio_Fusion_Listes;
     
-    procedure test_Liste_Mots_Communs is
-        Liste_Couple, Liste_Couple2, Liste_Couple3: TListe_Couple;
+    procedure test_Liste_Trio_Mots_Communs is
+        Liste_Couple, Liste_Couple2: TListe_Couple;
+	Liste_Couple3 : TListe_Trio;
       	Mot1, Mot2, Mot3, Mot4: TMot;
     begin
   	    Mot1 := creer_Mot;
@@ -910,11 +913,12 @@ package body FL_Tests is
 
   	  Liste_Couple3 := mots_Communs(Liste_Couple, Liste_Couple2);
 
-  	  assert(nb_Mots_Differents(Liste_Couple3) = 2, "L'intersection ne marche pas");
-    end test_Liste_Mots_Communs;
+  	  assert(nb_Mots_Differents_Trio(Liste_Couple3) = 2, "L'intersection ne marche pas");
+    end test_Liste_Trio_Mots_Communs;
     
-    procedure test_Liste_Mots_Differents is
-        Liste_Couple, Liste_Couple2, Liste_Couple3: TListe_Couple;
+    procedure test_Liste_Trio_Mots_Differents is
+        Liste_Couple, Liste_Couple2: TListe_Couple;
+	Liste_Couple3 : TListe_Trio;
       	Mot1, Mot2, Mot3, Mot4: TMot;
     begin
   	    Mot1 := creer_Mot;
@@ -948,8 +952,8 @@ package body FL_Tests is
 
   	  Liste_Couple3 := mots_Differents(Liste_Couple, Liste_Couple2);
 
-  	  assert(nb_Mots_Differents(Liste_Couple3) = 2, "La différence ne marche pas");
-    end test_Liste_Mots_Differents;
+  	  assert(nb_Mots_Differents_Trio(Liste_Couple3) = 2, "La différence ne marche pas");
+    end test_Liste_Trio_Mots_Differents;
     
 -- Sur les fichiers
 
@@ -960,11 +964,11 @@ package body FL_Tests is
         Fichier3: File_Type;
     begin
         
-        gen_Liste_Couples(Fichier, Liste_Couple, "texte.txt");
+        gen_Liste_Couples(Fichier, Liste_Couple, "texte2.txt");
         
-        gen_Fichier(Liste_Couple, Fichier2, "liste-mots.txt");
+        --gen_Fichier(Liste_Couple, Fichier2, "liste-mots.txt");
         
-        regen_Liste_Couples(Fichier3, Liste_Couple2, "liste-mots.txt");
+        --regen_Liste_Couples(Fichier3, Liste_Couple2, "liste-mots.txt");
         
         --affichage_decroissant(Liste_Couple2, 200);
         

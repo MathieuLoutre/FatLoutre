@@ -75,15 +75,6 @@ package PListe_Couple is
     function present(T: in TListe_Couple; Mot: in TMot) return Boolean;
         -- retourne True si le mot est présent dans la liste, faux sinon
     
-    function mots_Communs(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Couple;
-        -- Intersection de 2 listes
-    
-    function mots_Differents(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Couple;
-        -- Différence de 2 listes
-    
-    function fusion_Listes(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Couple;
-        -- Union de 2 listes
-    
     function ajout_Couple(T: in TListe_Couple; Couple: in TCouple) return TListe_Couple;
         -- Ajoute un nouveau couple contenant le mot si le mot n'est pas déjà présent, 
         -- sinon augmente son occurrence du nombre d'occurrences du couple donné

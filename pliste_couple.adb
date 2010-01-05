@@ -58,57 +58,6 @@ package body PListe_Couple is
         end if;
     end present;
     
-    function mots_Communs(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Couple is
-        L: TListe_Couple := creer_Liste_Couple;
-        L1: TListe_Couple := T1;
-    begin
-        while not vide(L1) loop
-            if present(T2,  mot_Couple(valeur_Couple(L1))) then
-                L := ajout_Mot(L, mot_Couple(valeur_Couple(L1)));
-            end if;
-                
-            L1 := suivant(L1);
-        end loop;
-        
-        return L;
-    end mots_Communs;
-    
-    function mots_Differents(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Couple is
-        L: TListe_Couple := creer_Liste_Couple;
-        L1: TListe_Couple := T1;
-        L2: TListe_Couple := T2;
-    begin
-        while not vide(L1) loop
-            if not present(T2,  mot_Couple(valeur_Couple(L1))) then
-                L := ajout_Mot(L,  mot_Couple(valeur_Couple(L1)));
-            end if;
-            
-            L1 := suivant(L1);
-        end loop;
-            
-        while not vide(L2) loop
-            if not present(T1,  mot_Couple(valeur_Couple(L2))) then
-                L := ajout_Mot(L,  mot_Couple(valeur_Couple(L2)));
-            end if;
-            
-            L2 := suivant(L2);
-        end loop;
-        
-        return L;
-    end mots_Differents;
-    
-    function fusion_Listes(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Couple is
-        L: TListe_Couple := T1;
-        L2: TListe_Couple := T2;
-    begin
-        while not vide(L2) loop
-            L := ajout_Couple(L, valeur_Couple(L2));
-            L2 := suivant(L2);
-        end loop;
-            
-        return L;
-    end fusion_Listes;
-    
     function ajout_Couple(T: in TListe_Couple; Couple: in TCouple) return TListe_Couple is
         newCouple: TCouple;
         L: TListe_Couple := T;
