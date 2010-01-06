@@ -37,6 +37,16 @@ package PListe_Trio is
     	-- Retourne l'élément suivant de la liste.
     	-- Retourne une erreur si la cellule est vide
     
+    function present_Trio(T: in TListe_Trio; Mot: in TMot) return Boolean;
+        -- Renvoi True si le mot est présent dans la liste de Trio, False sinon
+    
+    function recupere_Trio(T: TListe_Trio; Mot: TMot) return TTrio;
+        -- Renvoi le nombre de fois où apparait le mot donné dans la liste
+        -- Précondition: le mot DOIT être dans la liste !
+    
+    procedure affiche_Liste_Trio(T: in TListe_Trio);
+        -- Affiche la liste de Trio passée en paramètre
+    
     function mots_Communs(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Trio;
         -- Intersection de 2 listes
     
@@ -46,7 +56,7 @@ package PListe_Trio is
     function fusion_Listes(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Trio;
         -- Union de 2 listes
     
-    function ajout_Trio(T: in TListe_Trio; Couple: in TCouple; nbOccurTexte2: in Integer) return TListe_Trio;
+    function ajout_Trio(T: in TListe_Trio; Mot: in TMot; nbOccurTexte1: in Integer; nbOccurTexte2: in Integer) return TListe_Trio;
         -- Ajoute un nouveau Trio contenant le mot si le mot n'est pas déjà présent, 
         -- sinon augmente son occurrence du nombre d'occurrences du Trio donné
     

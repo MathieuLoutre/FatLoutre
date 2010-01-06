@@ -13,6 +13,8 @@ with ada.Float_Text_Io; use ada.Float_Text_Io;
 with Ada.Characters.Handling; use Ada.Characters.Handling;
 with Ada.Exceptions; use Ada.Exceptions;
 with PListe_Couple; use PListe_Couple;
+with PListe_Trio; use PListe_Trio;
+with PTrio; use PTrio;
 with PCouple; use PCouple;
 with PMot; use PMot;
 with PFichier; use PFichier;
@@ -38,7 +40,9 @@ procedure FatLoutre is
 
 Fichier, Fichier2, Fichier3, FichierA, FichierB, FichierC: File_Type;
 Liste_Couple, Liste_Couple2, Liste_CoupleA, Liste_CoupleB: TListe_Couple := creer_Liste_Couple;
+Liste_Fusion: TListe_Trio := creer_Liste_Trio;
 Mot1, Mot2, Suff: TMot := creer_Mot;
+Trio: TTrio;
 m: Integer := 1;
 l, n: Integer := 0;
 n1: Integer;
@@ -120,23 +124,31 @@ begin
 					    end if;
 				end if;
 				
-				if present(Liste_Couple2, Mot1) and present(Liste_CoupleB, Mot1) then
+				Liste_Fusion := fusion_Listes(Liste_Couple2, Liste_CoupleB);
+
+				if present_Trio(Liste_Fusion, Mot1) then
+				    Trio := recupere_Trio(Liste_Fusion, Mot1);
 				    new_line;
 				    put("Le nombre d'occurences de '");
 				    affiche_Mot(Mot1);
 				    put("' dans le texte1 est : ");
-				    put(nb_Occurrences(Liste_Couple2, Mot1), 1);new_line;
+				    put(occurrence_Texte1(Trio), 1);new_line;
 				    put("Le nombre d'occurences de '");
 				    affiche_Mot(Mot1);
-				    put("' dans le texte1 est : ");
-				    put(nb_Occurrences(Liste_CoupleB, Mot1), 1);
+				    put("' dans le texte2 est : ");
+				    put(occurrence_Texte2(Trio), 1);new_line;
 				else
 				    put("Le mot n'est pas présent dans les 2 textes!");
 				end if;
 				new_line(3);
 		    when 2 =>
-				if nb_Mots_Differents(Liste_Couple2) > nb_Mots_Differents(Liste_CoupleB) then
-				
+				Liste_Fusion := mots_Communs(Liste_Couple2, Liste_CoupleB);
+				affiche_Liste_Trio(Liste_Fusion);
+				new_line(3);
+			when 3 =>
+    			Liste_Fusion := mots_Differents(Liste_Couple2, Liste_CoupleB);
+    			affiche_Liste_Trio(Liste_Fusion);
+    			new_line(3);
 		    when others =>
 				null;
 		end case;
