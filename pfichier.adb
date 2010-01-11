@@ -6,13 +6,14 @@
 --
 -- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pfichier.adb
+--
+-- Abstraction et centralisation des fonctions sur les fichiers.
 
 with Ada.Characters.Handling; use Ada.Characters.Handling;
 with ada.integer_text_io; use ada.integer_text_io;
 
 package body PFichier is
     
-    -- TODO: Check le saut de ligne en fin de doc !!!
     procedure gen_Liste_Couples(Fichier: in out File_Type; T: out TListe_Couple; nomFichier : in String) is
     	M: TMot;
     	C: Character;
@@ -54,20 +55,22 @@ package body PFichier is
     	close(Fichier);
     end gen_Liste_Couples;
 	
+	-- Ecrit la ligne correspondant au couple dans le fichier
     procedure ecrire_Ligne(Fichier: in out File_Type; Couple: in TCouple) is
     	Mot: TMot := mot_Couple(Couple);
     begin
     	while (not mot_Vide(Mot)) loop
     		put(Fichier, valeur_Mot(Mot));
+    		-- On écrit lettre par lettre
     		Mot := lettre_Suivante(Mot);
     	end loop;
 
     	put(Fichier, " ");
-    	put(Fichier, Integer'image(occurrence(Couple)));
+    	put(Fichier, Integer'image(occurrence(Couple))); -- On affiche le string correspondant à l'int
     	new_line(Fichier);
-    	
     end ecrire_ligne;
 	
+	-- Régénère la liste de couple à partir du fichier liste-mots.txt
     procedure regen_Liste_Couples(Fichier: in out File_Type; T: out TListe_Couple; nomFichier : in String) is
     	Couple: TCouple;
     	C: Character;
@@ -80,26 +83,31 @@ package body PFichier is
         skip_line(Fichier); -- On saute la ligne des stats
         
         while (not end_of_file(Fichier)) loop
+        -- Tant qu'on est pas à la fin du fichier
     		if (not end_of_line(Fichier)) then
+    		-- Si on est pas à la fin de la ligne, on continue de récuperer le mot
     		    get(Fichier, C);
     		    if (is_Letter(C)) then
         			M := ajout_Lettre_Fin(M, C);
         		elsif (is_Digit(C)) then
+        		-- Cette partie se charge de récuperer le nombre d'occurrences
         		    O := ajout_Lettre_Fin(O, C);
         		end if;
-        	else
+        	else 
+        	    -- On est à la fin de la ligne, donc il faut recreer le couple
                 Couple := creer_Couple(M, mot_to_int(O));
                 T := insert_croissant_Mot(T, Couple);
                 
                 M := creer_Mot;
                 O := creer_Mot;
-        	    skip_line(Fichier);
+        	    skip_line(Fichier); -- On passe à la ligne d'après
         	end if;
     	end loop;
     	    
     	close(Fichier);
     end regen_Liste_Couples;
     
+    -- Génère le fichier à partir de la liste de couple
     procedure gen_Fichier(T: in TListe_Couple; Fichier: out File_Type; nomFichier : in String) is
         L: TListe_Couple := T;
     begin
@@ -112,7 +120,9 @@ package body PFichier is
         put(Fichier, "Nombre occurrences: ");
         put(Fichier, nb_Total_Occurrence(L), 1);
         new_line(Fichier);
+        -- On écrit les statistiques
         
+        -- Pour chaque couple, on l'écrit dans le fichier
         while not liste_Couple_Vide(L) loop
             ecrire_ligne(Fichier, valeur_Couple(L));
             L := couple_Suivant(L);

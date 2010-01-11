@@ -7,9 +7,9 @@
 -- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pliste_trio.ads
 --
--- Liste de Trios. Instancie pliste_gen et utilise principalement les Trios. La liste de
--- Trio est plus simple à maitriser car la structure de liste est déjà connue.
--- C'est les fonctions de ce paquetage sont principalement directement utilisé par l'utilisateur
+-- La liste de Trio est une structure similaire à la liste de couple, mais avec des Trios.
+-- Elle permet alors de stocker les informations de 2 listes distinctes.
+-- Elle comporte aussi moins de fonctions car on a moins de travail à effectuer dessus.
 
 with PListe_Gen;
 with PTrio; use PTrio;

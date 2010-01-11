@@ -19,7 +19,7 @@ package PCouple is
     type TCouple is private;
     
     function creer_Couple(Mot: in TMot; Occurrence: in Integer) return TCouple;
-    -- Creer un couple à partir d'un mot et d'un nombre d'occurrence
+        -- Creer un couple à partir d'un mot et d'un nombre d'occurrence
     
     procedure affiche_Couple(Couple: in TCouple);
         -- Affiche le TCouple passé en paramètre
