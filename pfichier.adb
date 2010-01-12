@@ -130,5 +130,42 @@ package body PFichier is
         
         close(Fichier);
     end gen_Fichier;
+    
+    
+    -- Fonctions de gestion de fichiers pour les trios.
+    
+    -- Ecrit la ligne correspondant au couple dans le fichier
+    procedure ecrire_Ligne_Trio(Fichier: in out File_Type; Trio: in TTrio) is
+    	Mot: TMot := mot_Trio(Trio);
+    begin
+    	while (not mot_Vide(Mot)) loop
+    		put(Fichier, valeur_Mot(Mot));
+    		-- On écrit lettre par lettre
+    		Mot := lettre_Suivante(Mot);
+    	end loop;
+
+    	put(Fichier, " ");
+    	put(Fichier, Integer'image(occurrence_Texte1(Trio))); -- On affiche le string correspondant aux occurrences 1
+    	put(Fichier, " ");
+    	put(Fichier, Integer'image(occurrence_Texte2(Trio))); -- On affiche le string correspondant aux occurrences 2
+    	new_line(Fichier);
+    end ecrire_Ligne_Trio;
+    
+    -- Génère le fichier à partir de la liste de trios
+    procedure gen_Fichier_Trio(T: in TListe_Trio; Fichier: out File_Type; nomFichier: in String) is
+        L: TListe_Trio := T;
+    begin
+        create(Fichier, Name => nomFichier);
+        close(Fichier);
+        open(Fichier, Out_File, nomFichier);
+        
+        -- Pour chaque trio, on l'écrit dans le fichier
+        while not liste_Trio_Vide(L) loop
+            ecrire_Ligne_Trio(Fichier, valeur_Trio(L));
+            L := trio_Suivant(L);
+        end loop;
+        
+        close(Fichier);
+    end gen_Fichier_Trio;
 
 end PFichier;

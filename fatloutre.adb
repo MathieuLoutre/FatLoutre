@@ -40,7 +40,7 @@ procedure FatLoutre is
     end entrer_Mot;
 
 
-Fichier, Fichier2, Fichier3, FichierA, FichierB, FichierC: File_Type;
+Fichier, Fichier2, Fichier3, FichierA, FichierB, FichierC, FichierUnion, FichierInter: File_Type;
 Liste_Couple, Liste_Couple2, Liste_CoupleA, Liste_CoupleB: TListe_Couple := creer_Liste_Couple;
 Liste_Fusion: TListe_Trio := creer_Liste_Trio;
 Mot1, Mot2, Suff: TMot := creer_Mot;
@@ -146,10 +146,32 @@ begin
 		    when 2 =>
 				Liste_Fusion := mots_Communs(Liste_Couple2, Liste_CoupleB);
 				affiche_Liste_Trio(Liste_Fusion);
+				
+				n1 := 3;
+				while n1 /= 1 and n1 /= 0 loop
+				    put("Generer fichier ? (1)Oui, (0)Non: ");
+				    get(n1);
+				end loop;
+			    
+				if n1 = 1 then
+				    gen_Fichier_Trio(Liste_Fusion, FichierUnion, "liste-mot-union.txt");
+				end if;
+				
 				new_line(3);
 			when 3 =>
     			Liste_Fusion := mots_Differents(Liste_Couple2, Liste_CoupleB);
     			affiche_Liste_Trio(Liste_Fusion);
+    			
+    			n1 := 3;
+				while n1 /= 1 and n1 /= 0 loop
+				    put("Generer fichier ? (1)Oui, (0)Non: ");
+				    get(n1);
+				end loop;
+			    
+				if n1 = 1 then
+				    gen_Fichier_Trio(Liste_Fusion, FichierInter, "liste-mot-inter.txt");
+				end if;
+    			
     			new_line(3);
 		    when others =>
 				null;
