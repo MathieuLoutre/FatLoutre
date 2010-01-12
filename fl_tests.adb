@@ -248,9 +248,9 @@ package body FL_Tests is
     begin
         Mot := creer_Mot;
         
-        Mot := ajout_Lettre_Fin(Mot, 'f');
-        Mot := ajout_Lettre_Fin(Mot, 'u');
-        Mot := ajout_Lettre_Fin(Mot, 'r');
+        Mot := ajout_Lettre_Fin(Mot, 'm');
+        Mot := ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'h');
         
         assert(significatif(Mot) = True, "Le mot devrait être significatif");
     end test_Mot_Petit;
@@ -260,8 +260,8 @@ package body FL_Tests is
     begin
         Mot := creer_Mot;
         
-        Mot := ajout_Lettre_Fin(Mot, 'm');
-        Mot := ajout_Lettre_Fin(Mot, 'e');
+        Mot := ajout_Lettre_Fin(Mot, 'n');
+        Mot := ajout_Lettre_Fin(Mot, 'i');
         Mot := ajout_Lettre_Fin(Mot, 'h');
         
         assert(significatif(Mot) = False, "Le mot ne devrait pas être significatif");
