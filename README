@@ -86,5 +86,5 @@ Pfichier n'est pas encore couvert.
 
 Il est recommandé de compiler les tests unitaires pour vérifier que la compilation sur votre machine ne cause pas d'erreur (le projet a été compilé avec succès sous Linux (Kubuntu) et Mac OSX (Leopard)). Une fois que les tests sont finis, vous pouvez compiler fatloutre.adb et lancer le programme.
 Le programme charge automatiquement le contenu de texte.txt (et texte2.txt si vous voulez analyser 2 textes). Placez votre texte dans ce(s) fichier(s) pour l'analyser.
-Ne supprimez ni liste-mot.txt (et liste-mot2.txt), ni texte.txt (et texte2.txt), ni petits-mots.txt (et petits-mots2.txt), ce sont des fichiers essentiels au fonctionnement du logiciel.
+Ne supprimez ni liste-mot.txt (et liste-mot2.txt), ni texte.txt (et texte2.txt), ni petits-mots.txt, ce sont des fichiers essentiels au fonctionnement du logiciel.
 Vous pouvez placer les mots de moins de 4 caractères que vous trouvez important dans petits-mots.txt, une ligne par mot.
