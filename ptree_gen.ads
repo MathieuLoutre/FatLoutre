@@ -8,6 +8,8 @@
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/ptree_gen.ads
 -- 
 
+with text_io; use text_io;
+
 generic
     type TElem is private;
         
@@ -44,6 +46,8 @@ package PTree_Gen is
             -- Affecte un fils N dans les fils de T. Si il est y est déjà, on ne fait rien.
             
         procedure modif_Val_Fils(T: in TPtrCellule; N: in TElem; L: in TPtrCellule);
+            
+        function fils_N_Int(T: in TPtrCellule; C: in Integer) return TPtrCellule;
    
     private
         

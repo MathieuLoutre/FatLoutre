@@ -24,7 +24,7 @@ package PNoeud is
     
     function char_Noeud(Noeud: in TNoeud) return character;
 
-    function occurrence(Noeud: in TNoeud) return Integer;
+    function occurrence_Noeud(Noeud: in TNoeud) return Integer;
         -- Retourne le nombre d'occurrence du TNoeud
         
     function ajout_Occurrence(Noeud: in TNoeud; N: in Integer) return TNoeud;

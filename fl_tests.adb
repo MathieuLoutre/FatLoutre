@@ -979,13 +979,12 @@ package body FL_Tests is
     end test_Fichier_Gen_Liste_Couples;
     
     procedure test_Tries_Inserer_Mot is
-        Mot1, Mot2: TMot;
+        Mot1, Mot2, Mot3: TMot;
         T: TTree_Noeud := creer_Tree_Noeud;
     begin
         Mot1 := creer_Mot;
   	    Mot1 := ajout_Lettre_Fin(Mot1, 'n');
   	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
-  	    --Mot1 := ajout_Lettre_Fin(Mot1, 'h');
   	    
   	    Mot2 := creer_Mot;
   	    Mot2 := ajout_Lettre_Fin(Mot2, 'n');
@@ -993,13 +992,18 @@ package body FL_Tests is
   	    Mot2 := ajout_Lettre_Fin(Mot2, 'h');
   	    Mot2 := ajout_Lettre_Fin(Mot2, 'n');
   	    
+  	    Mot3 := creer_Mot;
+  	    Mot3 := ajout_Lettre_Fin(Mot3, 'm');
+  	    Mot3 := ajout_Lettre_Fin(Mot3, 'e');
+  	    Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+  	    
   	    T := ajout_Mot_Tree(T, Mot1);
+  	    T := ajout_Mot_Tree(T, Mot2);
+  	    T := ajout_Mot_Tree(T, Mot3);
   	    
   	    affiche_Tree(T);
   	    
-  	    --T := ajout_Mot_Tree(T, Mot1);
-  	    
-  	    --assert(present_Tree(T, Mot1), "Le mot devrait être present");
+  	    assert(present_Tree(T, Mot1), "Le mot devrait être present");
     end test_Tries_Inserer_Mot;
     
 end FL_Tests;

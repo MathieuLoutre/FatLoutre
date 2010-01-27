@@ -47,6 +47,11 @@ package body PTree_Gen is
         T.fils(hash(N)) := L;
     end modif_Val_Fils;
     
+    function fils_N_Int(T: in TPtrCellule; C: in Integer) return TPtrCellule is
+    begin
+        return T.fils(C);
+    end fils_N_Int;
+    
     procedure modif_Val_Tree(T: in TPtrCellule; N: in TElem) is
     begin
         T.val := N;

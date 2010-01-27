@@ -16,7 +16,7 @@ package body PNoeud is
    
     function Noeud_Superieur_Occurrence(Noeud1: in TNoeud; Noeud2: in TNoeud) return Boolean is
     begin
-        return occurrence(Noeud1) > occurrence(Noeud2);
+        return occurrence_Noeud(Noeud1) > occurrence_Noeud(Noeud2);
     end Noeud_Superieur_Occurrence;
    
     function char_Noeud(Noeud: in TNoeud) return character is
@@ -24,14 +24,16 @@ package body PNoeud is
         return Noeud.char;
     end char_Noeud;
 
-    function occurrence(Noeud: in TNoeud) return Integer is
+    function occurrence_Noeud(Noeud: in TNoeud) return Integer is
     begin
         return Noeud.occurrences;
-    end occurrence;
+    end occurrence_Noeud;
     
     procedure affiche_Noeud(Noeud: in TNoeud) is
     begin
         put(Noeud.char);
+        --put_line(integer'image(Noeud.occurrences));
+        
     end affiche_Noeud;
     
     function ajout_Occurrence(Noeud: in TNoeud; N: in Integer) return TNoeud is
