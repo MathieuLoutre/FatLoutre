@@ -67,6 +67,9 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Trio_Mots_Communs'Access, "Mots Communs");
 	    Framework.Add_Test_Routine(T, test_Liste_Trio_Mots_Differents'Access, "Mots Différents");
 	    
+	    -- TETS SUR LES MEHHHHH
+	    Framework.Add_Test_Routine(T, test_Tries_Inserer_Mot'Access, "Tree Mot Present");
+	    
         
     end Initialize;
       
@@ -970,9 +973,33 @@ package body FL_Tests is
         
         regen_Liste_Couples(Fichier3, Liste_Couple2, "liste-mot.txt");
         
-        affichage_decroissant(Liste_Couple2, 200);
+        --affichage_decroissant(Liste_Couple2, 200);
         
         --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
     end test_Fichier_Gen_Liste_Couples;
-     
+    
+    procedure test_Tries_Inserer_Mot is
+        Mot1, Mot2: TMot;
+        T: TTree_Noeud := creer_Tree_Noeud;
+    begin
+        Mot1 := creer_Mot;
+  	    Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+  	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+  	    --Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+  	    
+  	    Mot2 := creer_Mot;
+  	    Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+  	    Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+  	    Mot2 := ajout_Lettre_Fin(Mot2, 'h');
+  	    Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+  	    
+  	    T := ajout_Mot_Tree(T, Mot1);
+  	    
+  	    affiche_Tree(T);
+  	    
+  	    --T := ajout_Mot_Tree(T, Mot1);
+  	    
+  	    --assert(present_Tree(T, Mot1), "Le mot devrait être present");
+    end test_Tries_Inserer_Mot;
+    
 end FL_Tests;

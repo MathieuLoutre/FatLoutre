@@ -14,6 +14,8 @@ with PCouple; use PCouple;
 with PListe_Couple; use PListe_Couple;
 with PListe_Trio; use PListe_Trio;
 with PFichier; use PFichier;
+--with PNoeud; use PNoeud;
+with PTree_Noeud; use PTree_Noeud;
 
 package FL_Tests is
     type Test is new Ahven.Framework.Test_Case with null record;
@@ -74,5 +76,8 @@ package FL_Tests is
     procedure test_Liste_Trio_Fusion_Listes;  
     procedure test_Liste_Trio_Mots_Communs;  
     procedure test_Liste_Trio_Mots_Differents;
+
+-- Test sur les Tries
+    procedure test_Tries_Inserer_Mot;
         
 end FL_Tests;
