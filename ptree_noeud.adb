@@ -25,11 +25,23 @@ package body PTree_Noeud is
         return valeur_Elem(T);
     end valeur_Noeud;
     
-    procedure affiche_Tree(T: in TTree_Noeud) is
+    procedure affiche_Mot_Noeud(T: in TTree_Noeud) is
     begin
         if not tree_Noeud_Vide(T) then
             affiche_Noeud(valeur_Noeud(T));
-            for I in 1..28 loop
+            affiche_Mot_Noeud(precedent(T));
+        end if;
+    end affiche_Mot_Noeud;
+    
+    -- Need Refactoring
+    procedure affiche_Tree(T: in TTree_Noeud) is
+    begin
+        if not tree_Noeud_Vide(T) then
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                affiche_Mot_Noeud(T);
+            end if;
+                
+            for I in 1..28 loop -- need more generic stuff here
                 affiche_Tree(fils_N_Int(T, I));
             end loop;
         end if;
@@ -71,6 +83,7 @@ package body PTree_Noeud is
     
     function ajout_Mot_Tree(T: in TTree_Noeud; Mot: in TMot) return TTree_Noeud is
         Meh: TTree_Noeud := T;
+        Moo: TNoeud;
     begin
         if not mot_Vide(Mot) then
             if not fils_Existe(Meh, valeur_Mot(Mot)) then
@@ -85,8 +98,14 @@ package body PTree_Noeud is
                 end if;
             else -- le fils existe déjà, on passe à ce fils pour inserer la suite
                 -- On relance sans ajouter (il y est déjà)
+                if mot_Vide(Lettre_Suivante(Mot)) then
+                    -- Il faut mettre les occurrences à + 1
+                    Moo := ajout_Occurrence(valeur_Noeud(fils_Char(Meh, valeur_Mot(Mot))), 1);
+                    Meh := insert_Fils(Meh, Moo);
+                end if; 
+                    
                 modif_Val_Fils(Meh, creer_Noeud(valeur_Mot(Mot), 0), ajout_Mot_Tree(fils_Char(Meh, valeur_Mot(Mot)), Lettre_Suivante(Mot)));
-            end if; 
+            end if;
             
             return Meh;
         else

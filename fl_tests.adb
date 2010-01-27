@@ -998,8 +998,7 @@ package body FL_Tests is
   	    Mot3 := ajout_Lettre_Fin(Mot3, 'h');
   	    
   	    T := ajout_Mot_Tree(T, Mot1);
-  	    T := ajout_Mot_Tree(T, Mot2);
-  	    T := ajout_Mot_Tree(T, Mot3);
+  	    T := ajout_Mot_Tree(T, Mot1);
   	    
   	    affiche_Tree(T);
   	    
