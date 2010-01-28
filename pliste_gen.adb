@@ -26,6 +26,12 @@ package body PListe_Gen is
         -- Ajoute une tete à la liste
     end ajout_Debut;
     
+    function ajout_Devant(T: in TPtrCellule; N: in TElem) return TPtrCellule is
+    begin
+        return new TCellule'(N, T);
+        -- Ajoute une tete à la liste
+    end ajout_Devant;
+    
     procedure modif_Val_Suivant(T: in out TPtrCellule; N: in TPtrCellule) is
     begin
         T.suiv := N;

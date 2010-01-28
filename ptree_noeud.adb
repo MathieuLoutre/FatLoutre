@@ -25,27 +25,183 @@ package body PTree_Noeud is
         return valeur_Elem(T);
     end valeur_Noeud;
     
-    procedure affiche_Mot_Noeud(T: in TTree_Noeud) is
+    function get_Mot_Tree(T: in TTree_Noeud; Mot: in TMot := creer_Mot) return TMot is
+        MehMot: TMot := Mot;
     begin
-        if not tree_Noeud_Vide(T) then
-            affiche_Noeud(valeur_Noeud(T));
-            affiche_Mot_Noeud(precedent(T));
+        if not tree_Noeud_Vide(T) and then not tree_Noeud_Vide(precedent(T)) then
+            MehMot := ajout_Lettre_Debut(MehMot, char_Noeud(valeur_Noeud(T)));
+            return get_Mot_Tree(precedent(T), MehMot);
+        else
+            return Mot;
         end if;
-    end affiche_Mot_Noeud;
+    end get_Mot_Tree;
     
-    -- Need Refactoring
     procedure affiche_Tree(T: in TTree_Noeud) is
     begin
         if not tree_Noeud_Vide(T) then
             if occurrence_Noeud(valeur_Noeud(T)) > 0 then
-                affiche_Mot_Noeud(T);
+                affiche_Mot(get_Mot_Tree(T));
+                put(" ");
+                put_line(integer'image(occurrence_Noeud(valeur_Noeud(T))));
             end if;
                 
-            for I in 1..28 loop -- need more generic stuff here
+            for I in 1..fils_Length(T) loop
                 affiche_Tree(fils_N_Int(T, I));
             end loop;
         end if;
     end affiche_Tree;
+    
+    function nb_Mots_Tree(T: in TTree_Noeud) return integer is
+        Meh: integer := 0;
+    begin
+        if not tree_Noeud_Vide(T) then
+            for I in 1..fils_Length(T) loop
+                Meh := Meh + nb_Mots_Tree(fils_N_Int(T, I));
+            end loop;
+            
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                return 1 + Meh;
+            else
+                return Meh;
+            end if;
+        else
+            return 0;
+        end if;
+    end nb_Mots_Tree;
+    
+    function nb_Occurrences_Total(T: in TTree_Noeud) return Integer is
+        Meh: integer := 0;
+    begin
+        if not tree_Noeud_Vide(T) then
+            for I in 1..fils_Length(T) loop
+                Meh := Meh + nb_Occurrences_Total(fils_N_Int(T, I));
+            end loop;
+            
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                return occurrence_Noeud(valeur_Noeud(T)) + Meh;
+            else
+                return Meh;
+            end if;
+        else
+            return 0;
+        end if;
+    end nb_Occurrences_Total;
+    
+    function moy_Occurrence_Tree(T: in TTree_Noeud) return Float is
+    begin
+        return float(nb_Occurrences_Total(T))/float(nb_Mots_Tree(T));
+    end moy_Occurrence_Tree;
+    
+    function Longueur_Totale_Mot_Tree(T: in TTree_Noeud) return Integer is
+        Meh: Integer := 0;
+    begin
+        if not tree_Noeud_Vide(T) then
+            for I in 1..fils_Length(T) loop
+                Meh := Meh + longueur_Totale_Mot_Tree(fils_N_Int(T, I));
+            end loop;
+
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                return longueur_Mot(get_Mot_Tree(T)) + Meh;
+            else
+                return Meh;
+            end if;
+        else
+            return 0;
+        end if;
+    end Longueur_Totale_Mot_Tree;
+    
+    function nb_Prefixe_Tree(T: in TTree_Noeud; M: in TMot) return Integer is
+        Meh: Integer := 0;
+    begin
+        if not tree_Noeud_Vide(T) then
+            for I in 1..fils_Length(T) loop
+                Meh := Meh + nb_Prefixe_Tree(fils_N_Int(T, I), M);
+            end loop;
+
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                if prefixe(get_Mot_Tree(T), M) then
+                    return 1 + Meh;
+                else
+                    return Meh;
+                end if;
+            else
+                return Meh;
+            end if;
+        else
+            return 0;
+        end if;
+    end nb_Prefixe_Tree;
+
+    function nb_Suffixe_Tree(T: in TTree_Noeud; M: in TMot) return Integer is
+        Meh: Integer := 0;
+    begin
+        if not tree_Noeud_Vide(T) then
+            for I in 1..fils_Length(T) loop
+                Meh := Meh + nb_Suffixe_Tree(fils_N_Int(T, I), M);
+            end loop;
+
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                if suffixe(get_Mot_Tree(T), M) then
+                    return 1 + Meh;
+                else
+                    return Meh;
+                end if;
+            else
+                return Meh;
+            end if;
+        else
+            return 0;
+        end if;
+    end nb_Suffixe_Tree;
+    
+    function nb_Facteur_Tree (T: in TTree_Noeud; M: in TMot) return Integer is
+        Meh: Integer := 0;
+    begin
+        if not tree_Noeud_Vide(T) then
+            for I in 1..fils_Length(T) loop
+                Meh := Meh + nb_Facteur_Tree(fils_N_Int(T, I), M);
+            end loop;
+
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                if facteur(get_Mot_Tree(T), M) then
+                    return 1 + Meh;
+                else
+                    return Meh;
+                end if;
+            else
+                return Meh;
+            end if;
+        else
+            return 0;
+        end if;
+    end nb_Facteur_Tree;
+    
+    function nb_Superieur_Tree(T: in TTree_Noeud; N: in Integer) return Integer is
+        Meh: Integer := 0;
+    begin
+        if not tree_Noeud_Vide(T) then
+            for I in 1..fils_Length(T) loop
+                Meh := Meh + nb_Superieur_Tree(fils_N_Int(T, I), N);
+            end loop;
+
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                if longueur_Mot(get_Mot_Tree(T)) >= N then
+                    return 1 + Meh;
+                else
+                    return Meh;
+                end if;
+            else
+                return Meh;
+            end if;
+        else
+            return 0;
+        end if;
+    end nb_Superieur_Tree;
+    
+    function moy_Longueur_Tree(T: in TTree_Noeud) return Float is
+    begin
+        return float(Longueur_Totale_Mot_Tree(T))/float(nb_Mots_Tree(T));
+    end moy_Longueur_Tree;
     
     function fils_Existe(T: in TTree_Noeud; N: in Character) return Boolean is
     begin
@@ -80,6 +236,87 @@ package body PTree_Noeud is
             return False;
         end if;
     end present_Tree;
+    
+    function retrouve_Mot(T: in TTree_Noeud; Mot: in TMot) return TTree_Noeud is
+    begin
+        if not tree_Noeud_Vide(T) and not mot_Vide(Mot) then
+            if not tree_Noeud_Vide(fils_Char(T, valeur_Mot(Mot))) then
+                -- Si les fils contiennent la lettre, on continue
+                if mot_Vide(Lettre_Suivante(Mot)) then
+                    -- fin !
+                    if occurrence_Noeud(valeur_Noeud(fils_Char(T, valeur_Mot(Mot)))) > 0 then
+                        return fils_Char(T, valeur_Mot(Mot));
+                    else
+                        return Tree_Vide;
+                    end if;
+                else
+                    -- on continue
+                    return retrouve_Mot(fils_Char(T, valeur_Mot(Mot)), Lettre_Suivante(Mot));
+                end if;
+            else
+                return Tree_Vide;
+            end if;
+        else
+            return Tree_Vide;
+        end if;
+    end retrouve_Mot;
+    
+    function fusion_Mot_Tree(T: in TTree_Noeud; M1, M2: in TMot) return TTree_Noeud is
+        L1: TTree_Noeud := retrouve_Mot(T, M1);
+        L2: TTree_Noeud := retrouve_Mot(T, M2);
+        Muh: TTree_Noeud;
+        Meh: TNoeud;
+    begin
+        if not Tree_Noeud_Vide(L1) and not Tree_Noeud_Vide(L2) then
+            Meh := ajout_Occurrence(valeur_Noeud(L1), occurrence_Noeud(valeur_Noeud(L2)));
+            Modif_Val_Tree(L1, Meh);
+            Muh := supprime_Mot_Tree(T, M2);
+            return Muh;
+        else
+            return T;
+        end if;
+    end fusion_Mot_Tree;
+    
+    function tree_To_Liste_Occurrence_Decroissante(T: in TTree_Noeud; L: in TListe_Couple := creer_Liste_Couple) return TListe_Couple is
+        K: TListe_Couple := L;
+        C: TCouple;
+    begin -- tree_To_Liste
+        if not tree_Noeud_Vide(T) then
+            for I in 1..fils_Length(T) loop
+                K := tree_To_Liste_Occurrence_Decroissante(fils_N_Int(T, I), K);
+            end loop;
+            
+            if occurrence_Noeud(valeur_Noeud(T)) > 0 then
+                C := creer_Couple(get_Mot_Tree(T), occurrence_Noeud(valeur_Noeud(T)));
+                K := insert_Decroissant_Occurrences(K, C);
+            end if;
+            
+            return K;
+        else
+            return K;
+        end if;
+    end tree_To_Liste_Occurrence_Decroissante;
+    
+    procedure affiche_Decroissant_Occurrence(T: in TTree_Noeud; N: in Integer) is
+        L: TListe_Couple := tree_To_Liste_Occurrence_Decroissante(T);
+        I: integer := 0;
+    begin
+        affichage_N(L, N);
+    end affiche_Decroissant_Occurrence;
+    
+    function supprime_Mot_Tree(T: in TTree_Noeud; Mot: in TMot) return TTree_Noeud is
+        Meh: TNoeud;
+        Moo: TTree_Noeud;
+    begin
+        if not Tree_Noeud_Vide(retrouve_Mot(T, Mot)) then
+            Moo := retrouve_Mot(T, Mot);
+            Meh := valeur_Noeud(Moo);
+            Meh := suppr_Occurrence(Meh);
+            Modif_Val_Tree(Moo, Meh);
+        end if;
+        
+        return T;
+    end supprime_Mot_Tree;
     
     function ajout_Mot_Tree(T: in TTree_Noeud; Mot: in TMot) return TTree_Noeud is
         Meh: TTree_Noeud := T;

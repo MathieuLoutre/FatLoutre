@@ -30,9 +30,11 @@ package PListe_Gen is
     function ajout_Fin (T: in TPtrCellule; N: in TElem) return TPtrCellule;
         -- Ajoute un élément en fin de liste
 
-    function ajout_Debut (T: in TPtrCellule; N: in TElem) return TPtrCellule;
+    function ajout_Debut(T: in TPtrCellule; N: in TElem) return TPtrCellule;
         -- Ajoute un élément en début de liste (la tête)
-
+    
+    function ajout_Devant(T: in TPtrCellule; N: in TElem) return TPtrCellule;
+    
     function vide (T: in TPtrCellule) return Boolean;
     	-- Retourne True si la liste est vide, False sinon
 

@@ -32,6 +32,9 @@ package PMot is
     
     function ajout_Lettre_Fin(Mot: in TMot; N: in Character) return TMot;
         -- Ajoute une lettre en fin de mot
+    
+    function ajout_Lettre_Debut(Mot: in TMot; N: in Character) return TMot;
+        -- Ajoute une lettre en fin de mot
         
     function valeur_Mot(Mot: in TMot) return Character;
         -- Retourne la valeur de la première lettre du mot

@@ -96,12 +96,19 @@ package body PListe_Couple is
     	L: TListe_Couple := tri_Decroissant_Occurrences(T);
     	I: Integer := 0;
 	begin
+    	affichage_N(L, N);
+    end affichage_Decroissant;
+    
+    procedure affichage_N(T: in TListe_Couple; N: in Integer) is
+    	L: TListe_Couple := T;
+    	I: Integer := 0;
+	begin
     	while (not vide(L) and then I < N) loop
     	    affiche_Couple(valeur_Couple(L));
     	    L := suivant(L);
     	    I := I + 1;
     	end loop;
-    end affichage_Decroissant;
+    end affichage_N;
 
     function fusion_Mots(T: in TListe_Couple; Mot1: in TMot; Mot2: in TMot) return TListe_Couple is
         L: TListe_Couple := T;

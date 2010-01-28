@@ -999,8 +999,14 @@ package body FL_Tests is
   	    
   	    T := ajout_Mot_Tree(T, Mot1);
   	    T := ajout_Mot_Tree(T, Mot1);
+  	    T := ajout_Mot_Tree(T, Mot2);
+  	    T := ajout_Mot_Tree(T, Mot3);
   	    
   	    affiche_Tree(T);
+  	    
+  	    T := fusion_Mot_Tree(T, Mot2, Mot1);
+  	    
+  	    affiche_Decroissant_Occurrence(T, 3);
   	    
   	    assert(present_Tree(T, Mot1), "Le mot devrait être present");
     end test_Tries_Inserer_Mot;

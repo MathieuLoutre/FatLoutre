@@ -29,6 +29,8 @@ package PNoeud is
         
     function ajout_Occurrence(Noeud: in TNoeud; N: in Integer) return TNoeud;
         -- Modifie le Noeud avec ses occurrences augmentées du nombre passé en paramètre
+        
+    function suppr_Occurrence(Noeud: in TNoeud) return TNoeud;
     
     procedure affiche_Noeud(Noeud: in TNoeud);
     

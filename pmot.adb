@@ -171,6 +171,11 @@ package body PMot is
         return ajout_Fin(Mot, N);
     end ajout_Lettre_Fin;
     
+    function ajout_Lettre_Debut(Mot: in TMot; N: in Character) return TMot is
+    begin
+        return ajout_Devant(Mot, N);
+    end ajout_Lettre_Debut;
+    
     function valeur_Mot(Mot: in TMot) return Character is
     begin
         return valeur(Mot);

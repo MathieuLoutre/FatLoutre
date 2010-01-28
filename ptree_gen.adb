@@ -14,6 +14,11 @@ package body PTree_Gen is
     begin
         return new TCellule'(N, null, M);
     end creer_Tree;
+    
+    function Tree_Vide return TPtrCellule is
+    begin
+        return null;
+    end Tree_Vide;
 
     function elem_Vide(T: in TPtrCellule) return Boolean is
     begin
@@ -51,6 +56,11 @@ package body PTree_Gen is
     begin
         return T.fils(C);
     end fils_N_Int;
+    
+    function fils_Length(T: in TPtrCellule) return Integer is
+    begin
+        return T.fils'last;
+    end fils_Length;
     
     procedure modif_Val_Tree(T: in TPtrCellule; N: in TElem) is
     begin

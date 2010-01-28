@@ -26,7 +26,9 @@ package PTree_Gen is
         
         function creer_Tree(N: in TElem) return TPtrCellule;
             -- Créé une liste vide
-
+        
+        function Tree_Vide return TPtrCellule;
+        
         function elem_Vide(T: in TPtrCellule) return Boolean;
            	-- Retourne True si la liste est vide, False sinon
 
@@ -48,6 +50,8 @@ package PTree_Gen is
         procedure modif_Val_Fils(T: in TPtrCellule; N: in TElem; L: in TPtrCellule);
             
         function fils_N_Int(T: in TPtrCellule; C: in Integer) return TPtrCellule;
+        
+        function fils_Length(T: in TPtrCellule) return Integer;
    
     private
         

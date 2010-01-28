@@ -42,6 +42,13 @@ package body PNoeud is
         MehNoeud.occurrences := MehNoeud.occurrences + N;
         return MehNoeud;
     end ajout_Occurrence;
+    
+    function suppr_Occurrence(Noeud: in TNoeud) return TNoeud is
+        MehNoeud: TNoeud := Noeud;
+    begin
+        MehNoeud.occurrences := 0;
+        return MehNoeud;
+    end suppr_Occurrence;
       
     function hash_Char(Noeud: in TNoeud) return integer is
         HashMeh: integer;
