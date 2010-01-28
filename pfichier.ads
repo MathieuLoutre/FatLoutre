@@ -8,7 +8,8 @@
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pfichier.ads
 --
 -- Abstraction et centralisation des fonctions sur les fichiers. 
-
+with PNoeud; use PNoeud;
+with PTree_Noeud; use PTree_Noeud;
 with PCouple; use PCouple;
 with PListe_Couple; use PListe_Couple;
 with PListe_Trio; use PListe_Trio;
@@ -29,9 +30,19 @@ package PFichier is
     	
     procedure gen_Fichier_Trio(T: in TListe_Trio; Fichier: out File_Type; nomFichier: in String);
     	-- Génère le fichier liste-mot-trio à partir d'une liste de trio
-
+     
+    procedure gen_Tree(Fichier: in out File_Type; T: out TTree_Noeud; nomFichier: in String);
+    
+    procedure gen_Fichier_Tree(T: in TTree_Noeud; Fichier: out File_Type; nomFichier: in String); 
+        
+    procedure regen_Tree(Fichier: in out File_Type; T: out TTree_Noeud; nomFichier: in String);
+       
     private
-         
+        
+        procedure write_Fichier_Tree(T: in TTree_Noeud; Fichier: in out File_Type);
+            
+        procedure ecrire_Ligne_Noeud(Fichier: in out File_Type; N: in TTree_Noeud);
+        
         procedure ecrire_Ligne(Fichier: in out File_Type; Couple: in TCouple);
          	-- Ecrit le TCouple formatté sur le Fichier donné
          	

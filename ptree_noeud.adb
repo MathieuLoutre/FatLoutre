@@ -69,6 +69,15 @@ package body PTree_Noeud is
         end if;
     end nb_Mots_Tree;
     
+    function nb_Occurrence_Mot_Tree(T: in TTree_Noeud; M: in TMot) return Integer is
+    begin
+        if not tree_Noeud_Vide(retrouve_Mot(T, M)) then
+            return occurrence_Noeud(valeur_Noeud(retrouve_Mot(T, M)));
+        else
+            return 0;
+        end if;
+    end nb_Occurrence_Mot_Tree;
+    
     function nb_Occurrences_Total(T: in TTree_Noeud) return Integer is
         Meh: integer := 0;
     begin
@@ -120,7 +129,7 @@ package body PTree_Noeud is
 
             if occurrence_Noeud(valeur_Noeud(T)) > 0 then
                 if prefixe(get_Mot_Tree(T), M) then
-                    return 1 + Meh;
+                    return occurrence_Noeud(valeur_Noeud(T)) + Meh;
                 else
                     return Meh;
                 end if;
@@ -142,7 +151,7 @@ package body PTree_Noeud is
 
             if occurrence_Noeud(valeur_Noeud(T)) > 0 then
                 if suffixe(get_Mot_Tree(T), M) then
-                    return 1 + Meh;
+                    return occurrence_Noeud(valeur_Noeud(T)) + Meh;
                 else
                     return Meh;
                 end if;
@@ -164,7 +173,7 @@ package body PTree_Noeud is
 
             if occurrence_Noeud(valeur_Noeud(T)) > 0 then
                 if facteur(get_Mot_Tree(T), M) then
-                    return 1 + Meh;
+                    return occurrence_Noeud(valeur_Noeud(T)) + Meh;
                 else
                     return Meh;
                 end if;
@@ -338,10 +347,12 @@ package body PTree_Noeud is
                 if mot_Vide(Lettre_Suivante(Mot)) then
                     -- Il faut mettre les occurrences à + 1
                     Moo := ajout_Occurrence(valeur_Noeud(fils_Char(Meh, valeur_Mot(Mot))), 1);
-                    Meh := insert_Fils(Meh, Moo);
-                end if; 
+                    Meh := insert_Fils(Meh, Moo, fils_Meh(fils_Char(Meh, valeur_Mot(Mot))));
                     
-                modif_Val_Fils(Meh, creer_Noeud(valeur_Mot(Mot), 0), ajout_Mot_Tree(fils_Char(Meh, valeur_Mot(Mot)), Lettre_Suivante(Mot)));
+                    modif_Val_Fils(Meh, creer_Noeud(valeur_Mot(Mot), 0), ajout_Mot_Tree(fils_Char(Meh, valeur_Mot(Mot)), Lettre_Suivante(Mot)));
+                else
+                    modif_Val_Fils(Meh, creer_Noeud(valeur_Mot(Mot), 0), ajout_Mot_Tree(fils_Char(Meh, valeur_Mot(Mot)), Lettre_Suivante(Mot)));
+                end if; 
             end if;
             
             return Meh;
@@ -349,5 +360,20 @@ package body PTree_Noeud is
             return Meh;
         end if;
     end ajout_Mot_Tree;
+    
+    function longueur_Fils(T: in TTree_Noeud) return Integer is
+    begin
+        return fils_Length(T);
+    end longueur_Fils;
+    
+    function fils_Char_Int(T: in TTree_Noeud; C: in Integer) return TTree_Noeud is
+    begin
+        return fils_N_int(T, C);
+    end fils_Char_Int;
+    
+    procedure modif_Tree(T: in TTree_Noeud; N: in TNoeud) is
+    begin
+        modif_Val_Tree(T, N);
+    end modif_Tree;
 
 end PTree_Noeud;

@@ -9,6 +9,7 @@
 
 with Ahven.Framework;
 with Text_IO; use Text_IO;
+with ada.integer_text_io; use ada.integer_text_io;
 with PMot; use PMot;
 with PCouple; use PCouple;
 with PListe_Couple; use PListe_Couple;
@@ -71,6 +72,7 @@ package FL_Tests is
         
 -- Test sur les fichiers
     procedure test_Fichier_Gen_Liste_Couples;
+    procedure test_Fichier_Gen_Tree;
         
 -- Test sur les listes de trios
     procedure test_Liste_Trio_Fusion_Listes;  
@@ -78,6 +80,17 @@ package FL_Tests is
     procedure test_Liste_Trio_Mots_Differents;
 
 -- Test sur les Tries
-    procedure test_Tries_Inserer_Mot;
+    procedure test_Tree_nb_Superieur;
+    procedure test_Tree_nb_Occurrence;
+    procedure test_Tree_Taille;
+    procedure test_Tree_Presence;
+    procedure test_Tree_Presence_Fail;
+    procedure test_Tree_nb_Prefixe;
+    procedure test_Tree_nb_Suffixe;
+    procedure test_Tree_nb_Facteur;
+    procedure test_Tree_Moy_Occur;
+    procedure test_Tree_Moy_Long;
+    procedure test_Tree_nb_Occur_Mot;  
+    procedure test_Tree_Fusion;
         
 end FL_Tests;

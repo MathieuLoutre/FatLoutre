@@ -75,7 +75,7 @@ package body PMot is
     begin
         if (not vide(Mot2) and not vide(Mot1)) then
             -- Tant que les 2 mots ne sont pas vide
-    	    if valeur(Mot2) >= valeur(Mot1) then
+    	    if valeur(Mot2) > valeur(Mot1) then
     	        return true;
     	        -- Si c'est superieur, c'est gagné
     	    elsif (valeur(Mot2) = valeur(Mot1)) then

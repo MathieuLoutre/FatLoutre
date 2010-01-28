@@ -22,7 +22,7 @@ generic
 package PTree_Gen is
       
     type TPtrCellule is private;
-    type TMeh is private;
+    type TMeh is array(1..Max) of TPtrCellule;
         
         function creer_Tree(N: in TElem) return TPtrCellule;
             -- Créé une liste vide
@@ -44,7 +44,7 @@ package PTree_Gen is
            	
         procedure modif_Val_Tree(T: in TPtrCellule; N: in TElem);
 
-        function insert_Fils(T: in TPtrCellule; N: in TElem) return TPtrCellule;
+        function insert_Fils(T: in TPtrCellule; N: in TElem; M: TMeh := (others => Tree_Vide)) return TPtrCellule;
             -- Affecte un fils N dans les fils de T. Si il est y est déjà, on ne fait rien.
             
         procedure modif_Val_Fils(T: in TPtrCellule; N: in TElem; L: in TPtrCellule);
@@ -53,11 +53,12 @@ package PTree_Gen is
         
         function fils_Length(T: in TPtrCellule) return Integer;
    
+        function fils_Meh(T: in TPtrCellule) return TMeh;
+        
     private
         
         type TCellule;
         type TPtrCellule is access TCellule;
-        type TMeh is array(1..Max) of TPtrCellule;
         type TCellule is record
             val: TElem;
             papa: TPtrCellule;

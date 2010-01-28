@@ -68,11 +68,19 @@ package PTree_Noeud is
         
     function nb_Superieur_Tree(T: in TTree_Noeud; N: in Integer) return Integer;
     
+    function nb_Occurrence_Mot_Tree(T: in TTree_Noeud; M: in TMot) return Integer;
+    
     function fusion_Mot_Tree(T: in TTree_Noeud; M1, M2: in TMot) return TTree_Noeud;
     
     procedure affiche_Decroissant_Occurrence(T: in TTree_Noeud; N: in Integer);
         
     function tree_To_Liste_Occurrence_Decroissante(T: in TTree_Noeud; L: in TListe_Couple := creer_Liste_Couple) return TListe_Couple;
+    
+    function longueur_Fils(T: in TTree_Noeud) return Integer;
+    
+    function fils_Char_Int(T: in TTree_Noeud; C: in Integer) return TTree_Noeud;
+    
+    procedure modif_Tree(T: in TTree_Noeud; N: in TNoeud);
     
     private
         function Longueur_Totale_Mot_Tree(T: in TTree_Noeud) return Integer;

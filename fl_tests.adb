@@ -61,6 +61,7 @@ package body FL_Tests is
 	    
 	    -- Sur les fichiers
 	    Framework.Add_Test_Routine(T, test_Fichier_Gen_Liste_Couples'Access, "Generer Fichier");
+	    Framework.Add_Test_Routine(T, test_Fichier_Gen_Tree'Access, "Generer Fichier Tree");
 	    
 	    -- Sur les listes de Trio
 	    Framework.Add_Test_Routine(T, test_Liste_Trio_Fusion_Listes'Access, "Fusion de listes");
@@ -68,7 +69,18 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Trio_Mots_Differents'Access, "Mots Différents");
 	    
 	    -- TETS SUR LES MEHHHHH
-	    Framework.Add_Test_Routine(T, test_Tries_Inserer_Mot'Access, "Tree Mot Present");
+	    Framework.Add_Test_Routine(T, test_Tree_nb_Superieur'Access, "Tree nb Superieur");
+	    Framework.Add_Test_Routine(T, test_Tree_nb_Occurrence'Access, "Tree nb Occurrence");
+	    Framework.Add_Test_Routine(T, test_Tree_Taille'Access, "Tree nb mots differents");
+	    Framework.Add_Test_Routine(T, test_Tree_Presence'Access, "Tree Presence");
+	    Framework.Add_Test_Routine(T, test_Tree_Presence_Fail'Access, "Tree Presence Fail");
+	    Framework.Add_Test_Routine(T, test_Tree_nb_Prefixe'Access, "Tree nb Prefixe");
+	    Framework.Add_Test_Routine(T, test_Tree_nb_Suffixe'Access, "Tree nb Suffixe");
+	    Framework.Add_Test_Routine(T, test_Tree_nb_Facteur'Access, "Tree nb Facteur");
+	    Framework.Add_Test_Routine(T, test_Tree_Moy_Occur'Access, "Tree moy Occurrence");
+	    Framework.Add_Test_Routine(T, test_Tree_Moy_Long'Access, "Tree moy Longueur");
+	    Framework.Add_Test_Routine(T, test_Tree_nb_Occur_Mot'Access, "Tree nb Occurrence Mot");
+	    Framework.Add_Test_Routine(T, test_Tree_Fusion'Access, "Tree Fusion de Mots");
 	    
         
     end Initialize;
@@ -973,42 +985,324 @@ package body FL_Tests is
         
         regen_Liste_Couples(Fichier3, Liste_Couple2, "liste-mot.txt");
         
-        --affichage_decroissant(Liste_Couple2, 200);
+        affichage_decroissant(Liste_Couple2, 200);
         
         --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
     end test_Fichier_Gen_Liste_Couples;
     
-    procedure test_Tries_Inserer_Mot is
-        Mot1, Mot2, Mot3: TMot;
-        T: TTree_Noeud := creer_Tree_Noeud;
+    procedure test_Fichier_Gen_Tree is
+           Tree, Tree2: TTree_Noeud;
+           Fichier: File_Type;
+           Fichier2: File_Type;
+           Fichier3: File_Type;
+       begin
+
+           gen_Tree(Fichier, Tree, "texte2.txt");
+
+           gen_Fichier_Tree(Tree, Fichier2, "liste-mot.txt");
+
+           regen_Tree(Fichier3, Tree2, "liste-mot.txt");
+
+           affiche_Decroissant_Occurrence(Tree2, 200);
+
+           --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
+       end test_Fichier_Gen_Tree;
+    
+-- Sur les Tries Couples
+
+    procedure test_Tree_nb_Superieur is
+	    Tree: TTree_Noeud;
+    	Mot1, Mot2: TMot;
     begin
-        Mot1 := creer_Mot;
-  	    Mot1 := ajout_Lettre_Fin(Mot1, 'n');
-  	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
-  	    
-  	    Mot2 := creer_Mot;
-  	    Mot2 := ajout_Lettre_Fin(Mot2, 'n');
-  	    Mot2 := ajout_Lettre_Fin(Mot2, 'i');
-  	    Mot2 := ajout_Lettre_Fin(Mot2, 'h');
-  	    Mot2 := ajout_Lettre_Fin(Mot2, 'n');
-  	    
-  	    Mot3 := creer_Mot;
-  	    Mot3 := ajout_Lettre_Fin(Mot3, 'm');
-  	    Mot3 := ajout_Lettre_Fin(Mot3, 'e');
-  	    Mot3 := ajout_Lettre_Fin(Mot3, 'h');
-  	    
-  	    T := ajout_Mot_Tree(T, Mot1);
-  	    T := ajout_Mot_Tree(T, Mot1);
-  	    T := ajout_Mot_Tree(T, Mot2);
-  	    T := ajout_Mot_Tree(T, Mot3);
-  	    
-  	    affiche_Tree(T);
-  	    
-  	    T := fusion_Mot_Tree(T, Mot2, Mot1);
-  	    
-  	    affiche_Decroissant_Occurrence(T, 3);
-  	    
-  	    assert(present_Tree(T, Mot1), "Le mot devrait être present");
-    end test_Tries_Inserer_Mot;
+	    Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+    	
+    	Mot2 := creer_Mot;
+    	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+    	Tree := creer_Tree_Noeud;
+    	Tree := ajout_Mot_Tree(Tree, Mot1);
+    	Tree := ajout_Mot_Tree(Tree, Mot2);
+        
+        assert(nb_Superieur_Tree(Tree, 2) = 1, "Le nombre de mots supérieur n'est pas bon");
+    end test_Tree_nb_Superieur;
+    
+    procedure test_Tree_Presence is
+	    Tree: TTree_Noeud;
+    	Mot1: TMot;
+    begin
+	    Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+    	Tree := creer_Tree_Noeud;
+    	Tree := ajout_Mot_Tree(Tree, Mot1);
+        
+        assert(present_Tree(Tree, Mot1) = True, "Le Mot1 devrait être présent dans la liste");
+    end test_Tree_Presence;
+    
+    procedure test_Tree_Presence_Fail is
+	    Tree: TTree_Noeud;
+    	Mot1, Mot2: TMot;
+    begin
+	    Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+    	
+    	Mot2 := creer_Mot;
+    	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+    	Tree := creer_Tree_Noeud;
+    	Tree := ajout_Mot_Tree(Tree, Mot1);
+        
+        assert(present_Tree(Tree, Mot2) = False, "Le Mot2 ne devrait pas être présent dans la liste");
+    end test_Tree_Presence_Fail;
+    
+    procedure test_Tree_Taille is
+	Tree: TTree_Noeud;
+	Mot1, Mot2: TMot;
+    begin
+	Mot1 := creer_Mot;
+	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+	
+	Mot2 := creer_Mot;
+	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+	Tree := creer_Tree_Noeud;
+	Tree := ajout_Mot_Tree(Tree, Mot1);
+	Tree := ajout_Mot_Tree(Tree, Mot2);
+	Tree := ajout_Mot_Tree(Tree, Mot2); -- ajout de 2 fois le même mot pour test
+
+        assert(nb_Mots_Tree(Tree) = 2, "Le nombre de mots différents n'est pas bon");
+    end test_Tree_Taille;
+    
+    procedure test_Tree_nb_Occurrence is
+ 	    Tree: TTree_Noeud;
+ 	    Mot1, Mot2: TMot;
+     begin
+     	Mot1 := creer_Mot;
+     	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+     	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+     	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+     	Mot2 := creer_Mot;
+     	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+     	Tree := creer_Tree_Noeud;
+     	Tree := ajout_Mot_Tree(Tree, Mot1);
+     	Tree := ajout_Mot_Tree(Tree, Mot2);
+     	Tree := ajout_Mot_Tree(Tree, Mot2);
+     	Tree := ajout_Mot_Tree(Tree, Mot2);
+            
+        assert(nb_Occurrences_Total(Tree) = 4, "Le nombre d'occurrence n'est pas bon");
+     end test_Tree_nb_Occurrence;
+      
+      procedure test_Tree_nb_Prefixe is
+          Tree: TTree_Noeud;
+          Mot1, Mot2, Mot3: TMot;
+      begin
+          Mot1 := creer_Mot;
+          Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+          Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+          Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+        	
+          Mot3 := creer_Mot;
+          Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+          Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+          Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+    	  Mot2 := creer_Mot;
+          Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+    	  Tree := creer_Tree_Noeud;
+    	  Tree := ajout_Mot_Tree(Tree, Mot1);
+    	  Tree := ajout_Mot_Tree(Tree, Mot3);
+    	  Tree := ajout_Mot_Tree(Tree, Mot1);
+    	  Tree := ajout_Mot_Tree(Tree, Mot3);
+        	
+          assert(nb_Prefixe_Tree(Tree, Mot2) = 2, "Le nombre de préfixes est incorrect");
+      end test_Tree_nb_Prefixe;
+        
+      procedure test_Tree_nb_Suffixe is
+          Tree: TTree_Noeud;
+      	  Mot1, Mot2, Mot3: TMot;
+      begin
+          	Mot1 := creer_Mot;
+          	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+          	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+          	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          	Mot3 := creer_Mot;
+          	Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+          	Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+          	Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+          	Mot2 := creer_Mot;
+          	Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+          	Mot2 := ajout_Lettre_Fin(Mot2, 'h');
+
+          	Tree := creer_Tree_Noeud;
+          	Tree := ajout_Mot_Tree(Tree, Mot1);
+          	Tree := ajout_Mot_Tree(Tree, Mot3);
+          	Tree := ajout_Mot_Tree(Tree, Mot1);
+          	Tree := ajout_Mot_Tree(Tree, Mot3);
+
+            assert(nb_Suffixe_Tree(Tree, Mot2) = 2, "Le nombre de suffixes est incorrect");
+          end test_Tree_nb_Suffixe;
+          
+          procedure test_Tree_nb_Facteur is
+              Tree: TTree_Noeud;
+              Mot1, Mot2, Mot3: TMot;
+          begin
+            Mot1 := creer_Mot;
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+        	Mot3 := creer_Mot;
+        	Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+        	Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+        	Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+        	Mot2 := creer_Mot;
+        	Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+
+        	Tree := creer_Tree_Noeud;
+        	Tree := ajout_Mot_Tree(Tree, Mot1);
+        	Tree := ajout_Mot_Tree(Tree, Mot3);
+        	Tree := ajout_Mot_Tree(Tree, Mot1);
+        	Tree := ajout_Mot_Tree(Tree, Mot3);
+            
+            assert(nb_Facteur_Tree(Tree, Mot2) = 4, "Le nombre de facteurs est incorrect");
+      end test_Tree_nb_Facteur;
+
+      procedure test_Tree_Moy_Occur is
+  	      Tree: TTree_Noeud;
+      	  Mot1, Mot2, Mot3: TMot;
+      begin
+  	      Mot1 := creer_Mot;
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+      	  
+      	  Mot2 := creer_Mot;
+      	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+      	  Tree := creer_Tree_Noeud;
+      	  Tree := ajout_Mot_Tree(Tree, Mot1);
+      	  Tree := ajout_Mot_Tree(Tree, Mot3);
+      	  Tree := ajout_Mot_Tree(Tree, Mot1);
+      	  Tree := ajout_Mot_Tree(Tree, Mot3);
+      	  Tree := ajout_Mot_Tree(Tree, Mot2);
+      	  Tree := ajout_Mot_Tree(Tree, Mot2);
+
+          assert(moy_Occurrence_Tree(Tree) = 2.00, "La moyenne d'occurrence n'est pas bonne");
+      end test_Tree_Moy_Occur;
+      
+      procedure test_Tree_Moy_Long is
+  	      Tree: TTree_Noeud;
+      	  Mot1, Mot2, Mot3: TMot;
+      begin
+  	      Mot1 := creer_Mot;
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+      	  
+      	  Mot2 := creer_Mot;
+      	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+      	  Tree := creer_Tree_Noeud;
+      	  Tree := ajout_Mot_Tree(Tree, Mot1);
+      	  Tree := ajout_Mot_Tree(Tree, Mot3);
+      	  Tree := ajout_Mot_Tree(Tree, Mot1);
+      	  Tree := ajout_Mot_Tree(Tree, Mot2);
+      	  Tree := ajout_Mot_Tree(Tree, Mot3);
+      	  Tree := ajout_Mot_Tree(Tree, Mot2);
+      	  Tree := ajout_Mot_Tree(Tree, Mot2);
+          
+          assert(moy_Longueur_Tree(Tree) = 3.00, "La moyenne n'est pas bonne");
+      end test_Tree_Moy_Long;
+
+       procedure test_Tree_nb_Occur_Mot is
+    	      Tree: TTree_Noeud;
+        	  Mot1, Mot2, Mot3: TMot;
+        begin
+    	      Mot1 := creer_Mot;
+        	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+        	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+              Mot3 := creer_Mot;
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+        	  Mot2 := creer_Mot;
+        	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+        	  Tree := creer_Tree_Noeud;
+        	  Tree := ajout_Mot_Tree(Tree, Mot1);
+        	  Tree := ajout_Mot_Tree(Tree, Mot3);
+        	  Tree := ajout_Mot_Tree(Tree, Mot1);
+        	  Tree := ajout_Mot_Tree(Tree, Mot2);
+        	  Tree := ajout_Mot_Tree(Tree, Mot3);
+        	  Tree := ajout_Mot_Tree(Tree, Mot2);
+        	  Tree := ajout_Mot_Tree(Tree, Mot2);
+              
+              assert(nb_Occurrence_Mot_Tree(Tree, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
+        end test_Tree_nb_Occur_Mot;
+    
+    procedure test_Tree_Fusion is
+        Tree: TTree_Noeud;
+    	Mot1, Mot2, Mot3: TMot;
+    	lol, lol2: integer;
+    begin
+	    Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+       	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+    	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+    	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+    	  Mot3 := ajout_Lettre_Fin(Mot3, 's');
+
+    	  Mot2 := creer_Mot;
+    	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+    	  Tree := creer_Tree_Noeud;
+    	  Tree := ajout_Mot_Tree(Tree, Mot1);
+    	  Tree := ajout_Mot_Tree(Tree, Mot3);
+    	  Tree := ajout_Mot_Tree(Tree, Mot1);
+    	  Tree := ajout_Mot_Tree(Tree, Mot2);
+    	  Tree := ajout_Mot_Tree(Tree, Mot3);
+    	  Tree := ajout_Mot_Tree(Tree, Mot2);
+    	  Tree := ajout_Mot_Tree(Tree, Mot2);
+          
+          lol := nb_Occurrence_Mot_Tree(Tree, Mot1);
+          lol2 := nb_Occurrence_Mot_Tree(Tree, Mot2);
+          
+          Tree := fusion_Mot_Tree(Tree, Mot1, Mot2);
+          assert(nb_Occurrence_Mot_Tree(Tree, Mot1) = lol+lol2 and (present_Tree(Tree, Mot2) = False), "La Fusion ne marche pas");
+    end test_Tree_Fusion;
     
 end FL_Tests;
