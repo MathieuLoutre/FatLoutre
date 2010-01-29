@@ -18,17 +18,7 @@ package body PNoeud is
         
         return Noeud;
     end creer_Noeud;
-       
-    function Noeuds_Egaux_Mot(Noeud1: in TNoeud; Noeud2: in TNoeud) return Boolean is
-    begin
-        return char_Noeud(Noeud1) = char_Noeud(Noeud2);
-    end Noeuds_Egaux_Mot;
-   
-    function Noeud_Superieur_Occurrence(Noeud1: in TNoeud; Noeud2: in TNoeud) return Boolean is
-    begin
-        return occurrence_Noeud(Noeud1) > occurrence_Noeud(Noeud2);
-    end Noeud_Superieur_Occurrence;
-   
+      
     function char_Noeud(Noeud: in TNoeud) return character is
     begin
         return Noeud.char;
@@ -38,13 +28,6 @@ package body PNoeud is
     begin
         return Noeud.occurrences;
     end occurrence_Noeud;
-    
-    procedure affiche_Noeud(Noeud: in TNoeud) is
-    begin
-        put(Noeud.char);
-        --put_line(integer'image(Noeud.occurrences));
-        
-    end affiche_Noeud;
     
     function ajout_Occurrence(Noeud: in TNoeud; N: in Integer) return TNoeud is
         MehNoeud: TNoeud := Noeud;
@@ -69,7 +52,8 @@ package body PNoeud is
             HashMeh := HashMeh + 84;
         elsif HashMeh = -51 then -- le tiret => 28
             HashMeh := HashMeh + 79;
-        elsif HashMeh not in 1..26 then -- Cas innatendu, on met 0, si jamais on a besoin de checker
+        elsif HashMeh not in 1..26 then 
+        -- Cas innatendu, on met 0, si jamais on a besoin de checker (produit un access check)
             HashMeh := 0;
         end if;
         

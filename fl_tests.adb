@@ -68,7 +68,7 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Liste_Trio_Mots_Communs'Access, "Mots Communs");
 	    Framework.Add_Test_Routine(T, test_Liste_Trio_Mots_Differents'Access, "Mots Différents");
 	    
-	    -- TETS SUR LES MEHHHHH
+	    -- TESTS SUR LES MEHHHHH
 	    Framework.Add_Test_Routine(T, test_Tree_nb_Superieur'Access, "Tree nb Superieur");
 	    Framework.Add_Test_Routine(T, test_Tree_nb_Occurrence'Access, "Tree nb Occurrence");
 	    Framework.Add_Test_Routine(T, test_Tree_Taille'Access, "Tree nb mots differents");
@@ -82,6 +82,22 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Tree_nb_Occur_Mot'Access, "Tree nb Occurrence Mot");
 	    Framework.Add_Test_Routine(T, test_Tree_Fusion'Access, "Tree Fusion de Mots");
 	    
+        -- TESTS SUR LES MEHHHHH GROOOOOS
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_nb_Superieur'Access, "Tree Gros nb Superieur");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_nb_Occurrence'Access, "Tree Gros nb Occurrence");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Taille'Access, "Tree Gros nb mots differents");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Presence'Access, "Tree Gros Presence");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Presence_Fail'Access, "Tree Gros Presence Fail");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_nb_Prefixe'Access, "Tree Gros nb Prefixe");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_nb_Suffixe'Access, "Tree Gros nb Suffixe");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_nb_Facteur'Access, "Tree Gros nb Facteur");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Moy_Occur'Access, "Tree Gros moy Occurrence");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Moy_Long'Access, "Tree Gros moy Longueur");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_nb_Occur_Mot'Access, "Tree Gros nb Occurrence Mot");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Fusion'Access, "Tree Gros Fusion de Mots");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Fusion_Tree'Access, "Fusion de Tree Gros");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Mots_Communs'Access, "Mots Communs Tree Gros");
+	    Framework.Add_Test_Routine(T, test_Tree_Gros_Mots_Differents'Access, "Mots Différents Tree Gros");
         
     end Initialize;
       
@@ -970,44 +986,6 @@ package body FL_Tests is
   	  assert(nb_Mots_Differents_Trio(Liste_Couple3) = 2, "La différence ne marche pas");
     end test_Liste_Trio_Mots_Differents;
     
--- Sur les fichiers
-
-    procedure test_Fichier_Gen_Liste_Couples is
-        Liste_Couple, Liste_Couple2: TListe_Couple;
-        Fichier: File_Type;
-        Fichier2: File_Type;
-        Fichier3: File_Type;
-    begin
-        
-        gen_Liste_Couples(Fichier, Liste_Couple, "texte2.txt");
-        
-        gen_Fichier(Liste_Couple, Fichier2, "liste-mot.txt");
-        
-        regen_Liste_Couples(Fichier3, Liste_Couple2, "liste-mot.txt");
-        
-        affichage_decroissant(Liste_Couple2, 200);
-        
-        --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
-    end test_Fichier_Gen_Liste_Couples;
-    
-    procedure test_Fichier_Gen_Tree is
-           Tree, Tree2: TTree_Noeud;
-           Fichier: File_Type;
-           Fichier2: File_Type;
-           Fichier3: File_Type;
-       begin
-
-           gen_Tree(Fichier, Tree, "texte2.txt");
-
-           gen_Fichier_Tree(Tree, Fichier2, "liste-mot.txt");
-
-           regen_Tree(Fichier3, Tree2, "liste-mot.txt");
-
-           affiche_Decroissant_Occurrence(Tree2, 200);
-
-           --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
-       end test_Fichier_Gen_Tree;
-    
 -- Sur les Tries Couples
 
     procedure test_Tree_nb_Superieur is
@@ -1304,5 +1282,459 @@ package body FL_Tests is
           Tree := fusion_Mot_Tree(Tree, Mot1, Mot2);
           assert(nb_Occurrence_Mot_Tree(Tree, Mot1) = lol+lol2 and (present_Tree(Tree, Mot2) = False), "La Fusion ne marche pas");
     end test_Tree_Fusion;
+    
+    
+    -- Sur les Tries Gros
+
+        procedure test_Tree_Gros_nb_Superieur is
+    	    Tree: TTree_Gros_Noeud;
+        	Mot1, Mot2: TMot;
+        begin
+    	    Mot1 := creer_Mot;
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+        	Mot2 := creer_Mot;
+        	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+        	Tree := creer_Tree_Gros_Noeud;
+        	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+        	Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+
+            assert(nb_Superieur_Tree_Gros(Tree, 2) = 1, "Le nombre de mots supérieur n'est pas bon");
+        end test_Tree_Gros_nb_Superieur;
+
+        procedure test_Tree_Gros_Presence is
+    	    Tree: TTree_Gros_Noeud;
+        	Mot1: TMot;
+        begin
+    	    Mot1 := creer_Mot;
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+        	Tree := creer_Tree_Gros_Noeud;
+        	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+
+            assert(present_Tree_Gros(Tree, Mot1) = True, "Le Mot1 devrait être présent dans la liste");
+        end test_Tree_Gros_Presence;
+
+        procedure test_Tree_Gros_Presence_Fail is
+    	    Tree: TTree_Gros_Noeud;
+        	Mot1, Mot2: TMot;
+        begin
+    	    Mot1 := creer_Mot;
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+        	Mot2 := creer_Mot;
+        	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+        	Tree := creer_Tree_Gros_Noeud;
+        	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 1, 0);
+
+            assert(present_Tree_Gros(Tree, Mot2) = False, "Le Mot2 ne devrait pas être présent dans la liste");
+        end test_Tree_Gros_Presence_Fail;
+
+        procedure test_Tree_Gros_Taille is
+    	Tree: TTree_Gros_Noeud;
+    	Mot1, Mot2: TMot;
+        begin
+    	Mot1 := creer_Mot;
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+    	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+    	Mot2 := creer_Mot;
+    	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+    	Tree := creer_Tree_Gros_Noeud;
+    	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+    	Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+    	Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 0, 1); -- ajout de 2 fois le même mot pour test
+
+            assert(nb_Mots_Tree_Gros(Tree) = 2, "Le nombre de mots différents n'est pas bon");
+        end test_Tree_Gros_Taille;
+
+        procedure test_Tree_Gros_nb_Occurrence is
+     	    Tree: TTree_Gros_Noeud;
+     	    Mot1, Mot2: TMot;
+         begin
+         	Mot1 := creer_Mot;
+         	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+         	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+         	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+         	Mot2 := creer_Mot;
+         	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+         	Tree := creer_Tree_Gros_Noeud;
+         	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 1, 0);
+         	Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+         	Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 0, 1);
+         	Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 0, 1);
+            
+            assert(nb_Occurrences_Total_Gros(Tree) = 4, "Le nombre d'occurrence n'est pas bon");
+         end test_Tree_Gros_nb_Occurrence;
+
+          procedure test_Tree_Gros_nb_Prefixe is
+              Tree: TTree_Gros_Noeud;
+              Mot1, Mot2, Mot3: TMot;
+          begin
+              Mot1 := creer_Mot;
+              Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+              Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+              Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+              Mot3 := creer_Mot;
+              Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+              Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+              Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+        	  Mot2 := creer_Mot;
+              Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+        	  Tree := creer_Tree_Gros_Noeud;
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 0, 1);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 1, 0);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 1, 0);
+
+              assert(nb_Prefixe_Tree_Gros(Tree, Mot2) = 2, "Le nombre de préfixes est incorrect");
+          end test_Tree_Gros_nb_Prefixe;
+
+          procedure test_Tree_Gros_nb_Suffixe is
+              Tree: TTree_Gros_Noeud;
+          	  Mot1, Mot2, Mot3: TMot;
+          begin
+              	Mot1 := creer_Mot;
+              	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+              	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+              	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+              	Mot3 := creer_Mot;
+              	Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+              	Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+              	Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+              	Mot2 := creer_Mot;
+              	Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+              	Mot2 := ajout_Lettre_Fin(Mot2, 'h');
+
+              	Tree := creer_Tree_Gros_Noeud;
+              	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+              	Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 1, 0);
+              	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+              	Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 0, 1);
+
+                assert(nb_Suffixe_Tree_Gros(Tree, Mot2) = 2, "Le nombre de suffixes est incorrect");
+              end test_Tree_Gros_nb_Suffixe;
+
+              procedure test_Tree_Gros_nb_Facteur is
+                  Tree: TTree_Gros_Noeud;
+                  Mot1, Mot2, Mot3: TMot;
+              begin
+                Mot1 := creer_Mot;
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+            	Mot3 := creer_Mot;
+            	Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+            	Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+            	Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+            	Mot2 := creer_Mot;
+            	Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+
+            	Tree := creer_Tree_Gros_Noeud;
+            	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+            	Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 1, 0);
+            	Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+            	Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 0, 1);
+
+                assert(nb_Facteur_Tree_Gros(Tree, Mot2) = 4, "Le nombre de facteurs est incorrect");
+          end test_Tree_Gros_nb_Facteur;
+
+          procedure test_Tree_Gros_Moy_Occur is
+      	      Tree: TTree_Gros_Noeud;
+          	  Mot1, Mot2, Mot3: TMot;
+          begin
+      	      Mot1 := creer_Mot;
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+              Mot3 := creer_Mot;
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+          	  Mot2 := creer_Mot;
+          	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+          	  Tree := creer_Tree_Gros_Noeud;
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 1, 0);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 1, 0);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 0, 1);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+
+              assert(moy_Occurrence_Tree_Gros(Tree) = 2.00, "La moyenne d'occurrence n'est pas bonne");
+          end test_Tree_Gros_Moy_Occur;
+
+          procedure test_Tree_Gros_Moy_Long is
+      	      Tree: TTree_Gros_Noeud;
+          	  Mot1, Mot2, Mot3: TMot;
+          begin
+      	      Mot1 := creer_Mot;
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+              Mot3 := creer_Mot;
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+          	  Mot2 := creer_Mot;
+          	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+          	  Tree := creer_Tree_Gros_Noeud;
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 1, 0);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 0, 1);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 1, 1);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 0, 1);
+          	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+
+              assert(moy_Longueur_Tree_Gros(Tree) = 3.00, "La moyenne n'est pas bonne");
+          end test_Tree_Gros_Moy_Long;
+
+           procedure test_Tree_Gros_nb_Occur_Mot is
+        	      Tree: TTree_Gros_Noeud;
+            	  Mot1, Mot2, Mot3: TMot;
+            begin
+        	      Mot1 := creer_Mot;
+            	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+            	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+            	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+                  Mot3 := creer_Mot;
+            	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+            	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+            	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+            	  Mot2 := creer_Mot;
+            	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+            	  Tree := creer_Tree_Gros_Noeud;
+            	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 1, 0);
+            	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 0, 1);
+            	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+            	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 0, 1);
+            	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 1, 0);
+            	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+            	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 0, 1);
+                  
+                  assert(nb_Occurrence_Mot_Tree_Gros(Tree, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
+            end test_Tree_Gros_nb_Occur_Mot;
+
+        procedure test_Tree_Gros_Fusion is
+            Tree: TTree_Gros_Noeud;
+        	Mot1, Mot2, Mot3: TMot;
+        	lol, lol2: integer;
+        begin
+    	    Mot1 := creer_Mot;
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+              Mot3 := creer_Mot;
+           	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+        	  Mot3 := ajout_Lettre_Fin(Mot3, 's');
+
+        	  Mot2 := creer_Mot;
+        	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+        	  Tree := creer_Tree_Gros_Noeud;
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 1, 0);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 0, 1);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot1, 0, 1);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot3, 0, 1);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+        	  Tree := ajout_Mot_Tree_Gros(Tree, Mot2, 1, 0);
+
+              lol := nb_Occurrence_Mot_Tree_Gros(Tree, Mot1);
+              lol2 := nb_Occurrence_Mot_Tree_Gros(Tree, Mot2);
+
+              Tree := fusion_Mot_Tree_Gros(Tree, Mot1, Mot2);
+              assert(nb_Occurrence_Mot_Tree_Gros(Tree, Mot1) = lol+lol2 and (present_Tree_Gros(Tree, Mot2) = False), "La Fusion ne marche pas");
+        end test_Tree_Gros_Fusion;
+        
+        procedure test_Tree_Gros_Fusion_Tree is 
+            Liste_Couple, Liste_Couple2: TListe_Couple;
+    	Liste_Couple3 : TListe_Trio;
+          	Mot1, Mot2, Mot3, Mot4: TMot;
+        begin
+      	    Mot1 := creer_Mot;
+      	    Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+      	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+      	  Mot2 := creer_Mot;
+      	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+      	  Mot4 := creer_Mot;
+          Mot4 := ajout_Lettre_Fin(Mot4, 'M');
+          Mot4 := ajout_Lettre_Fin(Mot4, 'e');
+          Mot4 := ajout_Lettre_Fin(Mot4, 'h');
+
+      	  Liste_Couple := creer_Liste_Couple;
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot3);
+      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot2);
+      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot4);
+
+      	  Liste_Couple3 := fusion_Listes(Liste_Couple, Liste_Couple2);
+      	  assert(nb_Mots_Differents_Trio(Liste_Couple3) = 4, "La Fusion de listes ne marche pas");
+        end test_Tree_Gros_Fusion_Tree;
+
+        procedure test_Tree_Gros_Mots_Communs is
+            Tree_Noeud, Tree_Noeud2: TTree_Noeud;
+    	Tree_Noeud3 : TTree_Gros_Noeud;
+          	Mot1, Mot2, Mot3, Mot4: TMot;
+        begin
+      	    Mot1 := creer_Mot;
+      	    Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+      	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+      	  Mot2 := creer_Mot;
+      	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+      	  Mot4 := creer_Mot;
+          Mot4 := ajout_Lettre_Fin(Mot4, 'm');
+          Mot4 := ajout_Lettre_Fin(Mot4, 'e');
+          Mot4 := ajout_Lettre_Fin(Mot4, 'h');
+          
+      	  Tree_Noeud := creer_Tree_Noeud;
+      	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot1);
+      	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot3);
+      	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot2);
+          
+          Tree_Noeud2 := creer_Tree_Noeud;
+      	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot3);
+      	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot2);
+      	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot4);
+          
+      	  Tree_Noeud3 := mots_Communs_Tree(Tree_Noeud, Tree_Noeud2);
+      	  
+      	  assert(nb_Mots_Tree_Gros(Tree_Noeud3) = 2, "L'intersection ne marche pas");
+        end test_Tree_Gros_Mots_Communs;
+
+        procedure test_Tree_Gros_Mots_Differents is
+            Liste_Couple, Liste_Couple2: TListe_Couple;
+    	Liste_Couple3 : TListe_Trio;
+          	Mot1, Mot2, Mot3, Mot4: TMot;
+        begin
+      	    Mot1 := creer_Mot;
+      	    Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+      	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+          Mot3 := creer_Mot;
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+      	  Mot2 := creer_Mot;
+      	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+
+      	  Mot4 := creer_Mot;
+          Mot4 := ajout_Lettre_Fin(Mot4, 'M');
+          Mot4 := ajout_Lettre_Fin(Mot4, 'e');
+          Mot4 := ajout_Lettre_Fin(Mot4, 'h');
+
+      	  Liste_Couple := creer_Liste_Couple;
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
+      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+
+      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot3);
+      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot2);
+      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot4);
+
+      	  Liste_Couple3 := mots_Differents(Liste_Couple, Liste_Couple2);
+
+      	  assert(nb_Mots_Differents_Trio(Liste_Couple3) = 2, "La différence ne marche pas");
+        end test_Tree_Gros_Mots_Differents;
+        
+        
+        -- Sur les fichiers
+
+            procedure test_Fichier_Gen_Liste_Couples is
+                Liste_Couple, Liste_Couple2: TListe_Couple;
+                Fichier: File_Type;
+                Fichier2: File_Type;
+                Fichier3: File_Type;
+            begin
+
+                gen_Liste_Couples(Fichier, Liste_Couple, "texte2.txt");
+
+                --gen_Fichier(Liste_Couple, Fichier2, "liste-mot.txt");
+
+                --regen_Liste_Couples(Fichier3, Liste_Couple2, "liste-mot.txt");
+
+                --affichage_decroissant(Liste_Couple2, 200);
+
+                --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
+            end test_Fichier_Gen_Liste_Couples;
+
+            procedure test_Fichier_Gen_Tree is
+                   Tree, Tree2: TTree_Noeud;
+                   Fichier: File_Type;
+                   Fichier2: File_Type;
+                   Fichier3: File_Type;
+               begin
+
+                   gen_Tree(Fichier, Tree, "texte2.txt");
+
+                   --gen_Fichier_Tree(Tree, Fichier2, "liste-mot.txt");
+
+                   --regen_Tree(Fichier3, Tree2, "liste-mot.txt");
+
+                   --affiche_Decroissant_Occurrence(Tree2, 200);
+
+                   --assert(gen_(Liste_Couple, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
+               end test_Fichier_Gen_Tree;
     
 end FL_Tests;

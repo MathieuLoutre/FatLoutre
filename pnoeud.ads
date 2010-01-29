@@ -16,12 +16,6 @@ package PNoeud is
     
     function creer_Noeud(Char: in character; Occurrence: in Integer) return TNoeud;
         -- Creer un Noeud à partir d'un char, un nb d'occurrences et un papa :)
-        
-    function Noeuds_Egaux_Mot(Noeud1: in TNoeud; Noeud2: in TNoeud) return Boolean;
-        -- Retourne True si les 2 mots des Noeuds sont égaux, False sinon
-    
-    function Noeud_Superieur_Occurrence(Noeud1: in TNoeud; Noeud2: in TNoeud) return Boolean;
-        -- Retourne True si le Noeud2 est superieur au Noeud1, False sinon
     
     function char_Noeud(Noeud: in TNoeud) return character;
 
@@ -32,8 +26,6 @@ package PNoeud is
         -- Modifie le Noeud avec ses occurrences augmentées du nombre passé en paramètre
         
     function suppr_Occurrence(Noeud: in TNoeud) return TNoeud;
-    
-    procedure affiche_Noeud(Noeud: in TNoeud);
     
     function hash_Char(Noeud: in TNoeud) return integer;
         -- retourne un int unique en fonction du char du noeud

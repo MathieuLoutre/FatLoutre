@@ -61,5 +61,10 @@ package body PTrio is
     begin
     	return Trio.occurrences_Texte2;
     end occurrence_Texte2;
+    
+    function trio_Superieur_Occurrence(Trio1: in TTrio; Trio2: in TTrio) return Boolean is
+    begin
+        return Trio2.occurrences_Texte1 + Trio2.occurrences_Texte2 > Trio1.occurrences_Texte1 + Trio1.occurrences_Texte1;
+    end trio_Superieur_Occurrence;
 
 end PTrio;

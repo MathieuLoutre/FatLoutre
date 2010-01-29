@@ -298,4 +298,54 @@ package body PFichier is
         	close(Fichier);
         end regen_Tree;
         
+        -- Fonctions de gestion de fichiers pour les gros arbres
+
+           procedure ecrire_Ligne_Gros_Noeud(Fichier: in out File_Type; N: in TTree_Gros_Noeud) is
+           	Mot: TMot := get_Mot_Tree_Gros(N);
+           begin
+           	while (not mot_Vide(Mot)) loop
+           		put(Fichier, valeur_Mot(Mot));
+           		-- On écrit lettre par lettre
+           		Mot := lettre_Suivante(Mot);
+           	end loop;
+
+           	put(Fichier, " ");
+           	put(Fichier, Integer'image(occurrence1_Gros_Noeud(valeur_Gros_Noeud(N)))); -- On affiche le string correspondant à l'int
+           	put(Fichier, Integer'image(occurrence2_Gros_Noeud(valeur_Gros_Noeud(N)))); -- On affiche le string correspondant à l'int
+           	new_line(Fichier);
+           end ecrire_ligne_Gros_Noeud;
+
+           procedure gen_Fichier_Tree_Gros(T: in TTree_Gros_Noeud; Fichier: out File_Type; nomFichier : in String) is
+                  L: TTree_Gros_Noeud := T;
+              begin
+                  create(Fichier, Name => nomFichier);
+                  close(Fichier);
+                  open(Fichier, Out_File, nomFichier);
+                  put(Fichier, "Mots differents: ");
+                  put(Fichier, nb_Mots_Tree_Gros(L), 1);
+                  put(Fichier, "    ");
+                  put(Fichier, "Nombre occurrences: ");
+                  put(Fichier, nb_Occurrences_Total_Gros(L), 1);
+                  new_line(Fichier);
+                  -- On écrit les statistiques
+
+                  write_Fichier_Tree_Gros(T, Fichier);
+
+                  close(Fichier);
+            end gen_Fichier_Tree_Gros;
+
+            procedure write_Fichier_Tree_Gros(T: in TTree_Gros_Noeud; Fichier: in out File_Type) is
+                L: TTree_Gros_Noeud := T;
+            begin
+                if not tree_Gros_Noeud_Vide(T) then
+                    if occurrence_Gros_Noeud(valeur_Gros_Noeud(T)) > 0 then
+                        ecrire_ligne_Gros_Noeud(Fichier, L);
+                    end if;
+
+                    for I in 1..longueur_Fils_Gros(T) loop
+                        write_Fichier_Tree_Gros(fils_Char_Int_Gros(T, I), Fichier);
+                    end loop;
+                end if;
+            end write_Fichier_Tree_Gros;
+        
 end PFichier;

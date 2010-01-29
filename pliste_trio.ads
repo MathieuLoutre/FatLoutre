@@ -47,6 +47,9 @@ package PListe_Trio is
     procedure affiche_Liste_Trio(T: in TListe_Trio);
         -- Affiche la liste de Trio passée en paramètre
     
+    procedure affiche_N_Trio(T: in TListe_Trio; N: in integer);
+        -- Affiche la liste de Trio passée en paramètre jusqu'a N
+    
     function mots_Communs(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Trio;
         -- Intersection de 2 listes
     
@@ -61,6 +64,9 @@ package PListe_Trio is
         -- sinon augmente son occurrence du nombre d'occurrences du Trio donné
     
     function insert_Croissant_Mot is new insert_Trie(Trio_Inferieur_Mot);
+        -- Quand on insert croissant des Trios sur les mots, il faut regarder l'infériorité des mots (cf algo insert_trie)
+    
+    function insert_Decroissant_Occurrence_Trio is new insert_Trie(Trio_Superieur_Occurrence);
         -- Quand on insert croissant des Trios sur les mots, il faut regarder l'infériorité des mots (cf algo insert_trie)
         
     function nb_Mots_Differents_Trio(T: in TListe_Trio) return Integer;   

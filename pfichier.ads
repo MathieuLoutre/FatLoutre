@@ -10,6 +10,8 @@
 -- Abstraction et centralisation des fonctions sur les fichiers. 
 with PNoeud; use PNoeud;
 with PTree_Noeud; use PTree_Noeud;
+with PGros_Noeud; use PGros_Noeud;
+with PTree_Gros_Noeud; use PTree_Gros_Noeud;
 with PCouple; use PCouple;
 with PListe_Couple; use PListe_Couple;
 with PListe_Trio; use PListe_Trio;
@@ -36,8 +38,14 @@ package PFichier is
     procedure gen_Fichier_Tree(T: in TTree_Noeud; Fichier: out File_Type; nomFichier: in String); 
         
     procedure regen_Tree(Fichier: in out File_Type; T: out TTree_Noeud; nomFichier: in String);
+        
+    procedure gen_Fichier_Tree_Gros(T: in TTree_Gros_Noeud; Fichier: out File_Type; nomFichier : in String);
        
     private
+        
+        procedure write_Fichier_Tree_Gros(T: in TTree_Gros_Noeud; Fichier: in out File_Type);
+        
+        procedure ecrire_Ligne_Gros_Noeud(Fichier: in out File_Type; N: in TTree_Gros_Noeud);
         
         procedure write_Fichier_Tree(T: in TTree_Noeud; Fichier: in out File_Type);
             

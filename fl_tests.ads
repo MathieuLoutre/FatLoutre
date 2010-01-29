@@ -17,6 +17,7 @@ with PListe_Trio; use PListe_Trio;
 with PFichier; use PFichier;
 --with PNoeud; use PNoeud;
 with PTree_Noeud; use PTree_Noeud;
+with PTree_Gros_Noeud; use PTree_Gros_Noeud;
 
 package FL_Tests is
     type Test is new Ahven.Framework.Test_Case with null record;
@@ -92,5 +93,22 @@ package FL_Tests is
     procedure test_Tree_Moy_Long;
     procedure test_Tree_nb_Occur_Mot;  
     procedure test_Tree_Fusion;
+        
+-- Test sur les Tries
+    procedure test_Tree_Gros_nb_Superieur;
+    procedure test_Tree_Gros_nb_Occurrence;
+    procedure test_Tree_Gros_Taille;
+    procedure test_Tree_Gros_Presence;
+    procedure test_Tree_Gros_Presence_Fail;
+    procedure test_Tree_Gros_nb_Prefixe;
+    procedure test_Tree_Gros_nb_Suffixe;
+    procedure test_Tree_Gros_nb_Facteur;
+    procedure test_Tree_Gros_Moy_Occur;
+    procedure test_Tree_Gros_Moy_Long;
+    procedure test_Tree_Gros_nb_Occur_Mot;  
+    procedure test_Tree_Gros_Fusion;
+    procedure test_Tree_Gros_Fusion_Tree;  
+    procedure test_Tree_Gros_Mots_Communs;  
+    procedure test_Tree_Gros_Mots_Differents;
         
 end FL_Tests;

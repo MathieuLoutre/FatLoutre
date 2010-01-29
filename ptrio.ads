@@ -35,6 +35,9 @@ package PTrio is
     function trio_Inferieur_Mot(Trio1: in TTrio; Trio2: in TTrio) return Boolean;
         -- Retourne True si le Trio2 est superieur au Trio1, False sinon
     
+    function trio_Superieur_Occurrence(Trio1: in TTrio; Trio2: in TTrio) return Boolean;
+        -- Retourne True si le Trio2 est superieur au Trio1, False sinon
+    
     function occurrence_Texte1(Trio: in TTrio) return Integer;
         -- Retourne le nombre d'occurrence du texte 1 du TTrio
      

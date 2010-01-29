@@ -128,6 +128,18 @@ package body PListe_Trio is
         end if;
     end ajout_Trio;
     
+    procedure affiche_N_Trio(T: in TListe_Trio; N: in integer) is
+        L: TListe_Trio := T;
+        I: Integer := 0;
+    begin
+    	while (not vide(L) and then I < N) loop
+    	    affiche_Trio(valeur_Trio(L));
+    	    L := suivant(L);
+    	    I := I + 1;
+    	end loop;
+    end affiche_N_Trio;
+    
+    
     -- Renames de fonctions génériques pour les utiliser, notamment dans les Unit Tests
     function creer_Liste_Trio return TListe_Trio is
     begin

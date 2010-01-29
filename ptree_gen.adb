@@ -10,7 +10,7 @@
 package body PTree_Gen is
 
     function creer_Tree(N: in TElem) return TPtrCellule is
-        M: TMeh;
+        M: TFils;
     begin
         return new TCellule'(N, null, M);
     end creer_Tree;
@@ -40,7 +40,7 @@ package body PTree_Gen is
         return T.fils(hash(N));
     end fils_N;
     
-    function insert_Fils(T: in TPtrCellule; N: in TElem; M: TMeh := (others => Tree_Vide)) return TPtrCellule is
+    function insert_Fils(T: in TPtrCellule; N: in TElem; M: TFils := (others => Tree_Vide)) return TPtrCellule is
     begin
         T.fils(hash(N)) := new TCellule'(N, T, M);
         return T;
@@ -61,7 +61,7 @@ package body PTree_Gen is
         return T.fils'last;
     end fils_Length;
     
-    function fils_Meh(T: in TPtrCellule) return TMeh is
+    function fils_Meh(T: in TPtrCellule) return TFils is
     begin
         return T.fils;
     end fils_Meh;
