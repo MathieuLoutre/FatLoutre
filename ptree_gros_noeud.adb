@@ -385,55 +385,101 @@ package body PTree_Gros_Noeud is
         end if;
     end mots_Communs_Tree;
     
-    -- -- Retourne une liste de trios contenant les mots apparaissant dans une liste et pas dans l'autre
-    --    function mots_Differents(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Trio is
-    --        L: TListe_Trio := creer_Liste_Trio;
-    --        L1: TListe_Couple := T1;
-    --        L2: TListe_Couple := T2;
-    --    begin
-    --        while not liste_Couple_Vide(L1) loop
-    --            -- Si il n'est pas dans l'autre liste...
-    --            if not present(T2,  mot_Couple(valeur_Couple(L1))) then
-    --                -- On l'ajoute :) (une des 2 occurrences sera à 0)
-    --                L := ajout_Trio(L, mot_Couple(valeur_Couple(L1)), nb_Occurrences(T1, mot_Couple(valeur_Couple(L1))), nb_Occurrences(T2, mot_Couple(valeur_Couple(L1))));
-    --            end if;
-    --            
-    --            L1 := couple_Suivant(L1);
-    --        end loop;
-    --        
-    --        -- Même chose ici, mais pour l'autre liste
-    --        while not liste_Couple_Vide(L2) loop
-    --            if not present(T1,  mot_Couple(valeur_Couple(L2))) then
-    --                L := ajout_Trio(L, mot_Couple(valeur_Couple(L2)), nb_Occurrences(T1, mot_Couple(valeur_Couple(L2))), nb_Occurrences(T2, mot_Couple(valeur_Couple(L2))));
-    --            end if;
-    --            
-    --            L2 := couple_Suivant(L2);
-    --        end loop;
-    --        
-    --        return L;
-    --    end mots_Differents;
-    --    
-    --    -- Retourne une liste de trios contenant les éléments des 2 listes. 
-    --    function fusion_Listes(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Trio is
-    --      L: TListe_Trio := creer_Liste_Trio;         
-    --      L1: TListe_Couple := T1;
-    --        L2: TListe_Couple := T2;
-    --    begin
-    --        -- On parcours toute la liste en créant les trios et en les ajoutants
-    --      while not liste_Couple_Vide(L1) loop
-    --            L := ajout_Trio(L, mot_Couple(valeur_Couple(L1)), nb_Occurrences(T1, mot_Couple(valeur_Couple(L1))), nb_Occurrences(T2, mot_Couple(valeur_Couple(L1))));
-    --            L1 := couple_Suivant(L1);
-    --        end loop; 
-    --      
-    --      -- On fait la même chose ici
-    --      -- Les mots qui sont déjà présent ne seront pas ajouté par Ajout_Trio
-    --        while not liste_Couple_Vide(L2) loop
-    --            L := ajout_Trio(L, mot_Couple(valeur_Couple(L2)), nb_Occurrences(T1, mot_Couple(valeur_Couple(L2))), nb_Occurrences(T2, mot_Couple(valeur_Couple(L2))));
-    --            L2 := couple_Suivant(L2);
-    --        end loop;
-    --        
-    --        return L;
-    --    end fusion_Listes;
+    function mots_Differents_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud is
+           L: TTree_Gros_Noeud := T3;
+       begin
+           L := mots_Differents_Tree_Gch(T1, T2, T3);
+           L := mots_Differents_Tree_Drt(T2, T1, T3);
+
+           return L;
+    end mots_Differents_Tree;
+    
+    function mots_Differents_Tree_Gch(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud is
+       L: TTree_Gros_Noeud := T3;
+    begin
+        if not tree_Noeud_Vide(T1) then
+            if occurrence_Noeud(valeur_Noeud(T1)) > 0 then
+                if tree_Noeud_Vide(retrouve_Mot(T2, get_Mot_Tree(T1))) then
+                    -- on ajoute
+                    L := ajout_Mot_Tree_Gros(T3, get_Mot_Tree(T1), occurrence_Noeud(valeur_Noeud(T1)), 0);
+                end if;
+            end if;
+                
+            for I in 1..fils_Length(T3) loop
+                L := mots_Differents_Tree_Gch(fils_Char_Int(T1, I), T2, L);
+            end loop;
+            
+            return L;
+        else
+            return L;
+        end if;
+    end mots_Differents_Tree_Gch;
+    
+    function mots_Differents_Tree_Drt(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud is
+       L: TTree_Gros_Noeud := T3;
+    begin
+        if not tree_Noeud_Vide(T1) then
+            if occurrence_Noeud(valeur_Noeud(T1)) > 0 then
+                if tree_Noeud_Vide(retrouve_Mot(T2, get_Mot_Tree(T1))) then
+                    -- on ajoute
+                    L := ajout_Mot_Tree_Gros(T3, get_Mot_Tree(T1), 0, occurrence_Noeud(valeur_Noeud(T1)));
+                end if;
+            end if;
+                
+            for I in 1..fils_Length(T3) loop
+                L := mots_Differents_Tree_Drt(fils_Char_Int(T1, I), T2, L);
+            end loop;
+            
+            return L;
+        else
+            return L;
+        end if;
+    end mots_Differents_Tree_Drt;
+    
+    function fusion_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud is
+        L: TTree_Gros_Noeud := T3;
+    begin
+        L := fusion_Tree_Gch(T1, T2, T3);
+        L := fusion_Tree_Drt(T2, T1, T3);
+        
+        return L;
+    end fusion_Tree;
+    
+    function fusion_Tree_Gch(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud is
+        L: TTree_Gros_Noeud := T3;
+    begin
+        if not tree_Noeud_Vide(T1) then
+            if occurrence_Noeud(valeur_Noeud(T1)) > 0 then
+                L := ajout_Mot_Tree_Gros(T3, get_Mot_Tree(T1), occurrence_Noeud(valeur_Noeud(T1)), 0);
+            end if;
+                
+            for I in 1..fils_Length(T3) loop
+                L := fusion_Tree_Gch(fils_Char_Int(T1, I), T2, L);
+            end loop;
+            
+            return L;
+        else
+            return L;
+        end if;
+    end fusion_Tree_Gch;
+    
+    function fusion_Tree_Drt(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud is
+        L: TTree_Gros_Noeud := T3;
+    begin
+        if not tree_Noeud_Vide(T1) then
+            if occurrence_Noeud(valeur_Noeud(T1)) > 0 then
+                L := ajout_Mot_Tree_Gros(T3, get_Mot_Tree(T1), 0, occurrence_Noeud(valeur_Noeud(T1)));
+            end if;
+                
+            for I in 1..fils_Length(T3) loop
+                L := fusion_Tree_Drt(fils_Char_Int(T1, I), T2, L);
+            end loop;
+            
+            return L;
+        else
+            return L;
+        end if;
+    end fusion_Tree_Drt;
     
     function longueur_Fils_Gros(T: in TTree_Gros_Noeud) return Integer is
     begin

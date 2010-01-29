@@ -86,7 +86,15 @@ package PTree_Gros_Noeud is
     
     function mots_Communs_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
     
+    function mots_Differents_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
+    
+    function fusion_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
+    
     private
         function Longueur_Totale_Mot_Tree_Gros(T: in TTree_Gros_Noeud) return Integer;
-   
+        function fusion_Tree_Gch(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
+        function fusion_Tree_Drt(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
+        function mots_Differents_Tree_Gch(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
+        function mots_Differents_Tree_Drt(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
+        
 end PTree_Gros_Noeud;

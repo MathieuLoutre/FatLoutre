@@ -1582,41 +1582,45 @@ package body FL_Tests is
         end test_Tree_Gros_Fusion;
         
         procedure test_Tree_Gros_Fusion_Tree is 
-            Liste_Couple, Liste_Couple2: TListe_Couple;
-    	Liste_Couple3 : TListe_Trio;
-          	Mot1, Mot2, Mot3, Mot4: TMot;
-        begin
-      	    Mot1 := creer_Mot;
-      	    Mot1 := ajout_Lettre_Fin(Mot1, 'N');
-      	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
-      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
-      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
-      	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+             Tree_Noeud, Tree_Noeud2: TTree_Noeud;
+        	Tree_Noeud3 : TTree_Gros_Noeud;
+              	Mot1, Mot2, Mot3, Mot4: TMot;
+            begin
+          	    Mot1 := creer_Mot;
+          	    Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+          	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+          	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
 
-          Mot3 := creer_Mot;
-      	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
-      	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
-      	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+              Mot3 := creer_Mot;
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+          	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
 
-      	  Mot2 := creer_Mot;
-      	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+          	  Mot2 := creer_Mot;
+          	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
 
-      	  Mot4 := creer_Mot;
-          Mot4 := ajout_Lettre_Fin(Mot4, 'M');
-          Mot4 := ajout_Lettre_Fin(Mot4, 'e');
-          Mot4 := ajout_Lettre_Fin(Mot4, 'h');
+          	  Mot4 := creer_Mot;
+              Mot4 := ajout_Lettre_Fin(Mot4, 'm');
+              Mot4 := ajout_Lettre_Fin(Mot4, 'e');
+              Mot4 := ajout_Lettre_Fin(Mot4, 'h');
 
-      	  Liste_Couple := creer_Liste_Couple;
-      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
-      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
-      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
+          	  Tree_Noeud := creer_Tree_Noeud;
+          	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot1);
+          	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot3);
+          	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot2);
 
-      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot3);
-      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot2);
-      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot4);
+              Tree_Noeud2 := creer_Tree_Noeud;
+          	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot3);
+          	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot2);
+          	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot4);
 
-      	  Liste_Couple3 := fusion_Listes(Liste_Couple, Liste_Couple2);
-      	  assert(nb_Mots_Differents_Trio(Liste_Couple3) = 4, "La Fusion de listes ne marche pas");
+          	  Tree_Noeud3 := fusion_Tree(Tree_Noeud, Tree_Noeud2);
+          	  
+          	  affiche_Decroissant_Occurrence_Gros(Tree_Noeud3, 100);
+          	  
+      	  assert(nb_Mots_Tree_Gros(Tree_Noeud3) = 4, "La Fusion de listes ne marche pas");
         end test_Tree_Gros_Fusion_Tree;
 
         procedure test_Tree_Gros_Mots_Communs is
@@ -1660,12 +1664,12 @@ package body FL_Tests is
         end test_Tree_Gros_Mots_Communs;
 
         procedure test_Tree_Gros_Mots_Differents is
-            Liste_Couple, Liste_Couple2: TListe_Couple;
-    	Liste_Couple3 : TListe_Trio;
+            Tree_Noeud, Tree_Noeud2: TTree_Noeud;
+    	Tree_Noeud3 : TTree_Gros_Noeud;
           	Mot1, Mot2, Mot3, Mot4: TMot;
         begin
       	    Mot1 := creer_Mot;
-      	    Mot1 := ajout_Lettre_Fin(Mot1, 'N');
+      	    Mot1 := ajout_Lettre_Fin(Mot1, 'n');
       	    Mot1 := ajout_Lettre_Fin(Mot1, 'i');
       	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
       	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
@@ -1673,29 +1677,30 @@ package body FL_Tests is
 
           Mot3 := creer_Mot;
       	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
-      	  Mot3 := ajout_Lettre_Fin(Mot3, 'N');
+      	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
       	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
 
       	  Mot2 := creer_Mot;
-      	  Mot2 := ajout_Lettre_Fin(Mot2, 'N');
+      	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
 
       	  Mot4 := creer_Mot;
-          Mot4 := ajout_Lettre_Fin(Mot4, 'M');
+          Mot4 := ajout_Lettre_Fin(Mot4, 'm');
           Mot4 := ajout_Lettre_Fin(Mot4, 'e');
           Mot4 := ajout_Lettre_Fin(Mot4, 'h');
-
-      	  Liste_Couple := creer_Liste_Couple;
-      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot1);
-      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot3);
-      	  Liste_Couple := ajout_Mot(Liste_Couple, Mot2);
-
-      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot3);
-      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot2);
-      	  Liste_Couple2 := ajout_Mot(Liste_Couple2, Mot4);
-
-      	  Liste_Couple3 := mots_Differents(Liste_Couple, Liste_Couple2);
-
-      	  assert(nb_Mots_Differents_Trio(Liste_Couple3) = 2, "La différence ne marche pas");
+          
+      	  Tree_Noeud := creer_Tree_Noeud;
+      	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot1);
+      	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot3);
+      	  Tree_Noeud := ajout_Mot_Tree(Tree_Noeud, Mot2);
+          
+          Tree_Noeud2 := creer_Tree_Noeud;
+      	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot3);
+      	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot2);
+      	  Tree_Noeud2 := ajout_Mot_Tree(Tree_Noeud2, Mot4);
+          
+      	  Tree_Noeud3 := mots_Differents_Tree(Tree_Noeud, Tree_Noeud2);
+      	  
+      	  assert(nb_Mots_Tree_Gros(Tree_Noeud3) = 2, "L'intersection ne marche pas");
         end test_Tree_Gros_Mots_Differents;
         
         
@@ -1708,7 +1713,7 @@ package body FL_Tests is
                 Fichier3: File_Type;
             begin
 
-                gen_Liste_Couples(Fichier, Liste_Couple, "texte2.txt");
+                gen_Liste_Couples(Fichier, Liste_Couple, "texte.txt");
 
                 --gen_Fichier(Liste_Couple, Fichier2, "liste-mot.txt");
 
@@ -1726,7 +1731,7 @@ package body FL_Tests is
                    Fichier3: File_Type;
                begin
 
-                   gen_Tree(Fichier, Tree, "texte2.txt");
+                   gen_Tree(Fichier, Tree, "texte.txt");
 
                    --gen_Fichier_Tree(Tree, Fichier2, "liste-mot.txt");
 
