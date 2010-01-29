@@ -4,9 +4,12 @@
 -- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
 -- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
 --
--- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- By Fat & Loutre - 01/10 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/ptree_gros_noeud.adb
 --
+-- Mimique le comportement de PTree_Noeud. Les mécanismes sont les mêmes que pour PTree_Noeud.
+-- Si c'est un mot, il aura la somme de ses occurrences > 0
+-- On a 3 fonctions inédites aussi, l'union, la différence et l'intersection qui seront plus amplement commentés
 
 package body PTree_Gros_Noeud is
 
@@ -368,14 +371,15 @@ package body PTree_Gros_Noeud is
         L: TTree_Gros_Noeud := T3;
     begin
         if not tree_Noeud_Vide(T1) then
-            if occurrence_Noeud(valeur_Noeud(T1)) > 0 then
-                if not tree_Noeud_Vide(retrouve_Mot(T2, get_Mot_Tree(T1))) then -- il est commun !
-                    -- on ajoute
+            if occurrence_Noeud(valeur_Noeud(T1)) > 0 then -- Si c'est un mot
+                if not tree_Noeud_Vide(retrouve_Mot(T2, get_Mot_Tree(T1))) then -- et qu'il est présent dans les 2
+                    -- On l'ajoute !
                     L := ajout_Mot_Tree_Gros(T3, get_Mot_Tree(T1), occurrence_Noeud(valeur_Noeud(T1)), occurrence_Noeud(valeur_Noeud(retrouve_Mot(T2, get_Mot_Tree(T1)))));
                 end if;
             end if;
                 
             for I in 1..fils_Length(T3) loop
+                -- Puis on parcours tout les autres
                 L := mots_Communs_Tree(fils_Char_Int(T1, I), T2, L);
             end loop;
             
@@ -385,6 +389,7 @@ package body PTree_Gros_Noeud is
         end if;
     end mots_Communs_Tree;
     
+    -- On utilise 2 fonctions cachées pour faire le boulot dans les 2 listes
     function mots_Differents_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud is
            L: TTree_Gros_Noeud := T3;
        begin
@@ -399,7 +404,7 @@ package body PTree_Gros_Noeud is
     begin
         if not tree_Noeud_Vide(T1) then
             if occurrence_Noeud(valeur_Noeud(T1)) > 0 then
-                if tree_Noeud_Vide(retrouve_Mot(T2, get_Mot_Tree(T1))) then
+                if tree_Noeud_Vide(retrouve_Mot(T2, get_Mot_Tree(T1))) then -- Si il n'y est pas dans l'autre ;)
                     -- on ajoute
                     L := ajout_Mot_Tree_Gros(T3, get_Mot_Tree(T1), occurrence_Noeud(valeur_Noeud(T1)), 0);
                 end if;
@@ -436,6 +441,7 @@ package body PTree_Gros_Noeud is
         end if;
     end mots_Differents_Tree_Drt;
     
+    -- même chose que pour la différence
     function fusion_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud is
         L: TTree_Gros_Noeud := T3;
     begin
@@ -480,6 +486,8 @@ package body PTree_Gros_Noeud is
             return L;
         end if;
     end fusion_Tree_Drt;
+    
+    -- Alias de fonctions pour utilisation externe --
     
     function longueur_Fils_Gros(T: in TTree_Gros_Noeud) return Integer is
     begin

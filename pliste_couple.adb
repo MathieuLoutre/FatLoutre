@@ -215,6 +215,52 @@ package body PListe_Couple is
       end if;
     end nb_Facteur;
     
+    function mots_En_Communs(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Couple is
+        L: TListe_Couple := creer_Liste_Couple; -- ça sera notre liste qu'on renverra
+        L1: TListe_Couple := T1; -- On fait une copie pour la parcourir sans problèmes
+    begin
+        -- Tant que la liste n'est pas vide
+        while not liste_Couple_Vide(L1) loop
+            -- Si le mot est aussi dans aussi dans l'autre liste...
+            if present(T2, mot_Couple(valeur_Couple(L1))) then
+                -- On l'ajoute dans la liste sans oublier de mettre les occurrences dans les 2 textes
+                L := ajout_Couple(L, creer_Couple(mot_Couple(valeur_Couple(L1)), nb_Occurrences(T1, mot_Couple(valeur_Couple(L1))) + nb_Occurrences(T2, mot_Couple(valeur_Couple(L1)))));
+            end if;
+                
+            L1 := couple_Suivant(L1);
+        end loop;
+        
+        return L;
+    end mots_En_Communs;
+
+    function mots_Non_Communs(T1: in TListe_Couple; T2: in TListe_Couple) return TListe_Couple is
+        L: TListe_Couple := creer_Liste_Couple; -- ça sera notre liste qu'on renverra
+        L1: TListe_Couple := T1; -- On fait une copie pour la parcourir sans problèmes
+    begin
+        -- Tant que la liste n'est pas vide
+        while not liste_Couple_Vide(L1) loop
+            -- Si le mot est aussi dans aussi dans l'autre liste...
+            if not present(T2, mot_Couple(valeur_Couple(L1))) then
+                -- On l'ajoute dans la liste sans oublier de mettre les occurrences dans les 2 textes
+                L := ajout_Couple(L, creer_Couple(mot_Couple(valeur_Couple(L1)), nb_Occurrences(T1, mot_Couple(valeur_Couple(L1))) + nb_Occurrences(T2, mot_Couple(valeur_Couple(L1)))));
+            end if;
+                
+            L1 := couple_Suivant(L1);
+        end loop;
+
+	L1 := T2;
+	while not liste_Couple_Vide(L1) loop
+            -- Si le mot est aussi dans aussi dans l'autre liste...
+            if not present(T1, mot_Couple(valeur_Couple(L1))) then
+                -- On l'ajoute dans la liste sans oublier de mettre les occurrences dans les 2 textes
+                L := ajout_Couple(L, creer_Couple(mot_Couple(valeur_Couple(L1)), nb_Occurrences(T1, mot_Couple(valeur_Couple(L1))) + nb_Occurrences(T2, mot_Couple(valeur_Couple(L1)))));
+            end if;
+                
+            L1 := couple_Suivant(L1);
+        end loop;
+        
+        return L;
+    end mots_Non_Communs;
     
     -- Renames de fonctions génériques pour les utiliser, notamment dans les Unit Tests
     function creer_Liste_Couple return TListe_Couple is

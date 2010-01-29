@@ -4,9 +4,12 @@
 -- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
 -- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
 --
--- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- By Fat & Loutre - 01/10 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/ptree_gros_noeud.ads
 --
+-- Mimique le comportement de PTree_Noeud. Les mécanismes sont les mêmes que pour PTree_Noeud.
+-- Si c'est un mot, il aura la somme de ses occurrences > 0
+-- On a 3 fonctions inédites aussi, l'union, la différence et l'intersection qui seront plus amplement commentés
 
 with PTree_Gen;
 with PMot; use PMot;
@@ -58,6 +61,8 @@ package PTree_Gros_Noeud is
         --Renvoie la somme des occurences de tous les mots contenus dans tree.
         --Si tree est vide, on renvoie 0.
     
+    -- Cf les fonction de PTree_Noeud --
+    
     function moy_Occurrence_Tree_Gros(T: in TTree_Gros_Noeud) return Float;
   
     function moy_Longueur_Tree_Gros(T: in TTree_Gros_Noeud) return Float;
@@ -84,11 +89,14 @@ package PTree_Gros_Noeud is
     
     procedure modif_Tree_Gros(T: in TTree_Gros_Noeud; N: in TGros_Noeud);
     
+    -- Fonctions inédites --
+    
     function mots_Communs_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
-    
+        -- Retourne une Tree de Gros Noeuds avec les mots communs de T1 et T2
     function mots_Differents_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
-    
+        -- Retourne une Tree de Gros Noeuds avec les mots de T1 qui ne sont pas dans T2 (et inversement)
     function fusion_Tree(T1: in TTree_Noeud; T2: in TTree_Noeud; T3: in TTree_Gros_Noeud := creer_Tree_Gros_Noeud) return TTree_Gros_Noeud;
+        -- Retourne une Tree de Gros Noeuds avec les mots de T1 et T2 (et fusion des mots égaux)
     
     private
         function Longueur_Totale_Mot_Tree_Gros(T: in TTree_Gros_Noeud) return Integer;

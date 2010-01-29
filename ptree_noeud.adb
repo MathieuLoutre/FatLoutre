@@ -4,38 +4,40 @@
 -- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
 -- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
 --
--- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- By Fat & Loutre - 01/10 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pTree_noeud.adb
 --
+-- Paquet qui instancie la structure générique de tree PTree_Gen. 
+-- On utilisera la fonction de hashage des Noeuds
+-- et les Noeuds comme élément de la structure.
+-- On notera les occurrences d'un mot sur la dernière lettre de celui-ci. Si elles sont à 0, c'est simplement une lettre.
+-- Si c'est superieur à 0, elle fait référence à un Mot.
 
 package body PTree_Noeud is
-
+    
+    -- Création de la racine du tree avec un charactère spécial * et des occurrences à 0
     function creer_Tree_Noeud return TTree_Noeud is
     begin
         return creer_Tree(creer_Noeud('*', 0));
     end creer_Tree_Noeud;
-        
-    function tree_Noeud_Vide(T: in TTree_Noeud) return Boolean is
-    begin
-        return elem_Vide(T);
-    end Tree_Noeud_Vide;
-    	
-    function valeur_Noeud(T: in TTree_Noeud) return TNoeud is
-    begin
-        return valeur_Elem(T);
-    end valeur_Noeud;
     
+    -- Donne un TMot en fonction du T donné en remontant de père en père
     function get_Mot_Tree(T: in TTree_Noeud; Mot: in TMot := creer_Mot) return TMot is
         MehMot: TMot := Mot;
     begin
         if not tree_Noeud_Vide(T) and then not tree_Noeud_Vide(precedent(T)) then
             MehMot := ajout_Lettre_Debut(MehMot, char_Noeud(valeur_Noeud(T)));
+            -- On stocke les lettres au début à chaque fois pour avoir le mot à l'endroit
             return get_Mot_Tree(precedent(T), MehMot);
+            -- On passe au père
         else
             return Mot;
         end if;
     end get_Mot_Tree;
     
+    -- Affiche le tree en parcourant le tree.
+    -- Si on a un noeud avec des occurrence > 0, on affiche le mot et les occurrences corresspondantes
+    -- Ensuite on regarde tout les fils du tableau
     procedure affiche_Tree(T: in TTree_Noeud) is
     begin
         if not tree_Noeud_Vide(T) then
@@ -51,6 +53,8 @@ package body PTree_Noeud is
         end if;
     end affiche_Tree;
     
+    -- retourne le nombre de mots contenus dans le Tree
+    -- On ajoute 1 à chaque fois qu'on trouve des occurrences > 0
     function nb_Mots_Tree(T: in TTree_Noeud) return integer is
         Meh: integer := 0;
     begin
@@ -69,15 +73,22 @@ package body PTree_Noeud is
         end if;
     end nb_Mots_Tree;
     
+    -- Retourne les occurrences d'un mot donné
+    -- On regarde si on peut retrouver le mot, si oui on renvoi les occurrences simplement
+    -- Sinon, 0.
     function nb_Occurrence_Mot_Tree(T: in TTree_Noeud; M: in TMot) return Integer is
     begin
         if not tree_Noeud_Vide(retrouve_Mot(T, M)) then
+            -- retrouve renvoi un pointeur vers la dernière lettre du mot
+            -- Plus facile pour acceder aux occurrences
             return occurrence_Noeud(valeur_Noeud(retrouve_Mot(T, M)));
         else
             return 0;
         end if;
     end nb_Occurrence_Mot_Tree;
     
+    -- retourne le nombre d'occurrences totale du Tree.
+    -- A chaque occurrence > 0 on ajoute et on relance sur tous les fils
     function nb_Occurrences_Total(T: in TTree_Noeud) return Integer is
         Meh: integer := 0;
     begin
@@ -96,10 +107,7 @@ package body PTree_Noeud is
         end if;
     end nb_Occurrences_Total;
     
-    function moy_Occurrence_Tree(T: in TTree_Noeud) return Float is
-    begin
-        return float(nb_Occurrences_Total(T))/float(nb_Mots_Tree(T));
-    end moy_Occurrence_Tree;
+    -- On utilise la même méthode pour toutes les fonctions suivantes --
     
     function Longueur_Totale_Mot_Tree(T: in TTree_Noeud) return Integer is
         Meh: Integer := 0;
@@ -207,21 +215,31 @@ package body PTree_Noeud is
         end if;
     end nb_Superieur_Tree;
     
+    -- On retourne la division du nb d'occurrences totale par le nombre de mots
+    function moy_Occurrence_Tree(T: in TTree_Noeud) return Float is
+    begin
+        return float(nb_Occurrences_Total(T))/float(nb_Mots_Tree(T));
+    end moy_Occurrence_Tree;
+    
+    -- On retourne la division de la longueur totale des mots du tree par le nombre de mots
     function moy_Longueur_Tree(T: in TTree_Noeud) return Float is
     begin
         return float(Longueur_Totale_Mot_Tree(T))/float(nb_Mots_Tree(T));
     end moy_Longueur_Tree;
     
+    -- Retourne True si le fils N de T est là, faux sinon
     function fils_Existe(T: in TTree_Noeud; N: in Character) return Boolean is
     begin
         return not tree_Noeud_Vide(fils_N(T, creer_Noeud(N, 0)));
     end fils_Existe;
     
+    -- Retourne le pointeur corresspondant au charactère contenu dans N
     function fils_Char(T: in TTree_Noeud; N: in Character) return TTree_Noeud is
     begin
         return fils_N(T, creer_Noeud(N, 0));
     end fils_Char;
     
+    -- Retourne vrai si le mot est contenu dans le tree, faux sinon
     function present_Tree(T: in TTree_Noeud; Mot: in TMot) return Boolean is
     begin
         if not tree_Noeud_Vide(T) and not mot_Vide(Mot) then
@@ -230,22 +248,25 @@ package body PTree_Noeud is
                 if mot_Vide(Lettre_Suivante(Mot)) then
                     -- fin !
                     if occurrence_Noeud(valeur_Noeud(fils_Char(T, valeur_Mot(Mot)))) > 0 then
+                        -- Si c'est un mot, c'est ok
                         return True;
-                    else
+                    else -- sinon on retourne chez sa mère !
                         return False;
                     end if;
                 else
                     -- on continue
                     return present_Tree(fils_Char(T, valeur_Mot(Mot)), Lettre_Suivante(Mot));
                 end if;
-            else
+            else -- le fils existe pas, c'est mort
                 return False;
             end if;
-        else
+        else -- on a un T vide avant la fin du mot, c'est mort
             return False;
         end if;
     end present_Tree;
     
+    -- Utilise la même technique que précédement mais retourne le pointeur 
+    -- (on aurait pu se pencher sur une version générique de cette fonction)
     function retrouve_Mot(T: in TTree_Noeud; Mot: in TMot) return TTree_Noeud is
     begin
         if not tree_Noeud_Vide(T) and not mot_Vide(Mot) then
@@ -270,6 +291,7 @@ package body PTree_Noeud is
         end if;
     end retrouve_Mot;
     
+    -- Fusionne les occurrences de M1 et M2 et supprime M2
     function fusion_Mot_Tree(T: in TTree_Noeud; M1, M2: in TMot) return TTree_Noeud is
         L1: TTree_Noeud := retrouve_Mot(T, M1);
         L2: TTree_Noeud := retrouve_Mot(T, M2);
@@ -278,14 +300,15 @@ package body PTree_Noeud is
     begin
         if not Tree_Noeud_Vide(L1) and not Tree_Noeud_Vide(L2) then
             Meh := ajout_Occurrence(valeur_Noeud(L1), occurrence_Noeud(valeur_Noeud(L2)));
-            Modif_Val_Tree(L1, Meh);
-            Muh := supprime_Mot_Tree(T, M2);
+            Modif_Val_Tree(L1, Meh); -- On modifie la valeur avec le nouveau Noeud
+            Muh := supprime_Mot_Tree(T, M2); -- et on supprime
             return Muh;
         else
             return T;
         end if;
     end fusion_Mot_Tree;
     
+    -- Converti un tree en liste ordonnée sur les occurrences de manière décroissante
     function tree_To_Liste_Occurrence_Decroissante(T: in TTree_Noeud; L: in TListe_Couple := creer_Liste_Couple) return TListe_Couple is
         K: TListe_Couple := L;
         C: TCouple;
@@ -296,8 +319,8 @@ package body PTree_Noeud is
             end loop;
             
             if occurrence_Noeud(valeur_Noeud(T)) > 0 then
-                C := creer_Couple(get_Mot_Tree(T), occurrence_Noeud(valeur_Noeud(T)));
-                K := insert_Decroissant_Occurrences(K, C);
+                C := creer_Couple(get_Mot_Tree(T), occurrence_Noeud(valeur_Noeud(T))); -- On créé le couple à la volée
+                K := insert_Decroissant_Occurrences(K, C); -- et on l'insert dans la liste
             end if;
             
             return K;
@@ -306,27 +329,33 @@ package body PTree_Noeud is
         end if;
     end tree_To_Liste_Occurrence_Decroissante;
     
+    -- Affiche la liste de couples à partir d'un Tree
     procedure affiche_Decroissant_Occurrence(T: in TTree_Noeud; N: in Integer) is
-        L: TListe_Couple := tree_To_Liste_Occurrence_Decroissante(T);
+        L: TListe_Couple := tree_To_Liste_Occurrence_Decroissante(T); -- On converti...
         I: integer := 0;
     begin
-        affichage_N(L, N);
+        affichage_N(L, N); -- .. et on affiche
     end affiche_Decroissant_Occurrence;
     
+    -- Supprime un mot du Tree, si il n'y est pas, on fait rien
     function supprime_Mot_Tree(T: in TTree_Noeud; Mot: in TMot) return TTree_Noeud is
         Meh: TNoeud;
         Moo: TTree_Noeud;
     begin
         if not Tree_Noeud_Vide(retrouve_Mot(T, Mot)) then
-            Moo := retrouve_Mot(T, Mot);
-            Meh := valeur_Noeud(Moo);
-            Meh := suppr_Occurrence(Meh);
-            Modif_Val_Tree(Moo, Meh);
+            Moo := retrouve_Mot(T, Mot); -- On retrouve le mot
+            Meh := valeur_Noeud(Moo); -- On le stocke
+            Meh := suppr_Occurrence(Meh); -- On supprime les occurrences (ce n'est donc plus un mot)
+            Modif_Val_Tree(Moo, Meh); -- et on modifie
+            
+            -- On ne supprime pas les noeuds car ils peuvent servir 
+            -- dans le meilleur des cas à d'autres mots plus tard
         end if;
         
         return T;
     end supprime_Mot_Tree;
     
+    -- Ajoute un mot donné au Tree. On utilise un chainage arrière pour renvoyer le père
     function ajout_Mot_Tree(T: in TTree_Noeud; Mot: in TMot) return TTree_Noeud is
         Meh: TTree_Noeud := T;
         Moo: TNoeud;
@@ -348,11 +377,9 @@ package body PTree_Noeud is
                     -- Il faut mettre les occurrences à + 1
                     Moo := ajout_Occurrence(valeur_Noeud(fils_Char(Meh, valeur_Mot(Mot))), 1);
                     Meh := insert_Fils(Meh, Moo, fils_Meh(fils_Char(Meh, valeur_Mot(Mot))));
-                    
-                    modif_Val_Fils(Meh, creer_Noeud(valeur_Mot(Mot), 0), ajout_Mot_Tree(fils_Char(Meh, valeur_Mot(Mot)), Lettre_Suivante(Mot)));
-                else
-                    modif_Val_Fils(Meh, creer_Noeud(valeur_Mot(Mot), 0), ajout_Mot_Tree(fils_Char(Meh, valeur_Mot(Mot)), Lettre_Suivante(Mot)));
                 end if; 
+                -- On modifie la valeur du fils avec le suivant (chainage arrière)
+                modif_Val_Fils(Meh, creer_Noeud(valeur_Mot(Mot), 0), ajout_Mot_Tree(fils_Char(Meh, valeur_Mot(Mot)), Lettre_Suivante(Mot)));
             end if;
             
             return Meh;
@@ -360,6 +387,18 @@ package body PTree_Noeud is
             return Meh;
         end if;
     end ajout_Mot_Tree;
+    
+    -- Alias des fonctions génériques pour accès exterieur --
+    
+    function tree_Noeud_Vide(T: in TTree_Noeud) return Boolean is
+    begin
+        return elem_Vide(T);
+    end Tree_Noeud_Vide;
+    
+    function valeur_Noeud(T: in TTree_Noeud) return TNoeud is
+    begin
+        return valeur_Elem(T);
+    end valeur_Noeud;
     
     function longueur_Fils(T: in TTree_Noeud) return Integer is
     begin

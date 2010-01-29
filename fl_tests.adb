@@ -98,6 +98,23 @@ package body FL_Tests is
 	    Framework.Add_Test_Routine(T, test_Tree_Gros_Fusion_Tree'Access, "Fusion de Tree Gros");
 	    Framework.Add_Test_Routine(T, test_Tree_Gros_Mots_Communs'Access, "Mots Communs Tree Gros");
 	    Framework.Add_Test_Routine(T, test_Tree_Gros_Mots_Differents'Access, "Mots Différents Tree Gros");
+	    
+	    -- TESTS SUR LES ARN
+	    Framework.Add_Test_Routine(T, test_ARN_nb_Superieur'Access, "ARN nb Superieur");
+	    Framework.Add_Test_Routine(T, test_ARN_nb_Occurrence'Access, "ARN nb Occurrence");
+	    Framework.Add_Test_Routine(T, test_ARN_Taille'Access, "ARN nb mots differents");
+	    Framework.Add_Test_Routine(T, test_ARN_Presence'Access, "ARN Presence");
+	    Framework.Add_Test_Routine(T, test_ARN_Presence_Fail'Access, "ARN Presence Fail");
+	    Framework.Add_Test_Routine(T, test_ARN_nb_Prefixe'Access, "ARN nb Prefixe");
+	    Framework.Add_Test_Routine(T, test_ARN_nb_Suffixe'Access, "ARN nb Suffixe");
+	    Framework.Add_Test_Routine(T, test_ARN_nb_Facteur'Access, "ARN nb Facteur");
+	    Framework.Add_Test_Routine(T, test_ARN_Moy_Occur'Access, "ARN moy Occurrence");
+	    Framework.Add_Test_Routine(T, test_ARN_Moy_Long'Access, "ARN moy Longueur");
+	    Framework.Add_Test_Routine(T, test_ARN_nb_Occur_Mot'Access, "ARN nb Occurrence Mot");
+	    Framework.Add_Test_Routine(T, test_ARN_Fusion'Access, "ARN Fusion de Mots");
+        -- Framework.Add_Test_Routine(T, test_ARN_Fusion_Tree'Access, "Fusion de ARN");
+        -- Framework.Add_Test_Routine(T, test_ARN_Mots_Communs'Access, "Mots Communs ARN");
+        -- Framework.Add_Test_Routine(T, test_ARN_Mots_Differents'Access, "Mots Différents ARN");
         
     end Initialize;
       
@@ -1618,8 +1635,6 @@ package body FL_Tests is
 
           	  Tree_Noeud3 := fusion_Tree(Tree_Noeud, Tree_Noeud2);
           	  
-          	  affiche_Decroissant_Occurrence_Gros(Tree_Noeud3, 100);
-          	  
       	  assert(nb_Mots_Tree_Gros(Tree_Noeud3) = 4, "La Fusion de listes ne marche pas");
         end test_Tree_Gros_Fusion_Tree;
 
@@ -1703,6 +1718,303 @@ package body FL_Tests is
       	  assert(nb_Mots_Tree_Gros(Tree_Noeud3) = 2, "L'intersection ne marche pas");
         end test_Tree_Gros_Mots_Differents;
         
+        
+        -- Sur les ARN
+
+            procedure test_ARN_nb_Superieur is
+        	    Tree: TARN;
+            	Mot1, Mot2: TMot;
+            begin
+        	    Mot1 := creer_Mot;
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+            	Mot2 := creer_Mot;
+            	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+            	Tree := creer_ARN;
+            	Tree := ajout_Mot_ARN(Tree, Mot1);
+            	Tree := ajout_Mot_ARN(Tree, Mot2);
+
+                assert(nb_Superieur_ARN(Tree, 2) = 1, "Le nombre de mots supérieur n'est pas bon");
+            end test_ARN_nb_Superieur;
+
+            procedure test_ARN_Presence is
+        	    Tree: TARN;
+            	Mot1: TMot;
+            begin
+        	    Mot1 := creer_Mot;
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+            	Tree := creer_ARN;
+            	Tree := ajout_Mot_ARN(Tree, Mot1);
+
+                assert(present_ARN(Tree, Mot1) = True, "Le Mot1 devrait être présent dans la liste");
+            end test_ARN_Presence;
+
+            procedure test_ARN_Presence_Fail is
+        	    Tree: TARN;
+            	Mot1, Mot2: TMot;
+            begin
+        	    Mot1 := creer_Mot;
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+            	Mot2 := creer_Mot;
+            	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+            	Tree := creer_ARN;
+            	Tree := ajout_Mot_ARN(Tree, Mot1);
+
+                assert(present_ARN(Tree, Mot2) = False, "Le Mot2 ne devrait pas être présent dans la liste");
+            end test_ARN_Presence_Fail;
+
+            procedure test_ARN_Taille is
+        	Tree: TARN;
+        	Mot1, Mot2: TMot;
+            begin
+        	Mot1 := creer_Mot;
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+        	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+        	Mot2 := creer_Mot;
+        	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+        	Tree := creer_ARN;              
+        	Tree := ajout_Mot_ARN(Tree, Mot1);
+        	Tree := ajout_Mot_ARN(Tree, Mot2);
+        	Tree := ajout_Mot_ARN(Tree, Mot2); -- ajout de 2 fois le même mot pour test
+
+                assert(nb_Noeuds(Tree) = 2, "Le nombre de mots différents n'est pas bon");
+            end test_ARN_Taille;
+
+            procedure test_ARN_nb_Occurrence is
+         	    Tree: TARN;
+         	    Mot1, Mot2: TMot;
+             begin
+             	Mot1 := creer_Mot;
+             	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+             	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+             	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+             	Mot2 := creer_Mot;
+             	Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+             	Tree := creer_ARN;              
+             	Tree := ajout_Mot_ARN(Tree, Mot1);
+             	Tree := ajout_Mot_ARN(Tree, Mot2);
+             	Tree := ajout_Mot_ARN(Tree, Mot2);
+             	Tree := ajout_Mot_ARN(Tree, Mot2);
+                                                
+                assert(nb_Total_Occurrence_ARN(Tree) = 4, "Le nombre d'occurrence n'est pas bon");
+             end test_ARN_nb_Occurrence;
+
+              procedure test_ARN_nb_Prefixe is
+                  Tree: TARN;
+                  Mot1, Mot2, Mot3: TMot;
+              begin
+                  Mot1 := creer_Mot;
+                  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+                  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+                  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+                  Mot3 := creer_Mot;
+                  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+                  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+                  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+            	  Mot2 := creer_Mot;
+                  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+            	  Tree := creer_ARN;              
+            	  Tree := ajout_Mot_ARN(Tree, Mot1);
+            	  Tree := ajout_Mot_ARN(Tree, Mot3);
+            	  Tree := ajout_Mot_ARN(Tree, Mot1);
+            	  Tree := ajout_Mot_ARN(Tree, Mot3);
+                                                  
+                  assert(nb_Prefixe_ARN(Tree, Mot2) = 2, "Le nombre de préfixes est incorrect");
+              end test_ARN_nb_Prefixe;
+
+              procedure test_ARN_nb_Suffixe is
+                  Tree: TARN;
+              	  Mot1, Mot2, Mot3: TMot;
+              begin
+                  	Mot1 := creer_Mot;
+                  	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+                  	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+                  	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+                  	Mot3 := creer_Mot;
+                  	Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+                  	Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+                  	Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+                  	Mot2 := creer_Mot;
+                  	Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+                  	Mot2 := ajout_Lettre_Fin(Mot2, 'h');
+
+                  	Tree := creer_ARN;              
+                  	Tree := ajout_Mot_ARN(Tree, Mot1);
+                  	Tree := ajout_Mot_ARN(Tree, Mot3);
+                  	Tree := ajout_Mot_ARN(Tree, Mot1);
+                  	Tree := ajout_Mot_ARN(Tree, Mot3);
+                                                    
+                    assert(nb_Suffixe_ARN(Tree, Mot2) = 2, "Le nombre de suffixes est incorrect");
+                  end test_ARN_nb_Suffixe;
+
+                  procedure test_ARN_nb_Facteur is
+                      Tree: TARN;
+                      Mot1, Mot2, Mot3: TMot;
+                  begin
+                    Mot1 := creer_Mot;
+                	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+                	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+                	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+                	Mot3 := creer_Mot;
+                	Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+                	Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+                	Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+                	Mot2 := creer_Mot;
+                	Mot2 := ajout_Lettre_Fin(Mot2, 'i');
+
+                	Tree := creer_ARN;
+                	Tree := ajout_Mot_ARN(Tree, Mot1);
+                	Tree := ajout_Mot_ARN(Tree, Mot3);
+                	Tree := ajout_Mot_ARN(Tree, Mot1);
+                	Tree := ajout_Mot_ARN(Tree, Mot3);
+
+                    assert(nb_Facteur_ARN(Tree, Mot2) = 4, "Le nombre de facteurs est incorrect");
+              end test_ARN_nb_Facteur;
+
+              procedure test_ARN_Moy_Occur is
+          	      Tree: TARN;
+              	  Mot1, Mot2, Mot3: TMot;
+              begin
+          	      Mot1 := creer_Mot;
+              	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+              	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+              	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+                  Mot3 := creer_Mot;
+              	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+              	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+              	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+              	  Mot2 := creer_Mot;
+              	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+              	  Tree := creer_ARN;              
+              	  Tree := ajout_Mot_ARN(Tree, Mot1);
+              	  Tree := ajout_Mot_ARN(Tree, Mot3);
+              	  Tree := ajout_Mot_ARN(Tree, Mot1);
+              	  Tree := ajout_Mot_ARN(Tree, Mot3);
+              	  Tree := ajout_Mot_ARN(Tree, Mot2);
+              	  Tree := ajout_Mot_ARN(Tree, Mot2);
+
+                  assert(moy_Occurrence_ARN(Tree) = 2.00, "La moyenne d'occurrence n'est pas bonne");
+              end test_ARN_Moy_Occur;
+
+              procedure test_ARN_Moy_Long is
+          	      Tree: TARN;
+              	  Mot1, Mot2, Mot3: TMot;
+              begin
+          	      Mot1 := creer_Mot;
+              	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+              	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+              	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+              	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+              	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+                  Mot3 := creer_Mot;
+              	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+              	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+              	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+              	  Mot2 := creer_Mot;
+              	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+              	  Tree := creer_ARN;
+              	  Tree := ajout_Mot_ARN(Tree, Mot1);
+              	  Tree := ajout_Mot_ARN(Tree, Mot3);
+              	  Tree := ajout_Mot_ARN(Tree, Mot1);
+              	  Tree := ajout_Mot_ARN(Tree, Mot2);
+              	  Tree := ajout_Mot_ARN(Tree, Mot3);
+              	  Tree := ajout_Mot_ARN(Tree, Mot2);
+              	  Tree := ajout_Mot_ARN(Tree, Mot2);
+
+                  assert(moy_Longueur_ARN(Tree) = 3.00, "La moyenne n'est pas bonne");
+              end test_ARN_Moy_Long;
+
+               procedure test_ARN_nb_Occur_Mot is
+            	      Tree: TARN;
+                	  Mot1, Mot2, Mot3: TMot;
+                begin
+            	      Mot1 := creer_Mot;
+                	  Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+                	  Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+                	  Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+                      Mot3 := creer_Mot;
+                	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+                	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+                	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+
+                	  Mot2 := creer_Mot;
+                	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+                	  Tree := creer_ARN;
+                	  Tree := ajout_Mot_ARN(Tree, Mot1);
+                	  Tree := ajout_Mot_ARN(Tree, Mot3);
+                	  Tree := ajout_Mot_ARN(Tree, Mot1);
+                	  Tree := ajout_Mot_ARN(Tree, Mot2);
+                	  Tree := ajout_Mot_ARN(Tree, Mot3);
+                	  Tree := ajout_Mot_ARN(Tree, Mot2);
+                	  Tree := ajout_Mot_ARN(Tree, Mot2);
+
+                      assert(nb_Occurrences_ARN(Tree, Mot2) = 3, "Le nombre d'occurence n'est pas bon");
+                end test_ARN_nb_Occur_Mot;
+
+            procedure test_ARN_Fusion is
+                Tree: TARN;
+            	Mot1, Mot2, Mot3: TMot;
+            	lol, lol2: integer;
+            begin
+        	    Mot1 := creer_Mot;
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'n');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'i');
+            	Mot1 := ajout_Lettre_Fin(Mot1, 'h');
+
+                  Mot3 := creer_Mot;
+               	  Mot3 := ajout_Lettre_Fin(Mot3, 'n');
+            	  Mot3 := ajout_Lettre_Fin(Mot3, 'i');
+            	  Mot3 := ajout_Lettre_Fin(Mot3, 'h');
+            	  Mot3 := ajout_Lettre_Fin(Mot3, 's');
+
+            	  Mot2 := creer_Mot;
+            	  Mot2 := ajout_Lettre_Fin(Mot2, 'n');
+
+            	  Tree := creer_ARN;
+            	  Tree := ajout_Mot_ARN(Tree, Mot1);
+            	  Tree := ajout_Mot_ARN(Tree, Mot3);
+            	  Tree := ajout_Mot_ARN(Tree, Mot1);
+            	  Tree := ajout_Mot_ARN(Tree, Mot2);
+            	  Tree := ajout_Mot_ARN(Tree, Mot3);
+            	  Tree := ajout_Mot_ARN(Tree, Mot2);
+            	  Tree := ajout_Mot_ARN(Tree, Mot2);
+
+                  lol := nb_Occurrences_ARN(Tree, Mot1);
+                  lol2 := nb_Occurrences_ARN(Tree, Mot2);
+
+                  Tree := fusion_Mots_ARN(Tree, Mot1, Mot2);
+                  assert(nb_Occurrences_ARN(Tree, Mot1) = lol+lol2 and (present_ARN(Tree, Mot2) = False), "La Fusion ne marche pas");
+            end test_ARN_Fusion;
         
         -- Sur les fichiers
 

@@ -63,6 +63,36 @@ Fichiers relatifs aux trio, a un comportement similaire aux couples. Est utilis�
 
 Instancie pliste_gen pour la gestion des trios.
 
+* parn_gen.ads et parn_gen.adb
+
+Paquetage générique d'arbre binaire, servant à instancier le parn.
+Devait contenir des arbres rouges et noirs au début, puis abandonné au profit des arbres binaires de recherche.
+
+* parn.ads et parn.adb
+
+Instanciation de parn_gen avec des couples
+
+* ptree_gen.ads et ptree_gen.adb
+
+Paquetage générique de Tries. Est utilisé pour instancier Ptree_Noeud et Ptree_Gros_Noeud
+
+* pnoeud.ads et pnoeud.adb
+
+Conteneur avec un characater et un nombre d'occurrence (similaire au couple). Permet d'instancier ptree_noeud.
+Fournit la fonction de hashage pour la table de hashage de ptree_gen. cf commentaire sur ptree_gen, ptree_noeud et pnoeud.
+
+* pgros_noeud.ads et pgros_noeud.adb
+
+Similaire à pnoeud mais avec 2 nombres d'occurrences (comme les PTrio)
+
+* ptree_noeud.ads et ptree_noeud.adb
+
+Instanciation de ptree_gen avec des noeuds. Les noeuds fournissent la fonction de hashage necessaire.
+
+* ptree_gros_noeud.ads et ptree_gros_noeud.adb
+
+Permet de gerer la fusion de 2 Ptree_noeud. Instancie Ptree_gen avec pgros_noeud.
+
 * fl_tests.ads, fl_tests.adb, tests_runner.adb
 
 fl_tests contient tout les tests unitaires, et tests_runner se contente de les exécuter et faire le rapport.
@@ -70,7 +100,7 @@ Voir 3. Ahven pour plus d'informations à ce sujet.
 
 * Autres fichiers
 
-La librairie Ahven.
+La librairie Ahven et fichiers textes pour faire fonctionner le programme.
 
 
 
@@ -79,12 +109,12 @@ La librairie Ahven.
 Ahven est une librairie de tests unitaire gratuite et libre pour ADA.
 Son code source peut être récupéré ici: http://ahven.stronglytyped.org/
 Le code fournit est la version pour Unix (Linux et OSX).
-Il suffit de compiler tests_runner.adb et de l'executer pour lancer l'exécution des tests unitaires.
+Il suffit de compiler tests_runner.adb et de l'exécuter pour lancer l'exécution des tests unitaires.
 Pfichier n'est pas encore couvert.
 
 4. Guide d'Utilisation
 
 Il est recommandé de compiler les tests unitaires pour vérifier que la compilation sur votre machine ne cause pas d'erreur (le projet a été compilé avec succès sous Linux (Kubuntu) et Mac OSX (Leopard)). Une fois que les tests sont finis, vous pouvez compiler fatloutre.adb et lancer le programme.
-Le programme charge automatiquement le contenu de texte.txt (et texte2.txt si vous voulez analyser 2 textes). Placez votre texte dans ce(s) fichier(s) pour l'analyser.
+Le programme charge automatiquement le contenu de texte.txt (et texte2.txt si vous voulez analyser 2 textes, les textes ne doivent pas contenir plus d'un retour à la ligne en fin de fichier). Placez votre texte dans ce(s) fichier(s) pour l'analyser.
 Ne supprimez ni liste-mot.txt, ni texte.txt (et texte2.txt), ni petits-mots.txt, ce sont des fichiers essentiels au fonctionnement du logiciel.
 Vous pouvez placer les mots de moins de 4 caractères que vous trouvez important dans petits-mots.txt, une ligne par mot.

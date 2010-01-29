@@ -15,6 +15,7 @@ with PCouple; use PCouple;
 with PListe_Couple; use PListe_Couple;
 with PListe_Trio; use PListe_Trio;
 with PFichier; use PFichier;
+with PARN; use PARN;
 --with PNoeud; use PNoeud;
 with PTree_Noeud; use PTree_Noeud;
 with PTree_Gros_Noeud; use PTree_Gros_Noeud;
@@ -94,7 +95,7 @@ package FL_Tests is
     procedure test_Tree_nb_Occur_Mot;  
     procedure test_Tree_Fusion;
         
--- Test sur les Tries
+-- Test sur les gros Tries
     procedure test_Tree_Gros_nb_Superieur;
     procedure test_Tree_Gros_nb_Occurrence;
     procedure test_Tree_Gros_Taille;
@@ -110,5 +111,22 @@ package FL_Tests is
     procedure test_Tree_Gros_Fusion_Tree;  
     procedure test_Tree_Gros_Mots_Communs;  
     procedure test_Tree_Gros_Mots_Differents;
+
+    -- Test sur les ARN
+    procedure test_ARN_nb_Superieur;
+    procedure test_ARN_nb_Occurrence;
+    procedure test_ARN_Taille;
+    procedure test_ARN_Presence;
+    procedure test_ARN_Presence_Fail;
+    procedure test_ARN_nb_Prefixe;
+    procedure test_ARN_nb_Suffixe;
+    procedure test_ARN_nb_Facteur;
+    procedure test_ARN_Moy_Occur;
+    procedure test_ARN_Moy_Long;
+    procedure test_ARN_nb_Occur_Mot;  
+    procedure test_ARN_Fusion;
+    -- procedure test_ARN_Fusion_Tree;  
+    -- procedure test_ARN_Mots_Communs;  
+    -- procedure test_ARN_Mots_Differents;
         
 end FL_Tests;

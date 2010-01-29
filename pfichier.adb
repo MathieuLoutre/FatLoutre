@@ -4,7 +4,7 @@
 -- |  _| (_| | |_| |__| (_) | |_| | |_| | |  __/
 -- |_|  \__,_|\__|_____\___/ \__,_|\__|_|  \___|
 --
--- By Fat & Loutre - 12/09 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
+-- By Fat & Loutre - 01/10 - mathieu.triay(at)gmail(dot)com / yann.pravo(at)gmail(dot)com
 -- Modifications: http://github.com/Nagy/FatLoutre/commits/master/pfichier.adb
 --
 -- Abstraction et centralisation des fonctions sur les fichiers.
@@ -347,5 +347,136 @@ package body PFichier is
                     end loop;
                 end if;
             end write_Fichier_Tree_Gros;
+            
+        -- Sur ARN
+        
+        -- Ecrit la ligne correspondant au couple dans le fichier
+        procedure ecrire_Ligne_ARN_Trio(Fichier: in out File_Type; Liste: in TListe_Couple; T1: in TARN; T2: in TARN) is
+        	Mot: TMot := mot_Couple(valeur_Couple(Liste));
+        begin
+        	while (not mot_Vide(Mot)) loop
+        		put(Fichier, valeur_Mot(Mot));
+        		-- On écrit lettre par lettre
+        		Mot := lettre_Suivante(Mot);
+        	end loop;
+
+        if not arn_Vide(chercher_Noeud(T1, mot_Couple(valeur_Couple((Liste))))) then
+        	put(Fichier, " ");
+        	put(Fichier, Integer'image(occurrence(valeur(chercher_Noeud(T1, mot_Couple(valeur_Couple((Liste)))))))); -- On affiche le string correspondant aux occurrences 1
+        end if;
+        if not arn_Vide(chercher_Noeud(T2, mot_Couple(valeur_Couple((Liste))))) then
+        	put(Fichier, " ");
+        	put(Fichier, Integer'image(occurrence(valeur(chercher_Noeud(T2, mot_Couple(valeur_Couple((Liste)))))))); -- On affiche le string correspondant aux occurrences 2
+        	new_line(Fichier);
+        end if;
+        end ecrire_Ligne_ARN_Trio;
+
+        procedure gen_Fichier_Trio_ARN(T: in TListe_Couple; T1: in TARN; T2: in TARN; Fichier: out File_Type; nomFichier: in String) is
+            L: TListe_Couple := T;
+        begin
+
+    	create(Fichier, Name => nomFichier);
+            close(Fichier);
+            open(Fichier, Out_File, nomFichier);
+            put(Fichier, "Mots differents: ");
+            put(Fichier, nb_Mots_Differents(L), 1);
+            put(Fichier, "    ");
+            put(Fichier, "Nombre occurrences: ");
+            put(Fichier, nb_Total_Occurrence(L), 1);
+            new_line(Fichier);
+            -- On écrit les statistiques
+
+            -- Pour chaque trio, on l'écrit dans le fichier
+            while not liste_Couple_Vide(L) loop
+                ecrire_Ligne_ARN_Trio(Fichier, L, T1, T2);
+                L := Couple_Suivant(L);
+            end loop;
+
+            close(Fichier);
+        end gen_Fichier_Trio_ARN;
+        
+        procedure gen_Fichier_ARN(T: in TARN; Fichier: out File_Type; nomFichier : in String) is
+        L: TListe_Couple := creer_Liste_Couple;
+        begin
+    	arnToListe(T, L);
+    	gen_Fichier(L, Fichier, nomFichier);
+        end gen_Fichier_ARN;
+        
+        procedure regen_ARN_Couples(Fichier: in out File_Type; T: out TARN; nomFichier: in String) is
+        	Couple: TCouple;
+        	C: Character;
+        	M: TMot := creer_Mot;
+        	O: TMot := creer_Mot;
+        	I: Integer := 0;
+        begin
+            T := creer_ARN;
+            open(Fichier, In_File, nomFichier);
+            skip_line(Fichier); -- On saute la ligne des stats
+
+            while (not end_of_file(Fichier)) loop
+            -- Tant qu'on est pas à la fin du fichier
+        		if (not end_of_line(Fichier)) then
+        		-- Si on est pas à la fin de la ligne, on continue de récuperer le mot
+        		    get(Fichier, C);
+        		    if (is_Letter(C)) then
+            			M := ajout_Lettre_Fin(M, C);
+            		elsif (is_Digit(C)) then
+            		-- Cette partie se charge de récuperer le nombre d'occurrences
+            		    O := ajout_Lettre_Fin(O, C);
+            		end if;
+            	else 
+            	    -- On est à la fin de la ligne, donc il faut recreer le couple
+                    Couple := creer_Couple(M, mot_to_int(O));
+                    T := ajout_Elem(T, Couple);
+
+                    M := creer_Mot;
+                    O := creer_Mot;
+            	    skip_line(Fichier); -- On passe à la ligne d'après
+            	end if;
+        	end loop;
+
+        	close(Fichier);
+        end regen_ARN_Couples;
+        
+        procedure gen_ARN_Couples(Fichier: in out File_Type; T: out TARN; nomFichier: in String) is
+        	M: TMot;
+        	C: Character;
+        begin
+            M := creer_Mot;
+            T := creer_ARN;
+        	open(Fichier, In_File, nomFichier);
+
+        	while (not end_of_file(Fichier)) loop
+        		get(Fichier, C);
+
+        		if ((is_Letter(C) or (Character'pos(C) = 39 or Character'pos(C) = 45)) and end_of_line(Fichier)) then
+        		    if (is_Upper(C)) then
+        			    -- Si c'est une majuscule, on la lowercase !
+        			    C := to_Lower(C);
+        			end if;
+
+        			M := ajout_Lettre_Fin(M, C);
+
+        			if (not mot_Vide(M) and then significatif(M)) then
+            			T := ajout_Elem(T, creer_Couple(M, 1));
+            		end if;
+            		M := creer_Mot;
+            	elsif ((is_Letter(C) or (Character'pos(C) = 39 or Character'pos(C) = 45))) then
+            		if (is_Upper(C)) then
+            		    -- Si c'est une majuscule, on la lowercase !
+            			C := to_Lower(C);
+            		end if;
+
+            		M := ajout_Lettre_Fin(M, C);
+        		else
+        			if (not mot_Vide(M) and then significatif(M)) then
+        			    T := ajout_Elem(T, creer_Couple(M, 1));
+        			end if;
+        			M := creer_Mot;
+        		end if;
+        	end loop;
+
+        	close(Fichier);
+        end gen_ARN_Couples;
         
 end PFichier;
